@@ -1,0 +1,414 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F4B84F21DEB403B00CF1163 /* DomainsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B84F11DEB403B00CF1163 /* DomainsTVC.m */; };
+		1F4B84F51DEB454600CF1163 /* ServicesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B84F41DEB454600CF1163 /* ServicesTVC.m */; };
+		1FADE3F11E02C2F600E32630 /* DetailTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FADE3F01E02C2F600E32630 /* DetailTVC.m */; };
+		1FEB96481DE95EF600D98443 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB96471DE95EF600D98443 /* main.m */; };
+		1FEB964B1DE95EF600D98443 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB964A1DE95EF600D98443 /* AppDelegate.m */; };
+		1FEB96511DE95EF600D98443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEB964F1DE95EF600D98443 /* Main.storyboard */; };
+		1FEB96531DE95EF600D98443 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FEB96521DE95EF600D98443 /* Assets.xcassets */; };
+		1FEB96561DE95EF600D98443 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEB96541DE95EF600D98443 /* LaunchScreen.storyboard */; };
+		420C50811E11EB0C008B1D3D /* DuoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C50801E11EB0C008B1D3D /* DuoKit.framework */; };
+		420C50821E11EB0C008B1D3D /* DuoKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 420C50801E11EB0C008B1D3D /* DuoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4266C7811E163A730056FE02 /* DetailSetterCell.m */; };
+		426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1FEB96661DE95F1C00D98443 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				420C50821E11EB0C008B1D3D /* DuoKit.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1F4B84F01DEB403B00CF1163 /* DomainsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainsTVC.h; sourceTree = "<group>"; };
+		1F4B84F11DEB403B00CF1163 /* DomainsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DomainsTVC.m; sourceTree = "<group>"; };
+		1F4B84F31DEB454600CF1163 /* ServicesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesTVC.h; sourceTree = "<group>"; };
+		1F4B84F41DEB454600CF1163 /* ServicesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesTVC.m; sourceTree = "<group>"; };
+		1FADE3EF1E02C2F600E32630 /* DetailTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTVC.h; sourceTree = "<group>"; };
+		1FADE3F01E02C2F600E32630 /* DetailTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTVC.m; sourceTree = "<group>"; };
+		1FEB96431DE95EF600D98443 /* DuoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FEB96471DE95EF600D98443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1FEB96491DE95EF600D98443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1FEB964A1DE95EF600D98443 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1FEB96501DE95EF600D98443 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1FEB96521DE95EF600D98443 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1FEB96551DE95EF600D98443 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1FEB96571DE95EF600D98443 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		420C50801E11EB0C008B1D3D /* DuoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DuoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4266C7801E163A730056FE02 /* DetailSetterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSetterCell.h; sourceTree = "<group>"; };
+		4266C7811E163A730056FE02 /* DetailSetterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSetterCell.m; sourceTree = "<group>"; };
+		426EC0E81E2337B700D2D762 /* DetailSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSwitchCell.h; sourceTree = "<group>"; };
+		426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSwitchCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1FEB96401DE95EF600D98443 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				420C50811E11EB0C008B1D3D /* DuoKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F4B84F61DEB455300CF1163 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1FEB964F1DE95EF600D98443 /* Main.storyboard */,
+				1FEB96541DE95EF600D98443 /* LaunchScreen.storyboard */,
+				1FEB96521DE95EF600D98443 /* Assets.xcassets */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		1FEB963A1DE95EF600D98443 = {
+			isa = PBXGroup;
+			children = (
+				1FEB96451DE95EF600D98443 /* DuoBrowser */,
+				1FEB96441DE95EF600D98443 /* Products */,
+				420C50791E11EA1C008B1D3D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		1FEB96441DE95EF600D98443 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FEB96431DE95EF600D98443 /* DuoBrowser.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FEB96451DE95EF600D98443 /* DuoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				1F4B84F61DEB455300CF1163 /* UI */,
+				1FEB96491DE95EF600D98443 /* AppDelegate.h */,
+				1FEB964A1DE95EF600D98443 /* AppDelegate.m */,
+				426EC0E41E23346B00D2D762 /* Domains */,
+				426EC0E51E23347F00D2D762 /* Services */,
+				426EC0E61E23348D00D2D762 /* Detail */,
+				1FEB96461DE95EF600D98443 /* Supporting Files */,
+			);
+			path = DuoBrowser;
+			sourceTree = "<group>";
+		};
+		1FEB96461DE95EF600D98443 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1FEB96571DE95EF600D98443 /* Info.plist */,
+				1FEB96471DE95EF600D98443 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		420C50791E11EA1C008B1D3D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				420C50801E11EB0C008B1D3D /* DuoKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		426EC0E41E23346B00D2D762 /* Domains */ = {
+			isa = PBXGroup;
+			children = (
+				1F4B84F01DEB403B00CF1163 /* DomainsTVC.h */,
+				1F4B84F11DEB403B00CF1163 /* DomainsTVC.m */,
+			);
+			name = Domains;
+			sourceTree = "<group>";
+		};
+		426EC0E51E23347F00D2D762 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1F4B84F31DEB454600CF1163 /* ServicesTVC.h */,
+				1F4B84F41DEB454600CF1163 /* ServicesTVC.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		426EC0E61E23348D00D2D762 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				1FADE3EF1E02C2F600E32630 /* DetailTVC.h */,
+				1FADE3F01E02C2F600E32630 /* DetailTVC.m */,
+				426EC0E71E2334A000D2D762 /* Cell */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
+		426EC0E71E2334A000D2D762 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				426EC0E81E2337B700D2D762 /* DetailSwitchCell.h */,
+				426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */,
+				4266C7801E163A730056FE02 /* DetailSetterCell.h */,
+				4266C7811E163A730056FE02 /* DetailSetterCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1FEB96421DE95EF600D98443 /* DuoBrowser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FEB965A1DE95EF600D98443 /* Build configuration list for PBXNativeTarget "DuoBrowser" */;
+			buildPhases = (
+				1FEB963F1DE95EF600D98443 /* Sources */,
+				1FEB96401DE95EF600D98443 /* Frameworks */,
+				1FEB96411DE95EF600D98443 /* Resources */,
+				1FEB96661DE95F1C00D98443 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DuoBrowser;
+			productName = DuoBrowser;
+			productReference = 1FEB96431DE95EF600D98443 /* DuoBrowser.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1FEB963B1DE95EF600D98443 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "MediaTek Inc.";
+				TargetAttributes = {
+					1FEB96421DE95EF600D98443 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = ZG5MN8MJ6A;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1FEB963E1DE95EF600D98443 /* Build configuration list for PBXProject "DuoBrowser" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1FEB963A1DE95EF600D98443;
+			productRefGroup = 1FEB96441DE95EF600D98443 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1FEB96421DE95EF600D98443 /* DuoBrowser */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1FEB96411DE95EF600D98443 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FEB96561DE95EF600D98443 /* LaunchScreen.storyboard in Resources */,
+				1FEB96531DE95EF600D98443 /* Assets.xcassets in Resources */,
+				1FEB96511DE95EF600D98443 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1FEB963F1DE95EF600D98443 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FEB964B1DE95EF600D98443 /* AppDelegate.m in Sources */,
+				1F4B84F51DEB454600CF1163 /* ServicesTVC.m in Sources */,
+				1FEB96481DE95EF600D98443 /* main.m in Sources */,
+				4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */,
+				426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */,
+				1F4B84F21DEB403B00CF1163 /* DomainsTVC.m in Sources */,
+				1FADE3F11E02C2F600E32630 /* DetailTVC.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1FEB964F1DE95EF600D98443 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FEB96501DE95EF600D98443 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1FEB96541DE95EF600D98443 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FEB96551DE95EF600D98443 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1FEB96581DE95EF600D98443 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1FEB96591DE95EF600D98443 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1FEB965B1DE95EF600D98443 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZG5MN8MJ6A;
+				INFOPLIST_FILE = DuoBrowser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mediatek.DuoBrowser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1FEB965C1DE95EF600D98443 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZG5MN8MJ6A;
+				INFOPLIST_FILE = DuoBrowser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mediatek.DuoBrowser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1FEB963E1DE95EF600D98443 /* Build configuration list for PBXProject "DuoBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FEB96581DE95EF600D98443 /* Debug */,
+				1FEB96591DE95EF600D98443 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FEB965A1DE95EF600D98443 /* Build configuration list for PBXNativeTarget "DuoBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FEB965B1DE95EF600D98443 /* Debug */,
+				1FEB965C1DE95EF600D98443 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1FEB963B1DE95EF600D98443 /* Project object */;
+}
