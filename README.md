@@ -36,7 +36,7 @@ You may also need to setup **Avahi** if you need the Bonjour discovery feature:
 ```
 opkg update
 opkg install dbus dbus-utils
-opkg install avahi-dbus-daemon
+opkg install avahi-daemon
 opkg install avahi-dnsconfd avahi-utils
 reboot
 ```
