@@ -17,7 +17,9 @@ Install
 - Restart Arduino IDE.
 
 *Or simply create a symlink to the repo (e.g. macOS):*
-`ln -s lib/Arduino/DuoKit ~/Documents/Arduino/libraries/DuoKit`
+```
+ln -s lib/Arduino/DuoKit ~/Documents/Arduino/libraries/DuoKit
+```
 
 **For LinkIt 7688 Duo:**
 
