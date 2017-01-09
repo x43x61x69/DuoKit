@@ -1,4 +1,4 @@
-A bonjour based solution for MediaTek LinkIt 7688 Duo.
+README: https://github.com/x43x61x69/DuoKit
 
 == License ==
 
