@@ -3,6 +3,8 @@ DuoKit
 
 A Bonjour based solution for **MediaTek LinkIt 7688 Duo** and **Arduino Yun** a-likes.
 
+![Preview](preview.gif)
+
 Install
 -------
 
