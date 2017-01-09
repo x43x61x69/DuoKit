@@ -16,7 +16,7 @@ Install
 - Choose **DuoKit** folder within the `/lib/` folder of this repo.
 - Restart Arduino IDE.
 
-* Or simply create a symlink to the repo (e.g. macOS):
+*Or simply create a symlink to the repo (e.g. macOS):*
 `ln -s lib/Arduino/DuoKit ~/Documents/Arduino/libraries/DuoKit`
 
 **For LinkIt 7688 Duo:**
@@ -30,9 +30,14 @@ reboot
 
 **For Arduino Yun:**
 
-Set **REST API Access** to **Open** on your Arduino Yun before use this example.
+- Set **REST API Access** to **Open** in WebUI on your Arduino Yun before use this example.
+- SSH into your Arduino Yun via `ssh root@arduino.local`.
+- Use the following command to add `_http._tcp` service to avahi-daemon:
+```
+wget --no-check-certificate -O /etc/avahi/services/http.service https://raw.githubusercontent.com/x43x61x69/DuoKit/master/misc/avahi-service/http.service
+```
 
-You may also need to setup **Avahi** if you need the Bonjour discovery feature:
+*You may need to setup Avahi if you don't have it already:*
 ```
 opkg update
 opkg install dbus dbus-utils
