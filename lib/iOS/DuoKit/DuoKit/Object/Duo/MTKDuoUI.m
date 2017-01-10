@@ -36,6 +36,7 @@
         self.name           = [decoder decodeObjectForKey:@"name"];
         self.key            = [decoder decodeObjectForKey:@"key"];
         self.pin            = [decoder decodeIntegerForKey:@"pin"];
+        self.value          = [decoder decodeDoubleForKey:@"value"];
         self.minimumValue   = [decoder decodeDoubleForKey:@"minimumValue"];
         self.maximumValue   = [decoder decodeDoubleForKey:@"maximumValue"];
         self.reloadInterval = [decoder decodeDoubleForKey:@"reloadInterval"];
@@ -49,6 +50,7 @@
     [encoder encodeObject:_name             forKey:@"name"];
     [encoder encodeObject:_key              forKey:@"key"];
     [encoder encodeInteger:_pin             forKey:@"pin"];
+    [encoder encodeDouble:_value            forKey:@"value"];
     [encoder encodeDouble:_minimumValue     forKey:@"minimumValue"];
     [encoder encodeDouble:_maximumValue     forKey:@"maximumValue"];
     [encoder encodeDouble:_reloadInterval   forKey:@"reloadInterval"];
@@ -70,6 +72,8 @@
             self.key = [dictionary objectForKey:@"key"];
         if ([dictionary objectForKey:@"pin"])
             self.pin = [[dictionary objectForKey:@"pin"] integerValue];
+        if ([dictionary objectForKey:@"value"])
+            self.value = [[dictionary objectForKey:@"value"] doubleValue];
         if ([dictionary objectForKey:@"min"])
             self.minimumValue = [[dictionary objectForKey:@"min"] doubleValue];
         if ([dictionary objectForKey:@"max"])

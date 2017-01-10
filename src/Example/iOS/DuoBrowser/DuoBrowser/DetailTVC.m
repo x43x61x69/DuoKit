@@ -26,11 +26,10 @@
 //
 
 #import "DetailTVC.h"
+#import "DetailWebUICell.h"
 #import "DetailSwitchCell.h"
 #import "DetailSetterCell.h"
 #import "DetailSliderCell.h"
-
-#define kDetailWebUICellIdentifer   @"DetailWebUICell"
 
 @interface DetailTVC () <UITextFieldDelegate>
 
@@ -66,9 +65,10 @@
     MTKDuoUI *ui = [_duo.layout objectAtIndex:indexPath.row];
     switch (ui.type) {
         case DuoUIWebUI: {
-            UITableViewCell *cell =
+            DetailWebUICell *cell =
             [tableView dequeueReusableCellWithIdentifier:kDetailWebUICellIdentifer
                                             forIndexPath:indexPath];
+            cell.duo = _duo;
             cell.textLabel.text = ui.name ? ui.name : _duo.name;
             cell.detailTextLabel.text = _duo.v4Addresses.count ?
             [_duo.v4Addresses firstObject] : _duo.v6Addresses.count ?
@@ -82,7 +82,10 @@
             cell.textLabel.text = ui.name;
             cell.duo = _duo;
             cell.pin = ui.pin;
-            [cell setReloadInterval:ui.reloadInterval];
+            [cell.pinSwitch setOn:ui.value animated:YES];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [cell setReloadInterval:ui.reloadInterval];
+            });
             return cell;
         }
         case DuoUISetter:
@@ -93,8 +96,13 @@
             cell.title.text = ui.name;
             cell.duo = _duo;
             cell.key = ui.key;
+            cell.value = ui.value;
+            cell.textField.text = [NSString stringWithFormat:@"%.*f", 2, ui.value];
             cell.textField.userInteractionEnabled = ui.type == DuoUISetter;
-            [cell setReloadInterval:ui.reloadInterval];
+            cell.textField.borderStyle = ui.type == DuoUISetter ? UITextBorderStyleRoundedRect :  UITextBorderStyleNone;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [cell setReloadInterval:ui.reloadInterval];
+            });
             return cell;
         }
         case DuoUISlider: {
@@ -104,9 +112,12 @@
             cell.title.text = ui.name;
             cell.duo = _duo;
             cell.key = ui.key;
-            cell.slider.minimumValue = ui.minimumValue;
             cell.slider.maximumValue = ui.maximumValue;
-            [cell setReloadInterval:ui.reloadInterval];
+            cell.slider.minimumValue = ui.minimumValue;
+            cell.slider.value = ui.value;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [cell setReloadInterval:ui.reloadInterval];
+            });
             return cell;
         }
         default:
@@ -121,28 +132,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     switch ([_duo.layout objectAtIndex:indexPath.row].type) {
-        case DuoUIWebUI:
-            [self openWebUI:_duo];
+        case DuoUIWebUI: {
+            DetailWebUICell *cell = [[tableView visibleCells] objectAtIndex:indexPath.row];
+            [cell openWebUI];
             break;
+        }
         default:
             break;
     }
-}
-
-#pragma mark - Methods
-
-- (void)openWebUI:(MTKDuo *)duo
-{
-    [[UIApplication sharedApplication]
-     openURL:[NSURL URLWithString:
-              [NSString stringWithFormat:@"http://%@%@:%@",
-               duo.user ? [NSString stringWithFormat:@"%@%@@",
-                           duo.user,
-                           duo.password ?
-                           [NSString stringWithFormat:@":%@", duo.password] : @""] : @"",
-               duo.host,
-               duo.port ? [NSString stringWithFormat:@"%ld",
-                           (long)duo.port] : @""]]];
 }
 
 @end

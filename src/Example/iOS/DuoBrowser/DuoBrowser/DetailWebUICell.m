@@ -1,6 +1,6 @@
 //
-//  MTKDuoUI.h
-//  DuoKit
+//  DetailWebUICell.m
+//  DuoBrowser
 //
 //  The MIT License (MIT)
 //
@@ -25,28 +25,22 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "DetailWebUICell.h"
 
-typedef enum : uint8_t {
-    DuoUINone  = 0,
-    DuoUIWebUI,
-    DuoUISwitch,
-    DuoUISetter,
-    DuoUIGetter,
-    DuoUISlider
-} DuoUIType;
+@implementation DetailWebUICell
 
-@interface MTKDuoUI : NSObject
-
-@property (nonatomic)       DuoUIType       type;
-@property (nonatomic, copy) NSString        *name;
-@property (nonatomic)       NSInteger       pin;
-@property (nonatomic, copy) NSString        *key;
-@property (nonatomic)       double          value;
-@property (nonatomic)       double          minimumValue;
-@property (nonatomic)       double          maximumValue;
-@property (nonatomic)       NSTimeInterval  reloadInterval;
-
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (void)openWebUI
+{
+    [[UIApplication sharedApplication]
+     openURL:[NSURL URLWithString:
+              [NSString stringWithFormat:@"http://%@%@:%@",
+               _duo.user ? [NSString stringWithFormat:@"%@%@@",
+                            _duo.user,
+                            _duo.password ?
+                            [NSString stringWithFormat:@":%@", _duo.password] : @""] : @"",
+               _duo.host,
+               _duo.port ? [NSString stringWithFormat:@"%ld",
+                            (long)_duo.port] : @""]]];
+}
 
 @end
