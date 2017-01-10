@@ -27,6 +27,13 @@
 
 #import "DetailSliderCell.h"
 
+@interface DetailSliderCell ()
+{
+    NSUUID *actionUUID;
+}
+
+@end
+
 @implementation DetailSliderCell
 
 - (void)awakeFromNib
@@ -46,7 +53,6 @@
         [_timer invalidate];
     }
     if (interval) {
-        [self reload];
         _timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                                   target:self
                                                 selector:@selector(reload)
@@ -57,7 +63,7 @@
 
 - (void)reload
 {
-    if (_slider.isTouchInside) {
+    if (_slider.isTouchInside || actionUUID) {
         return;
     }
     [_duo readValueWithKey:_key
@@ -69,8 +75,15 @@
      {
          if (status) {
              dispatch_async(dispatch_get_main_queue(), ^{
-                 if (_slider && !_slider.isTouchInside) {
-                     [_slider setValue:value animated:YES];
+                 if (_slider &&
+                     !_slider.isTouchInside &&
+                     !actionUUID) {
+                     [UIView animateWithDuration:.5f
+                                           delay:.0f
+                                         options:UIViewAnimationOptionCurveLinear
+                                      animations:^{
+                                          [_slider setValue:value animated:YES];
+                                      } completion:nil];
                  }
              });
          } else {
@@ -86,6 +99,8 @@
 - (void)sliderDidEndEditng:(UISlider *)slider
 {
     if ([slider isEqual:_slider]) {
+        NSUUID *thisAction = [NSUUID UUID];
+        actionUUID = thisAction;
         [_duo updateValue:_slider.value
                   withKey:_key
         completionHandler:^(NSInteger api,
@@ -96,8 +111,14 @@
          {
              if (status) {
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     if (!_slider.isTouchInside) {
-                         [_slider setValue:value animated:YES];
+                     if (!_slider.isTouchInside &&
+                         thisAction == actionUUID) {
+                         [UIView animateWithDuration:.5f
+                                               delay:.0f
+                                             options:UIViewAnimationOptionCurveLinear
+                                          animations:^{
+                                              [_slider setValue:value animated:YES];
+                                          } completion:nil];
                      }
                  });
              } else {
@@ -107,6 +128,10 @@
                  } else {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
                  }
+             }
+             
+             if (thisAction == actionUUID) {
+                 actionUUID = nil;
              }
          }];
     }

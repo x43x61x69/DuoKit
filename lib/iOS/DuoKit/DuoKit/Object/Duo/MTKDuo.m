@@ -98,7 +98,7 @@
         NSDictionary *dict = [NSNetService dictionaryFromTXTRecordData:[service TXTRecordData]];
         
         self.service     = service;
-        self.name        = [service name]; // [[service name] stringByReplacingOccurrencesOfString:@"LinkIt Smart7688 WebUI on " withString:@""];
+        self.name        = [service name];
         self.domain      = [service domain];
         self.type        = [service type];
         self.host        = [service hostName];

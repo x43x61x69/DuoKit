@@ -27,6 +27,13 @@
 
 #import "DetailSwitchCell.h"
 
+@interface DetailSwitchCell ()
+{
+    NSUUID *actionUUID;
+}
+
+@end
+
 @implementation DetailSwitchCell
 
 - (void)awakeFromNib
@@ -49,7 +56,6 @@
         [_timer invalidate];
     }
     if (interval) {
-        [self reload];
         _timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                                   target:self
                                                 selector:@selector(reload)
@@ -58,32 +64,9 @@
     }
 }
 
-- (void)switchDidChange:(UISwitch *)sender
-{
-    [sender setOn:[sender isOn] animated:YES];
-    [_duo setPinType:DuoSetPinDigital
-                 pin:_pin
-               value:sender.on ? DuoPinHigh : DuoPinLow
-   completionHandler:^(NSInteger api,
-                       BOOL status,
-                       DuoPin pin,
-                       DuoPinValue value,
-                       DuoPinMode mode,
-                       NSString *result,
-                       NSError *error)
-     {
-         if (!status) {
-             [sender setOn:!sender.on animated:YES];
-             NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
-         } else {
-             NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
-         }
-     }];
-}
-
 - (void)reload
 {
-    if (_pinSwitch.isTouchInside) {
+    if (_pinSwitch.isTouchInside || actionUUID) {
         return;
     }
     [_duo readDigitalPin:_pin
@@ -97,7 +80,9 @@
      {
          if (status) {
              dispatch_async(dispatch_get_main_queue(), ^{
-                 if (!_pinSwitch.isTouchInside) {
+                 if (_pinSwitch &&
+                     !_pinSwitch.isTouchInside &&
+                     !actionUUID) {
                      [_pinSwitch setOn:(value == DuoPinHigh) animated:YES];
                  }
              });
@@ -109,6 +94,36 @@
              }
          }
      }];
+}
+
+- (void)switchDidChange:(UISwitch *)sender
+{
+    if ([sender isEqual:_pinSwitch]) {
+        [sender setOn:[sender isOn] animated:YES];
+        NSUUID *thisAction = [NSUUID UUID];
+        actionUUID = thisAction;
+        [_duo setPinType:DuoSetPinDigital
+                     pin:_pin
+                   value:sender.on ? DuoPinHigh : DuoPinLow
+       completionHandler:^(NSInteger api,
+                           BOOL status,
+                           DuoPin pin,
+                           DuoPinValue value,
+                           DuoPinMode mode,
+                           NSString *result,
+                           NSError *error)
+         {
+             if (!status) {
+                 if (!_pinSwitch.isTouchInside &&
+                     thisAction == actionUUID) {
+                     [sender setOn:!sender.on animated:YES];
+                 }
+                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+             } else {
+                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+             }
+         }];
+    }
 }
 
 @end

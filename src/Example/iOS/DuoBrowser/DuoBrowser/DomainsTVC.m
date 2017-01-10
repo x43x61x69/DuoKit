@@ -78,7 +78,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDomainCellIdentifer
                                                             forIndexPath:indexPath];
     
-    cell.textLabel.text = [_dataSource objectAtIndex:indexPath.row];
+    NSString *domain = [_dataSource objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = [domain hasSuffix:@"."] ?
+    [domain substringToIndex:domain.length-1] :
+    domain;
     
     return cell;
 }

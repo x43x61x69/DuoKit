@@ -27,6 +27,13 @@
 
 #import "DetailSetterCell.h"
 
+@interface DetailSetterCell ()
+{
+    NSUUID *actionUUID;
+}
+
+@end
+
 @implementation DetailSetterCell
 
 - (void)awakeFromNib
@@ -58,7 +65,6 @@
         [_timer invalidate];
     }
     if (interval) {
-        [self reload];
         _timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                                   target:self
                                                 selector:@selector(reload)
@@ -69,7 +75,7 @@
 
 - (void)reload
 {
-    if (_textField.isEditing) {
+    if (_textField.isEditing || actionUUID) {
         return;
     }
     [_duo readValueWithKey:_key
@@ -82,7 +88,9 @@
          if (status) {
              dispatch_async(dispatch_get_main_queue(), ^{
                  _value = value;
-                 if (_textField && !_textField.isEditing) {
+                 if (_textField &&
+                     !_textField.isEditing &&
+                     !actionUUID) {
                      _textField.text = [NSString stringWithFormat:@"%.*f", 2, _value];
                  }
              });
@@ -106,6 +114,8 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if ([textField isEqual:_textField]) {
+        NSUUID *thisAction = [NSUUID UUID];
+        actionUUID = thisAction;
         [_duo updateValue:[_textField.text floatValue]
                   withKey:_key
         completionHandler:^(NSInteger api,
@@ -116,7 +126,10 @@
          {
              if (status) {
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     _value = value;
+                     if (!_textField.isEditing &&
+                         thisAction == actionUUID) {
+                         _value = value;
+                     }
                  });
              } else {
                  
@@ -125,6 +138,10 @@
                  } else {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
                  }
+             }
+             
+             if (thisAction == actionUUID) {
+                 actionUUID = nil;
              }
          }];
     }

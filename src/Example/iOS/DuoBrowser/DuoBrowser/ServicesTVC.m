@@ -44,7 +44,11 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = _domain;
+    NSString *domain = _domain;
+    
+    self.navigationItem.title = [domain hasSuffix:@"."] ?
+    [domain substringToIndex:domain.length-1] :
+    domain;
     
     _dataSource = [NSMutableArray new];
     
@@ -110,8 +114,7 @@
         MTKDuo *duo = (MTKDuo *)sender;
         DetailTVC *vc = (DetailTVC *)segue.destinationViewController;
         vc.duo = duo;
-        vc.navigationItem.title = [duo.name stringByReplacingOccurrencesOfString:@"LinkIt Smart7688 WebUI on "
-                                                                      withString:@""];
+        vc.navigationItem.title = duo.name;
     }
 }
 
@@ -133,8 +136,7 @@
                                                             forIndexPath:indexPath];
     
     MTKDuo *duo = (MTKDuo *)[_dataSource objectAtIndex:indexPath.row];
-    cell.textLabel.text = [duo.name stringByReplacingOccurrencesOfString:@"LinkIt Smart7688 WebUI on "
-                                                              withString:@""];
+    cell.textLabel.text = duo.name;
     
     return cell;
 }

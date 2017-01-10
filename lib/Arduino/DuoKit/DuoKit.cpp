@@ -287,13 +287,20 @@ void DuoKit::layoutStatus(BridgeClient client)
                     String j;
                     j.concat(",\"pin\":");
                     j.concat(_layout[i].pin);
+                    if (_layout[i].type == DuoUISwitch) {
+                        j.concat(",\"value\":");
+                        j.concat(digitalRead(_layout[i].pin));
+                    }
                     client.print(j);
                 }
                 if (_layout[i].key != "") {
                     String j;
+                    double value;
+                    valueForKey(&value, _layout[i].key);
                     j.concat(",\"key\":\"");
                     j.concat(_layout[i].key);
-                    j.concat("\"");
+                    j.concat("\",\"value\":");
+                    j.concat(String(value));
                     client.print(j);
                 }
                 if (_layout[i].type == DuoUISlider) {
