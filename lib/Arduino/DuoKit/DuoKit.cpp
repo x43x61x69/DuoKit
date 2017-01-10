@@ -221,57 +221,6 @@ String DuoKit::JSONStatus(const bool status, const String &keyPairs)
     return JSONFormat(j);
 }
 
-String DuoKit::layoutStatus()
-{
-    bool status = false;
-    String j;
-    if (_layout) {
-        j.concat("\"layout\":[");
-        int count = 0;
-        for (int i = 0; i < _layoutSize; i++) {
-            if (count) j.concat(",");
-            j.concat("{");
-            j.concat(keyPair("type", String(_layout[i].type), false));
-            if (_layout[i].name != "") {
-                j.concat(",\"name\":\"");
-                j.concat(_layout[i].name);
-                j.concat("\"");
-            }
-            if (_layout[i].type != DuoUIWebUI) {
-                if (_layout[i].pin) {
-                    j.concat(",\"pin\":");
-                    j.concat(_layout[i].pin);
-                }
-                if (_layout[i].key != "") {
-                    j.concat(",\"key\":\"");
-                    j.concat(_layout[i].key);
-                    j.concat("\"");
-                }
-                if (_layout[i].type == DuoUISlider) {
-                    if (_layout[i].max > _layout[i].min) {
-                        j.concat(",\"min\":");
-                        j.concat(_layout[i].min);
-                        j.concat(",\"max\":");
-                        j.concat(_layout[i].max);
-                    } else {
-                        continue;
-                    }
-                }
-                if (_layout[i].interval) {
-                    j.concat(",\"interval\":");
-                    j.concat(_layout[i].interval);
-                }
-            }
-            j.concat("}");
-            count++;
-        }
-        j.concat("],");
-        j.concat(keyPair("count", String(count), false));
-        LOGD(JSONStatus(true, j));
-    }
-    return JSONStatus(true, j);
-}
-
 String DuoKit::digitalPinStatus(const uint8_t pin)
 {
     bool status = false;
@@ -314,6 +263,65 @@ String DuoKit::modeErrorStatus(const uint8_t pin)
     return JSONStatus(false, j);
 }
 
+void DuoKit::layoutStatus(BridgeClient client)
+{
+    client.print("{");
+    client.print(keyPair("api", String(DUOKIT_API_VERSION), false));
+    client.print(",");
+    if (_layout) {
+        client.print("\"layout\":[");
+        int count = 0;
+        for (int i = 0; i < _layoutSize; i++) {
+            if (count) client.print(",");
+            client.print("{");
+            client.print(keyPair("type", String(_layout[i].type), false));
+            if (_layout[i].name != "") {
+                String j;
+                j.concat(",\"name\":\"");
+                j.concat(_layout[i].name);
+                j.concat("\"");
+                client.print(j);
+            }
+            if (_layout[i].type != DuoUIWebUI) {
+                if (_layout[i].pin) {
+                    String j;
+                    j.concat(",\"pin\":");
+                    j.concat(_layout[i].pin);
+                    client.print(j);
+                }
+                if (_layout[i].key != "") {
+                    String j;
+                    j.concat(",\"key\":\"");
+                    j.concat(_layout[i].key);
+                    j.concat("\"");
+                    client.print(j);
+                }
+                if (_layout[i].type == DuoUISlider) {
+                    String j;
+                    j.concat(",\"min\":");
+                    j.concat(_layout[i].min);
+                    j.concat(",\"max\":");
+                    j.concat(_layout[i].max);
+                    client.print(j);
+                }
+                if (_layout[i].interval) {
+                    String j;
+                    j.concat(",\"interval\":");
+                    j.concat(_layout[i].interval);
+                    client.print(j);
+                }
+            }
+            client.print("}");
+            count++;
+        }
+        client.print("],");
+        client.print(keyPair("count", String(count), false));
+        client.print(",");
+    }
+    client.print(keyPair("status", "ok"));
+    client.print("}");
+}
+
 String DuoKit::readStatus(const String &key)
 {
     double value;
@@ -328,20 +336,27 @@ String DuoKit::readStatus(const String &key)
     return JSONStatus(status, j);
 }
 
-String DuoKit::listStatus()
+void DuoKit::listStatus(BridgeClient client)
 {
-    String j = "\"keys\":[";
+    client.print("{");
+    client.print(keyPair("api", String(DUOKIT_API_VERSION), false));
+    client.print(",");
+    client.print("\"keys\":[");
     int count = 0;
     for (int i = 0; i < _objectsSize; i++) {
+        String j;
         if (count) j.concat(",");
         j.concat("\"");
         j.concat(_objects[i].name);
         j.concat("\"");
+        client.print(j);
         count++;
     }
-    j.concat("],");
-    j.concat(keyPair("count", String(count), false));
-    return JSONStatus(true, j);
+    client.print("],");
+    client.print(keyPair("count", String(count), false));
+    client.print(",");
+    client.print(keyPair("status", "ok"));
+    client.print("}");
 }
 
 String DuoKit::updateStatus(const String &key, double value, bool status)
@@ -384,7 +399,7 @@ void DuoKit::command(BridgeClient client)
     } else if (command.startsWith("list")) {
         list(client);
     } else if (command.startsWith("ping")) {
-        client.println(layoutStatus());
+        layoutStatus(client);
     } else {
         String j = JSONStatus(false, keyPair("message", "command unknown."));
         client.println(j);
@@ -457,8 +472,7 @@ void DuoKit::read(BridgeClient client)
 
 void DuoKit::list(BridgeClient client)
 {
-    client.print(listStatus());
-    LOGD(listStatus());
+    listStatus(client);
 }
 
 void DuoKit::update(BridgeClient client)
