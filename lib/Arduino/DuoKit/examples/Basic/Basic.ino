@@ -81,17 +81,18 @@ void setup()
 
     //
     // Set pre-defined layout:
-    // Format: {DUO_UI_TYPE, DISPLAY_TEXT, PIN_NUM, VAR_KEY_NAME, RELOAD_INTERVAL}
+    // Format: {DUO_UI_TYPE, DISPLAY_TEXT, PIN_NUM, VAR_KEY_NAME, SLIDER_MIN, SLIDER_MAX, RELOAD_INTERVAL}
     // DUO_UI_TYPE Can be one of the followings:
-    // - DuoUIWebUI: Setup UI for WebUI.
-    // - DuoUISwitch: Setup a switch for a pin. VAR_KEY_NAME will be ignored.
-    // - DuoUIValueSetter: Setup a setter for a variable. PIN_NUM will be ignored.
-    // - DuoUIValueGetter: Setup a getter for a variable. PIN_NUM will be ignored.
+    // - DuoUIWebUI: Setup UI for WebUI. PIN_NUM, VAR_KEY_NAME, SLIDER_MIN, SLIDER_MAX and RELOAD_INTERVAL will be ignored.
+    // - DuoUISwitch: Setup a switch for a pin. VAR_KEY_NAME, SLIDER_MIN and SLIDER_MAX will be ignored.
+    // - DuoUIValueSetter: Setup a setter for a variable. PIN_NUM, SLIDER_MIN and SLIDER_MAX will be ignored.
+    // - DuoUIValueGetter: Setup a getter for a variable. PIN_NUM, SLIDER_MIN and SLIDER_MAX will be ignored.
+    // - DuoUISlider: Setup a slider for a variable. PIN_NUM will be ignored.
     //
-    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0};
-    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        10.0};
-    layout[2] = {DuoUIValueSetter,  "This is count",    0,   "count",   5.0};
-    layout[3] = {DuoUIValueGetter,  "This is fixed",    0,   "fixed",   5.0};
+    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,      0};
+    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,      10};
+    layout[2] = {DuoUIValueSetter,  "This is count",    0,   "count",   0,  0,      5};
+    layout[3] = {DuoUISlider,       "Slider for fixed", 0,   "fixed",   0,  9999,   5};
 
     //
     // Setup the DuoKit layout with "duokit.setLayout(LAYOUT_ARRAY, LAYOUT_LENGTH)".

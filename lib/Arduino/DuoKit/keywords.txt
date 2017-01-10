@@ -2,6 +2,7 @@ DuoKit              KEYWORD1
 DuoUIWebUI          KEYWORD1
 DuoUISwitch         KEYWORD1
 DuoUIWebUI          KEYWORD1
+DuoUISlider         KEYWORD1
 DuoUIValueSetter    KEYWORD1
 DuoUIValueGetter    KEYWORD1
 DuoUIType           KEYWORD1

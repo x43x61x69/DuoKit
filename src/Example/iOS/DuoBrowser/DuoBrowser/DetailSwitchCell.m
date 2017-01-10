@@ -83,6 +83,9 @@
 
 - (void)reload
 {
+    if (_pinSwitch.isTouchInside) {
+        return;
+    }
     [_duo readDigitalPin:_pin
        completionHandler:^(NSInteger api,
                            BOOL status,
@@ -94,7 +97,9 @@
      {
          if (status) {
              dispatch_async(dispatch_get_main_queue(), ^{
-                 [_pinSwitch setOn:(value == DuoPinHigh) animated:YES];
+                 if (!_pinSwitch.isTouchInside) {
+                     [_pinSwitch setOn:(value == DuoPinHigh) animated:YES];
+                 }
              });
          } else {
              if (error) {

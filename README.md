@@ -32,7 +32,7 @@ reboot
 
 **For Arduino Yun:**
 
-- Set **REST API Access** to **Open** in WebUI on your Arduino Yun before use this example.
+- Set **REST API Access** to **Open** in WebUI on your Arduino Yun before using this example.
 - SSH into your Arduino Yun via `ssh root@arduino.local`.
 - Use the following command to add `_http._tcp` service to avahi-daemon:
 ```

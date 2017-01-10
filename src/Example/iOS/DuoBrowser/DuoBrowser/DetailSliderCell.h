@@ -1,6 +1,6 @@
 //
-//  MTKDuoUI.h
-//  DuoKit
+//  DetailSliderCell.h
+//  DuoBrowser
 //
 //  The MIT License (MIT)
 //
@@ -25,27 +25,21 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#define kDetailSliderCellIdentifer  @"DetailSliderCell"
 
-typedef enum : uint8_t {
-    DuoUINone  = 0,
-    DuoUIWebUI,
-    DuoUISwitch,
-    DuoUISetter,
-    DuoUIGetter,
-    DuoUISlider
-} DuoUIType;
+#import <UIKit/UIKit.h>
+#import <DuoKit/DuoKit.h>
 
-@interface MTKDuoUI : NSObject
+@interface DetailSliderCell : UITableViewCell
 
-@property (nonatomic)       DuoUIType       type;
-@property (nonatomic, copy) NSString        *name;
-@property (nonatomic)       NSInteger       pin;
-@property (nonatomic, copy) NSString        *key;
-@property (nonatomic)       double          minimumValue;
-@property (nonatomic)       double          maximumValue;
-@property (nonatomic)       NSTimeInterval  reloadInterval;
+@property (nonatomic, strong)   MTKDuo *duo;
+@property (nonatomic, strong)   NSString *key;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+@property (nonatomic, strong)   NSTimer *timer;
+@property (nonatomic, weak)     IBOutlet UILabel    *title;
+@property (nonatomic, weak)     IBOutlet UISlider   *slider;
+
+- (void)setReloadInterval:(NSTimeInterval)interval;
+- (void)reload;
 
 @end

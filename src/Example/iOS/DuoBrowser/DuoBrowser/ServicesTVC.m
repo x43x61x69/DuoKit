@@ -24,7 +24,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-#define kMinApiVersion  1
 
 #import "ServicesTVC.h"
 #import "DetailTVC.h"
@@ -65,7 +64,7 @@
 
 - (void)didResolveDuo:(MTKDuo *)duo
 {
-    [duo isDeviceReadyWithApi:kMinApiVersion
+    [duo isDeviceReadyWithApi:kDuoKitMinVersion
             completionHandler:^(NSInteger api,
                                 BOOL isReady,
                                 NSArray *layouts,

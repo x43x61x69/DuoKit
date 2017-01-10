@@ -1,5 +1,5 @@
 //
-//  DetailSetterCell.m
+//  DetailSliderCell.m
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -25,31 +25,19 @@
 //  SOFTWARE.
 //
 
-#import "DetailSetterCell.h"
+#import "DetailSliderCell.h"
 
-@implementation DetailSetterCell
+@implementation DetailSliderCell
 
 - (void)awakeFromNib
 {
     [super awakeFromNib];
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    _textField.delegate = self;
     
-    UIBarButtonItem *flexibleItem
-    = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                    target:nil
-                                                    action:nil];
-    UIBarButtonItem *doneButton =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
-                                                  target:self
-                                                  action:@selector(dismissKeyboard)];
-    UIToolbar *inputToolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(.0f, .0f,
-                                                                           self.frame.size.width,
-                                                                           44.f)];
-    
-    [inputToolbar setItems:@[flexibleItem, doneButton] animated:NO];
-    _textField.inputAccessoryView = inputToolbar;
+    [_slider addTarget:self
+                action:@selector(sliderDidEndEditng:)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setReloadInterval:(NSTimeInterval)interval
@@ -69,7 +57,7 @@
 
 - (void)reload
 {
-    if (_textField.isEditing) {
+    if (_slider.isTouchInside) {
         return;
     }
     [_duo readValueWithKey:_key
@@ -81,9 +69,8 @@
      {
          if (status) {
              dispatch_async(dispatch_get_main_queue(), ^{
-                 _value = value;
-                 if (_textField && !_textField.isEditing) {
-                     _textField.text = [NSString stringWithFormat:@"%.*f", 2, _value];
+                 if (_slider && !_slider.isTouchInside) {
+                     [_slider setValue:value animated:YES];
                  }
              });
          } else {
@@ -96,17 +83,10 @@
      }];
 }
 
-- (void)dismissKeyboard
+- (void)sliderDidEndEditng:(UISlider *)slider
 {
-    [self endEditing:YES];
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if ([textField isEqual:_textField]) {
-        [_duo updateValue:[_textField.text floatValue]
+    if ([slider isEqual:_slider]) {
+        [_duo updateValue:_slider.value
                   withKey:_key
         completionHandler:^(NSInteger api,
                             BOOL status,
@@ -116,7 +96,9 @@
          {
              if (status) {
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     _value = value;
+                     if (!_slider.isTouchInside) {
+                         [_slider setValue:value animated:YES];
+                     }
                  });
              } else {
                  

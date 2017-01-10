@@ -10,6 +10,7 @@
 		1F4B84F21DEB403B00CF1163 /* DomainsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B84F11DEB403B00CF1163 /* DomainsTVC.m */; };
 		1F4B84F51DEB454600CF1163 /* ServicesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B84F41DEB454600CF1163 /* ServicesTVC.m */; };
 		1FADE3F11E02C2F600E32630 /* DetailTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FADE3F01E02C2F600E32630 /* DetailTVC.m */; };
+		1FEB23B31E2511A600918646 /* DetailSliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB23B21E2511A600918646 /* DetailSliderCell.m */; };
 		1FEB96481DE95EF600D98443 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB96471DE95EF600D98443 /* main.m */; };
 		1FEB964B1DE95EF600D98443 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB964A1DE95EF600D98443 /* AppDelegate.m */; };
 		1FEB96511DE95EF600D98443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEB964F1DE95EF600D98443 /* Main.storyboard */; };
@@ -42,6 +43,8 @@
 		1F4B84F41DEB454600CF1163 /* ServicesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesTVC.m; sourceTree = "<group>"; };
 		1FADE3EF1E02C2F600E32630 /* DetailTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTVC.h; sourceTree = "<group>"; };
 		1FADE3F01E02C2F600E32630 /* DetailTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTVC.m; sourceTree = "<group>"; };
+		1FEB23B11E2511A600918646 /* DetailSliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSliderCell.h; sourceTree = "<group>"; };
+		1FEB23B21E2511A600918646 /* DetailSliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSliderCell.m; sourceTree = "<group>"; };
 		1FEB96431DE95EF600D98443 /* DuoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FEB96471DE95EF600D98443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1FEB96491DE95EF600D98443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -162,6 +165,8 @@
 				426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */,
 				4266C7801E163A730056FE02 /* DetailSetterCell.h */,
 				4266C7811E163A730056FE02 /* DetailSetterCell.m */,
+				1FEB23B11E2511A600918646 /* DetailSliderCell.h */,
+				1FEB23B21E2511A600918646 /* DetailSliderCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 				1FEB964B1DE95EF600D98443 /* AppDelegate.m in Sources */,
 				1F4B84F51DEB454600CF1163 /* ServicesTVC.m in Sources */,
 				1FEB96481DE95EF600D98443 /* main.m in Sources */,
+				1FEB23B31E2511A600918646 /* DetailSliderCell.m in Sources */,
 				4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */,
 				426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */,
 				1F4B84F21DEB403B00CF1163 /* DomainsTVC.m in Sources */,

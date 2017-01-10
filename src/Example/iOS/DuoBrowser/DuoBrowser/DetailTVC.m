@@ -28,6 +28,7 @@
 #import "DetailTVC.h"
 #import "DetailSwitchCell.h"
 #import "DetailSetterCell.h"
+#import "DetailSliderCell.h"
 
 #define kDetailWebUICellIdentifer   @"DetailWebUICell"
 
@@ -93,6 +94,18 @@
             cell.duo = _duo;
             cell.key = ui.key;
             cell.textField.userInteractionEnabled = ui.type == DuoUISetter;
+            [cell setReloadInterval:ui.reloadInterval];
+            return cell;
+        }
+        case DuoUISlider: {
+            DetailSliderCell *cell =
+            [tableView dequeueReusableCellWithIdentifier:kDetailSliderCellIdentifer
+                                            forIndexPath:indexPath];
+            cell.title.text = ui.name;
+            cell.duo = _duo;
+            cell.key = ui.key;
+            cell.slider.minimumValue = ui.minimumValue;
+            cell.slider.maximumValue = ui.maximumValue;
             [cell setReloadInterval:ui.reloadInterval];
             return cell;
         }
