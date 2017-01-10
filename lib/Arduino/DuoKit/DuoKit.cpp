@@ -163,8 +163,10 @@ bool DuoKit::removeValueForKey(const String &key)
 
 void DuoKit::LOG(const String &message)
 {
-    Serial.print(F("[DuoKit] "));
-    Serial.println(message);
+    if (_serialPort) {
+        Serial.print(F("[DuoKit] "));
+        Serial.println(message);
+    }
 }
 
 int DuoKit::pinModeRead(const uint8_t pin)
