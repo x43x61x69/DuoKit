@@ -86,7 +86,7 @@ Pre-defined UI layout is also possible via Arduino code. Check out the
 Example
 -------
 
-**Arduino (LinkIt 7688 Duo):**
+**Arduino:**
 
 - Arduino IDE 1.8.0 or above is required.
 - See `File > Examples > DuoKit > Basic`.
