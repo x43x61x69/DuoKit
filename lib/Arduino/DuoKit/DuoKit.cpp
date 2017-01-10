@@ -237,18 +237,30 @@ String DuoKit::layoutStatus()
                 j.concat(_layout[i].name);
                 j.concat("\"");
             }
-            if (_layout[i].pin) {
-                j.concat(",\"pin\":");
-                j.concat(_layout[i].pin);
-            }
-            if (_layout[i].key != "") {
-                j.concat(",\"key\":\"");
-                j.concat(_layout[i].key);
-                j.concat("\"");
-            }
-            if (_layout[i].interval) {
-                j.concat(",\"interval\":");
-                j.concat(_layout[i].interval);
+            if (_layout[i].type != DuoUIWebUI) {
+                if (_layout[i].pin) {
+                    j.concat(",\"pin\":");
+                    j.concat(_layout[i].pin);
+                }
+                if (_layout[i].key != "") {
+                    j.concat(",\"key\":\"");
+                    j.concat(_layout[i].key);
+                    j.concat("\"");
+                }
+                if (_layout[i].type == DuoUISlider) {
+                    if (_layout[i].max > _layout[i].min) {
+                        j.concat(",\"min\":");
+                        j.concat(_layout[i].min);
+                        j.concat(",\"max\":");
+                        j.concat(_layout[i].max);
+                    } else {
+                        continue;
+                    }
+                }
+                if (_layout[i].interval) {
+                    j.concat(",\"interval\":");
+                    j.concat(_layout[i].interval);
+                }
             }
             j.concat("}");
             count++;

@@ -25,8 +25,8 @@
 #ifndef DUOKIT_H
 #define DUOKIT_H
 
-#define DUOKIT_VERSION          "1.0.0"
-#define DUOKIT_API_VERSION      1
+#define DUOKIT_VERSION          "1.0.1"
+#define DUOKIT_API_VERSION      2
 #define DUOKIT_INPUT            0x0
 #define DUOKIT_OUTPUT           0x1
 #define DUOKIT_INPUT_PULLUP     0x2
@@ -41,7 +41,8 @@ typedef enum : uint8_t
     DuoUIWebUI          = 0x1,
     DuoUISwitch         = 0x2,
     DuoUIValueSetter    = 0x3,
-    DuoUIValueGetter    = 0x4
+    DuoUIValueGetter    = 0x4,
+    DuoUISlider         = 0x5
 } DuoUIType;
 
 typedef struct __attribute__((packed))
@@ -56,6 +57,8 @@ typedef struct __attribute__((packed))
     String      name;
     DuoPin      pin;
     String      key;
+    double      min;
+    double      max;
     double      interval;
 } DuoUI;
 
