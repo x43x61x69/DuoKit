@@ -50,7 +50,7 @@
 
 //
 // Use "duokit(SERIAL_PORT_NUM)" to initialize a DuoKit object. Simply use
-// "duokit()" if you don't need the serial output.
+// "duokit" if you don't need the serial output.
 //
 DuoKit duokit(9600);
 
