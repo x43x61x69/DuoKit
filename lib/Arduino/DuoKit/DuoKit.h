@@ -90,13 +90,11 @@ private:
     String keyPair(const String &key, const String &value, bool isString = true);
     String JSONFormat(const String &keyPairs);
     String JSONStatus(const bool status, const String &keyPairs = "");
-    String layoutStatus();
     String digitalPinStatus(const uint8_t pin);
     String analogPinStatus(const uint8_t pin);
     String modeErrorStatus(const uint8_t pin);
     String readStatus(const String &key);
     String writeStatus(const String &key, double value, bool status);
-    String listStatus();
     String updateStatus(const String &key, double value, bool status);
     String removeStatus(const String &key, bool status);
 
@@ -104,8 +102,10 @@ private:
     void digitalSet(BridgeClient client);
     void analogSet(BridgeClient client);
     void modeSet(BridgeClient client);
+    void layoutStatus(BridgeClient client);
     void read(BridgeClient client);
     void list(BridgeClient client);
+    void listStatus(BridgeClient client);
     void update(BridgeClient client);
     void remove(BridgeClient client);
 };

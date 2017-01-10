@@ -43,7 +43,7 @@
 // test your layout/object settings with ping/read command before you deploy
 // your sketch.
 //
-#define LAYOUT_LENGTH   4
+#define LAYOUT_LENGTH   6
 #define OBJECTS_LENGTH  2
 
 #include <DuoKit.h>
@@ -92,7 +92,9 @@ void setup()
     layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,      0};
     layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,      10};
     layout[2] = {DuoUIValueSetter,  "This is count",    0,   "count",   0,  0,      5};
-    layout[3] = {DuoUISlider,       "Slider for fixed", 0,   "fixed",   0,  9999,   5};
+    layout[3] = {DuoUISlider,       "Slider for count", 0,   "count",   0,  65535,  5};
+    layout[4] = {DuoUIValueGetter,  "This is fixed",    0,   "fixed",   0,  0,      5};
+    layout[5] = {DuoUISlider,       "Slider for fixed", 0,   "fixed",   0,  9999,   5};
 
     //
     // Setup the DuoKit layout with "duokit.setLayout(LAYOUT_ARRAY, LAYOUT_LENGTH)".
