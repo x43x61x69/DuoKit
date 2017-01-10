@@ -37,7 +37,10 @@ reboot
 - Use the following command to add `_http._tcp` service to avahi-daemon:
 ```
 wget --no-check-certificate -O /etc/avahi/services/http.service https://raw.githubusercontent.com/x43x61x69/DuoKit/master/misc/avahi-service/http.service
+avahi-daemon --reload
 ```
+
+**For Other Arduino Yun Compatiables:**
 
 *You may need to setup Avahi if you don't have it already:*
 ```
