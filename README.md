@@ -40,7 +40,7 @@ wget --no-check-certificate -O /etc/avahi/services/http.service https://raw.gith
 avahi-daemon --reload
 ```
 
-**For Other Arduino Yun Compatiables:**
+**For Other Arduino Yun Compatibles:**
 
 *You may need to setup Avahi if you don't have it already:*
 ```
