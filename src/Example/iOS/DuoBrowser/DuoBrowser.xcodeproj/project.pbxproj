@@ -210,7 +210,7 @@
 				TargetAttributes = {
 					1FEB96421DE95EF600D98443 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = ZG5MN8MJ6A;
+						DevelopmentTeam = 928652TY3Y;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -412,10 +412,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZG5MN8MJ6A;
+				DEVELOPMENT_TEAM = 928652TY3Y;
 				INFOPLIST_FILE = DuoBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mediatek.DuoBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = vg.vox.DuoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -424,10 +424,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZG5MN8MJ6A;
+				DEVELOPMENT_TEAM = 928652TY3Y;
 				INFOPLIST_FILE = DuoBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mediatek.DuoBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = vg.vox.DuoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
