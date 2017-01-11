@@ -26,6 +26,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef enum : uint8_t {
     DuoUINone  = 0,
@@ -45,6 +46,7 @@ typedef enum : uint8_t {
 @property (nonatomic)       double          value;
 @property (nonatomic)       double          minimumValue;
 @property (nonatomic)       double          maximumValue;
+@property (nonatomic, copy) UIColor         *color;
 @property (nonatomic)       NSTimeInterval  reloadInterval;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;

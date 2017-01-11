@@ -31,6 +31,11 @@ wget --no-check-certificate -O /etc/avahi/services/duokit.service https://raw.gi
 avahi-daemon --reload
 ```
 
+*If you get `wget: can't execute 'openssl': No such file or directory` error:*
+```
+opkg install wget ca-certificates
+```
+
 **For LinkIt 7688 Duo:**
 
 *Make sure you have firmware version v0.9.4 or higher to prevent network issues.*

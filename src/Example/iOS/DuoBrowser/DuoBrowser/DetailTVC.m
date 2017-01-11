@@ -82,6 +82,7 @@
             cell.textLabel.text = ui.name;
             cell.duo = _duo;
             cell.pin = ui.pin;
+            if (ui.color) cell.pinSwitch.onTintColor = ui.color;
             [cell.pinSwitch setOn:ui.value animated:YES];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [cell setReloadInterval:ui.reloadInterval];
@@ -112,6 +113,7 @@
             cell.title.text = ui.name;
             cell.duo = _duo;
             cell.key = ui.key;
+            if (ui.color) cell.slider.tintColor = ui.color;
             cell.slider.maximumValue = ui.maximumValue;
             cell.slider.minimumValue = ui.minimumValue;
             cell.slider.value = ui.value;
