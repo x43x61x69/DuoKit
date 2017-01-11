@@ -1,14 +1,12 @@
 DuoKit
 ======
 
-A Bonjour based solution for **Arduino Yun** a-likes.
+A Bonjour based solution for **Arduino Yún** a-likes.
 
 ![Preview](preview.gif)
 
 Install
 -------
-
-*Make sure you have firmware version v0.9.4 or higher to prevent network issues.*
 
 **Arduino Library:**
 
@@ -21,10 +19,12 @@ Install
 ln -s lib/Arduino/DuoKit ~/Documents/Arduino/libraries/DuoKit
 ```
 
-**For Arduino Yun:**
+**For Arduino Yún:**
 
-- Set **REST API Access** to **Open** in WebUI on your Arduino Yun before using this example.
-- SSH into your Arduino Yun via `ssh root@arduino.local`.
+*Make sure you have firmware version v1.5.3 or higher to prevent network issues.*
+
+- Set **REST API Access** to **Open** in WebUI on your Arduino Yún before using this example.
+- SSH into your Arduino Yún via `ssh root@arduino.local`.
 - Use the following command to add `_http._tcp` service to avahi-daemon:
 ```
 wget --no-check-certificate -O /etc/avahi/services/duokit.service https://raw.githubusercontent.com/x43x61x69/DuoKit/master/misc/avahi-service/duokit.service
@@ -33,6 +33,8 @@ avahi-daemon --reload
 
 **For LinkIt 7688 Duo:**
 
+*Make sure you have firmware version v0.9.4 or higher to prevent network issues.*
+
 Enable Yun Bridge on LinkIt 7688 Duo before use this library:
 ```
 uci set yunbridge.config.disabled='0'
@@ -40,7 +42,7 @@ uci commit
 reboot
 ```
 
-**For Other Arduino Yun Compatibles:**
+**For Other Arduino Yún Compatibles:**
 
 *You may need to setup Avahi if you don't have it already:*
 ```
