@@ -313,6 +313,12 @@ void DuoKit::layoutStatus(BridgeClient client)
                     j.concat(_layout[i].max);
                     client.print(j);
                 }
+                if (_layout[i].useColor) {
+                    String j;
+                    j.concat(",\"color\":");
+                    j.concat(_layout[i].color);
+                    client.print(j);
+                }
                 if (_layout[i].interval) {
                     String j;
                     j.concat(",\"interval\":");

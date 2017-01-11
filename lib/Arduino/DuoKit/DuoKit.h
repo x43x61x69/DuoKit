@@ -59,6 +59,8 @@ typedef struct __attribute__((packed))
     String      key;
     double      min;
     double      max;
+    bool        useColor;
+    uint32_t    color;
     double      interval;
 } DuoUI;
 

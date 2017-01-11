@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 #import "MTKDuoUI.h"
 
 @implementation MTKDuoUI
@@ -39,6 +41,7 @@
         self.value          = [decoder decodeDoubleForKey:@"value"];
         self.minimumValue   = [decoder decodeDoubleForKey:@"minimumValue"];
         self.maximumValue   = [decoder decodeDoubleForKey:@"maximumValue"];
+        self.color          = [decoder decodeObjectForKey:@"color"];
         self.reloadInterval = [decoder decodeDoubleForKey:@"reloadInterval"];
     }
     return self;
@@ -53,6 +56,7 @@
     [encoder encodeDouble:_value            forKey:@"value"];
     [encoder encodeDouble:_minimumValue     forKey:@"minimumValue"];
     [encoder encodeDouble:_maximumValue     forKey:@"maximumValue"];
+    [encoder encodeObject:_color            forKey:@"color"];
     [encoder encodeDouble:_reloadInterval   forKey:@"reloadInterval"];
 }
 
@@ -78,6 +82,8 @@
             self.minimumValue = [[dictionary objectForKey:@"min"] doubleValue];
         if ([dictionary objectForKey:@"max"])
             self.maximumValue = [[dictionary objectForKey:@"max"] doubleValue];
+        if ([dictionary objectForKey:@"color"])
+            self.color = UIColorFromRGB([[dictionary objectForKey:@"color"] integerValue]);
         if ([dictionary objectForKey:@"interval"])
             self.reloadInterval = [[dictionary objectForKey:@"interval"] doubleValue];
     }

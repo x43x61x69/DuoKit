@@ -35,9 +35,9 @@
 #define OBJECTS_LENGTH  3
 
 #define LED_OFF     0xFF
-#define GREEN_PIN   9
+#define RED_PIN     9
 #define BLUE_PIN    10
-#define RED_PIN     11
+#define GREEN_PIN   11
 
 #include <DuoKit.h>
 
@@ -50,8 +50,20 @@ double r = 0;
 double g = 0;
 double b = 0;
 
+uint8_t _r = 0;
+uint8_t _g = 0;
+uint8_t _b = 0;
+
 void setup()
 {
+    //
+    // Initialize with a random color.
+    //
+    randomSeed(analogRead(0));
+    r = _r = random(LED_OFF);
+    g = _g = random(LED_OFF);
+    b = _b = random(LED_OFF);
+
     //
     // Initialize LED module.
     //
@@ -60,24 +72,23 @@ void setup()
     pinMode(GREEN_PIN,  OUTPUT);
 
     //
-    // Turn RGB LED Module off.
+    // Turn off RGB LED color.
     //
     analogWrite(RED_PIN,    LED_OFF);
     analogWrite(GREEN_PIN,  LED_OFF);
     analogWrite(BLUE_PIN,   LED_OFF);
 
     //
-    // Initialize with a random color.
-    //
-    randomSeed(analogRead(0));
-    r = random(LED_OFF);
-    g = random(LED_OFF);
-    b = random(LED_OFF);
-
-    //
     // Initialize DuoKit.
     //
     duokit.begin();
+
+    //
+    // Change RGB LED color.
+    //
+    analogWrite(RED_PIN,    _r);
+    analogWrite(GREEN_PIN,  _g);
+    analogWrite(BLUE_PIN,   _b);
 
     //
     // Setup layout profile name.
@@ -95,11 +106,11 @@ void setup()
     //
     // Setup layouts.
     //
-    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,          0};
-    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,          10};
-    layout[2] = {DuoUISlider,       "Red",              0,   "r",       0,  LED_OFF,    10};
-    layout[3] = {DuoUISlider,       "Green",            0,   "g",       0,  LED_OFF,    10};
-    layout[4] = {DuoUISlider,       "Blue",             0,   "b",       0,  LED_OFF,    10};
+    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,          false,  0,          0};
+    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,          true,   0xFF5B37,   10};
+    layout[2] = {DuoUISlider,       "Red",              0,   "r",       0,  LED_OFF,    true,   0xFF3B30,   10};
+    layout[3] = {DuoUISlider,       "Green",            0,   "g",       0,  LED_OFF,    true,   0x0BD318,   10};
+    layout[4] = {DuoUISlider,       "Blue",             0,   "b",       0,  LED_OFF,    true,   0x1D62F0,   10};
     duokit.setLayout(layout, LAYOUT_LENGTH);
 }
 
@@ -110,19 +121,19 @@ void loop()
     //
     // Transition r, g, b values to user selection.
     //
-    ledWrite(RED_PIN,    int(r));
-    ledWrite(GREEN_PIN,  int(g));
-    ledWrite(BLUE_PIN,   int(b));
-
-    delay(3);
+    ledTransition(RED_PIN,   &_r,  LED_OFF - int(r));
+    ledTransition(GREEN_PIN, &_g,  LED_OFF - int(g));
+    ledTransition(BLUE_PIN,  &_b,  LED_OFF - int(b));
 }
 
-void ledWrite(const uint8_t pin, const uint8_t value)
+void ledTransition(const uint8_t pin, uint8_t *current, const uint8_t value)
 {
-    uint8_t current = analogRead(pin);
-    if (current > value) {
-        analogWrite(pin, --current);
-    } else if (current < value) {
-        analogWrite(pin, ++current);
+    if (*current > value) {
+        *current -= 1;
+    } else if (*current < value) {
+        *current += 1;
+    } else {
+      return;
     }
+    analogWrite(pin, *current);
 }
