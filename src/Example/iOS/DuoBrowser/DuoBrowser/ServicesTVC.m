@@ -71,6 +71,7 @@
     [duo isDeviceReadyWithApi:kDuoKitMinVersion
             completionHandler:^(NSInteger api,
                                 BOOL isReady,
+                                NSString *profile,
                                 NSArray *layouts,
                                 NSString *errorMessage) {
                 if (isReady) {
@@ -81,6 +82,9 @@
                         if (ui) {
                             [layoutArray addObject:ui];
                         }
+                    }
+                    if (profile) {
+                        duo.profile = profile;
                     }
                     if (layoutArray.count) {
                         duo.layout = layoutArray;
@@ -114,7 +118,7 @@
         MTKDuo *duo = (MTKDuo *)sender;
         DetailTVC *vc = (DetailTVC *)segue.destinationViewController;
         vc.duo = duo;
-        vc.navigationItem.title = duo.name;
+        vc.navigationItem.title = duo.profile ? duo.profile : duo.name;
     }
 }
 

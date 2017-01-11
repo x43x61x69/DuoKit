@@ -62,13 +62,14 @@ typedef enum : int8_t {
 @property (nonatomic, copy)     NSString            *path;
 @property (nonatomic, copy)     NSString            *user;
 @property (nonatomic, copy)     NSString            *password;
+@property (nonatomic, copy)     NSString            *profile;
 @property (nonatomic, copy)     NSArray<MTKDuoUI *> *layout;
 
 @property (nonatomic) NSInteger port;
 
 - (instancetype)initWithService:(NSNetService *)service;
 + (NSString *)stringFromTXTDict:(NSDictionary *)dict withKey:(NSString *)key;
-- (void)isDeviceReadyWithApi:(NSInteger)apiVersion completionHandler:(void (^)(NSInteger api, BOOL isReady, NSArray *layout, NSString *errorMessage))completionHandler;
+- (void)isDeviceReadyWithApi:(NSInteger)apiVersion completionHandler:(void (^)(NSInteger api, BOOL isReady, NSString *profile, NSArray *layout, NSString *errorMessage))completionHandler;
 - (void)setPinType:(DuoSetPinType)type pin:(DuoPin)pin value:(DuoPinValue)value completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, DuoPinMode mode, NSString *result, NSError *error))completionHandler;
 - (void)readDigitalPin:(DuoPin)pin completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, DuoPinMode mode, NSString *result, NSError *error))completionHandler;
 - (void)readAnalogPin:(DuoPin)pin completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, NSString *result, NSError *error))completionHandler;

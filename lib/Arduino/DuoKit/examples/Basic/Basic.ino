@@ -23,16 +23,9 @@
 
  ------------------------------------------------------------------------------
 
- For LinkIt 7688 Duo:
+ Setup your device before you begin, see:
 
- Enable Yun Bridge on your LinkIt 7688 Duo before use this example:
- uci set yunbridge.config.disabled='0' && uci commit && reboot
-
- ------------------------------------------------------------------------------
-
- For Arduino Yun:
-
- Set REST API Access to "Open" on your Arduino Yun before use this example.
+ https://github.com/x43x61x69/DuoKit
 
  ------------------------------------------------------------------------------
 
@@ -63,6 +56,11 @@ double fixed = 1337;
 void setup()
 {
     duokit.begin();
+
+    //
+    // Setup layout profile name.
+    //
+    duokit.layoutProfile = "Basic Controller";
 
     //
     // Setup variable pointers:

@@ -45,6 +45,7 @@
 #define kVersion        @"version"
 #define kCount          @"count"
 #define kKeys           @"keys"
+#define kProfile        @"profile"
 #define kLayout         @"layout"
 
 #import "MTKDuo.h"
@@ -65,8 +66,9 @@
         self.path           = [decoder decodeObjectForKey:@"path"];
         self.user           = [decoder decodeObjectForKey:@"user"];
         self.password       = [decoder decodeObjectForKey:@"password"];
-        
         self.port           = [decoder decodeIntegerForKey:@"port"];
+        self.profile        = [decoder decodeObjectForKey:@"profile"];
+        self.layout         = [decoder decodeObjectForKey:@"layout"];
     }
     return self;
 }
@@ -83,8 +85,9 @@
     [encoder encodeObject:_path         forKey:@"path"];
     [encoder encodeObject:_user         forKey:@"user"];
     [encoder encodeObject:_password     forKey:@"password"];
-    
     [encoder encodeInteger:_port        forKey:@"port"];
+    [encoder encodeObject:_profile      forKey:@"profile"];
+    [encoder encodeObject:_layout       forKey:@"layout"];
 }
 
 - (instancetype)initWithService:(NSNetService *)service
@@ -156,7 +159,7 @@
 
 #pragma mark - RESTful API
 #pragma mark Ping
-- (void)isDeviceReadyWithApi:(NSInteger)apiVersion completionHandler:(void (^)(NSInteger api, BOOL isReady, NSArray *layout, NSString *errorMessage))completionHandler
+- (void)isDeviceReadyWithApi:(NSInteger)apiVersion completionHandler:(void (^)(NSInteger api, BOOL isReady, NSString *profile, NSArray *layout, NSString *errorMessage))completionHandler
 {
     [self commandWithPath:kPingCommand
         completionHandler:^(NSInteger api,
@@ -166,9 +169,10 @@
      {
          if (status) {
              BOOL apiCheck = apiVersion >= api;
+             NSString *profile = [result objectForKey:kProfile];
              NSArray *layouts = [result objectForKey:kLayout];
              dispatch_async(dispatch_get_main_queue(),^{
-                 completionHandler(api, status && apiCheck, layouts, !apiCheck ? @"Please update your client library to use with this code." : nil);
+                 completionHandler(api, status && apiCheck, profile, layouts, !apiCheck ? @"Please update your client library to use with this code." : nil);
              });
          } else {
              NSString *message;
@@ -178,7 +182,7 @@
                  message = [result objectForKey:kMessage];
              }
              dispatch_async(dispatch_get_main_queue(),^{
-                 completionHandler(api, status, nil, message);
+                 completionHandler(api, status, nil, nil, message);
              });
          }
      }];

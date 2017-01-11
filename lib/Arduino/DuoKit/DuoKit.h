@@ -65,6 +65,7 @@ typedef struct __attribute__((packed))
 class DuoKit
 {
 public:
+    String layoutProfile;
     BridgeServer server;
     DuoKit(uint32_t serialPort = 0, bool indicator = false);
     void begin(bool shouldWaitForSerial = false);

@@ -36,7 +36,7 @@ reboot
 - SSH into your Arduino Yun via `ssh root@arduino.local`.
 - Use the following command to add `_http._tcp` service to avahi-daemon:
 ```
-wget --no-check-certificate -O /etc/avahi/services/http.service https://raw.githubusercontent.com/x43x61x69/DuoKit/master/misc/avahi-service/http.service
+wget --no-check-certificate -O /etc/avahi/services/duokit.service https://raw.githubusercontent.com/x43x61x69/DuoKit/master/misc/avahi-service/duokit.service
 avahi-daemon --reload
 ```
 
@@ -98,6 +98,7 @@ Example
  pre-defined UI settings.
 - Xcode 8.0 or above is required.
 - See `/src/Example/iOS/DuoBrowser/DuoBrowser.xcworkspace`.
+- For pre-compiled binaries, please check out: https://github.com/x43x61x69/DuoKit/releases.
 
 License
 -------
