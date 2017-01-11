@@ -1,7 +1,7 @@
 DuoKit
 ======
 
-A Bonjour based solution for **MediaTek LinkIt 7688 Duo** and **Arduino Yun** a-likes.
+A Bonjour based solution for **Arduino Yun** a-likes.
 
 ![Preview](preview.gif)
 
@@ -21,15 +21,6 @@ Install
 ln -s lib/Arduino/DuoKit ~/Documents/Arduino/libraries/DuoKit
 ```
 
-**For LinkIt 7688 Duo:**
-
-Enable Yun Bridge on LinkIt 7688 Duo before use this library:
-```
-uci set yunbridge.config.disabled='0'
-uci commit
-reboot
-```
-
 **For Arduino Yun:**
 
 - Set **REST API Access** to **Open** in WebUI on your Arduino Yun before using this example.
@@ -38,6 +29,15 @@ reboot
 ```
 wget --no-check-certificate -O /etc/avahi/services/duokit.service https://raw.githubusercontent.com/x43x61x69/DuoKit/master/misc/avahi-service/duokit.service
 avahi-daemon --reload
+```
+
+**For LinkIt 7688 Duo:**
+
+Enable Yun Bridge on LinkIt 7688 Duo before use this library:
+```
+uci set yunbridge.config.disabled='0'
+uci commit
+reboot
 ```
 
 **For Other Arduino Yun Compatibles:**
@@ -105,7 +105,7 @@ License
 
 The MIT License (MIT)
 
-Copyright © 2017 Zhi-Wei Cai (MediaTek Inc.). All rights reserved.
+Copyright © 2017 Zhi-Wei Cai. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
