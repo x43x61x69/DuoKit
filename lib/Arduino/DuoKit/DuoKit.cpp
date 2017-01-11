@@ -324,6 +324,10 @@ void DuoKit::layoutStatus(BridgeClient client)
             count++;
         }
         client.print("],");
+        if (layoutProfile != "") {
+            client.print(keyPair("profile", layoutProfile, true));
+            client.print(",");
+        }
         client.print(keyPair("count", String(count), false));
         client.print(",");
     }

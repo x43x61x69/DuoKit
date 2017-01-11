@@ -18,3 +18,4 @@ valueForKey         KEYWORD2
 setValueForKey      KEYWORD2
 updateValueForKey   KEYWORD2
 removeValueForKey   KEYWORD2
+layoutProfile       KEYWORD2

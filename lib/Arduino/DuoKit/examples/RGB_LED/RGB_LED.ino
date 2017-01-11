@@ -23,16 +23,9 @@
 
  ------------------------------------------------------------------------------
 
- For LinkIt 7688 Duo:
+ Setup your device before you begin, see:
 
- Enable Yun Bridge on your LinkIt 7688 Duo before use this example:
- uci set yunbridge.config.disabled='0' && uci commit && reboot
-
- ------------------------------------------------------------------------------
-
- For Arduino Yun:
-
- Set REST API Access to "Open" on your Arduino Yun before use this example.
+ https://github.com/x43x61x69/DuoKit
 
  ------------------------------------------------------------------------------
 
@@ -59,6 +52,9 @@ double b = 0;
 
 void setup()
 {
+    //
+    // Initialize LED module.
+    //
     pinMode(RED_PIN,    OUTPUT);
     pinMode(BLUE_PIN,   OUTPUT);
     pinMode(GREEN_PIN,  OUTPUT);
@@ -83,16 +79,27 @@ void setup()
     //
     duokit.begin();
 
+    //
+    // Setup layout profile name.
+    //
+    duokit.layoutProfile = "RGB LED Contorller";
+
+    //
+    // Setup object pointers.
+    //
     objects[0] = {"r", &r};
     objects[1] = {"g", &g};
     objects[2] = {"b", &b};
     duokit.setObjetcs(objects, OBJECTS_LENGTH);
 
-    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,      0};
-    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,      10};
-    layout[2] = {DuoUISlider,       "LED - Red",        0,   "r",       0,  255,    10};
-    layout[3] = {DuoUISlider,       "LED - Green",      0,   "g",       0,  255,    10};
-    layout[4] = {DuoUISlider,       "LED - Blue",       0,   "b",       0,  255,    10};
+    //
+    // Setup layouts.
+    //
+    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,          0};
+    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,          10};
+    layout[2] = {DuoUISlider,       "Red",              0,   "r",       0,  LED_OFF,    10};
+    layout[3] = {DuoUISlider,       "Green",            0,   "g",       0,  LED_OFF,    10};
+    layout[4] = {DuoUISlider,       "Blue",             0,   "b",       0,  LED_OFF,    10};
     duokit.setLayout(layout, LAYOUT_LENGTH);
 }
 
@@ -100,6 +107,9 @@ void loop()
 {
     duokit.loop();
 
+    //
+    // Transition r, g, b values to user selection.
+    //
     ledWrite(RED_PIN,    int(r));
     ledWrite(GREEN_PIN,  int(g));
     ledWrite(BLUE_PIN,   int(b));
