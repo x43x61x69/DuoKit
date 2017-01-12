@@ -25,7 +25,7 @@
 #ifndef DUOKIT_H
 #define DUOKIT_H
 
-#define DUOKIT_VERSION          "1.0.1"
+#define DUOKIT_VERSION          "1.0.3"
 #define DUOKIT_API_VERSION      2
 #define DUOKIT_INPUT            0x0
 #define DUOKIT_OUTPUT           0x1

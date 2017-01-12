@@ -19,3 +19,12 @@ setValueForKey      KEYWORD2
 updateValueForKey   KEYWORD2
 removeValueForKey   KEYWORD2
 layoutProfile       KEYWORD2
+type                KEYWORD2
+name                KEYWORD2
+pin                 KEYWORD2
+key                 KEYWORD2
+min                 KEYWORD2
+max                 KEYWORD2
+useColor            KEYWORD2
+color               KEYWORD2
+interval            KEYWORD2

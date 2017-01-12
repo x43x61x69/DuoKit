@@ -34,7 +34,11 @@
 #define LAYOUT_LENGTH   5
 #define OBJECTS_LENGTH  3
 
-#define LED_OFF     0xFF
+#define LED_MAX     0xFF
+#define CommonAnodeRGB(value)   LED_MAX - int(value)
+#define CommonCathodeRGB(value) int(value)
+
+#define LED_OFF     LED_MAX
 #define RED_PIN     9
 #define BLUE_PIN    10
 #define GREEN_PIN   11
@@ -60,16 +64,9 @@ void setup()
     // Initialize with a random color.
     //
     randomSeed(analogRead(0));
-    r = _r = random(LED_OFF);
-    g = _g = random(LED_OFF);
-    b = _b = random(LED_OFF);
-
-    //
-    // Initialize LED module.
-    //
-    pinMode(RED_PIN,    OUTPUT);
-    pinMode(BLUE_PIN,   OUTPUT);
-    pinMode(GREEN_PIN,  OUTPUT);
+    r = _r = random(LED_MAX);
+    g = _g = random(LED_MAX);
+    b = _b = random(LED_MAX);
 
     //
     // Turn off RGB LED color.
@@ -77,6 +74,13 @@ void setup()
     analogWrite(RED_PIN,    LED_OFF);
     analogWrite(GREEN_PIN,  LED_OFF);
     analogWrite(BLUE_PIN,   LED_OFF);
+
+    //
+    // Initialize LED module.
+    //
+    pinMode(RED_PIN,    OUTPUT);
+    pinMode(BLUE_PIN,   OUTPUT);
+    pinMode(GREEN_PIN,  OUTPUT);
 
     //
     // Initialize DuoKit.
@@ -108,9 +112,9 @@ void setup()
     //
     layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,          false,  0,          0};
     layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,          true,   0xFF5B37,   10};
-    layout[2] = {DuoUISlider,       "Red",              0,   "r",       0,  LED_OFF,    true,   0xFF3B30,   10};
-    layout[3] = {DuoUISlider,       "Green",            0,   "g",       0,  LED_OFF,    true,   0x0BD318,   10};
-    layout[4] = {DuoUISlider,       "Blue",             0,   "b",       0,  LED_OFF,    true,   0x1D62F0,   10};
+    layout[2] = {DuoUISlider,       "Red",              0,   "r",       0,  LED_MAX,    true,   0xFF3B30,   10};
+    layout[3] = {DuoUISlider,       "Green",            0,   "g",       0,  LED_MAX,    true,   0x0BD318,   10};
+    layout[4] = {DuoUISlider,       "Blue",             0,   "b",       0,  LED_MAX,    true,   0x1D62F0,   10};
     duokit.setLayout(layout, LAYOUT_LENGTH);
 }
 
@@ -120,10 +124,11 @@ void loop()
 
     //
     // Transition r, g, b values to user selection.
+    // Use "CommonCathodeRGB()" if you have a common cathode LED.
     //
-    ledTransition(RED_PIN,   &_r,  LED_OFF - int(r));
-    ledTransition(GREEN_PIN, &_g,  LED_OFF - int(g));
-    ledTransition(BLUE_PIN,  &_b,  LED_OFF - int(b));
+    ledTransition(RED_PIN,   &_r,  CommonAnodeRGB(r));
+    ledTransition(GREEN_PIN, &_g,  CommonAnodeRGB(g));
+    ledTransition(BLUE_PIN,  &_b,  CommonAnodeRGB(b));
 }
 
 void ledTransition(const uint8_t pin, uint8_t *current, const uint8_t value)
