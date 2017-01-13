@@ -33,6 +33,7 @@ avahi-daemon --reload
 
 *If you get `wget: can't execute 'openssl': No such file or directory` error:*
 ```
+opkg update
 opkg install wget ca-certificates
 ```
 
