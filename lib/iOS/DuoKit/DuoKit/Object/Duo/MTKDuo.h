@@ -73,9 +73,9 @@ typedef enum : int8_t {
 - (void)setPinType:(DuoSetPinType)type pin:(DuoPin)pin value:(DuoPinValue)value completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, DuoPinMode mode, NSString *result, NSError *error))completionHandler;
 - (void)readDigitalPin:(DuoPin)pin completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, DuoPinMode mode, NSString *result, NSError *error))completionHandler;
 - (void)readAnalogPin:(DuoPin)pin completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, NSString *result, NSError *error))completionHandler;
-- (void)readValueWithKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *result, NSError *error))completionHandler;
+- (void)readValueWithKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *stringValue, NSString *result, NSError *error))completionHandler;
 - (void)listKeysWithCompletionHandler:(void (^)(NSInteger api, BOOL status, NSInteger count, NSArray *keys, NSError *error))completionHandler;
-- (void)updateValue:(double)value withKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *result, NSError *error))completionHandler;
+- (void)updateValue:(double)value stringValue:(NSString *)stringValue withKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *stringValue, NSString *result, NSError *error))completionHandler;
 - (void)removeKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, NSString *result, NSError *error))completionHandler;
 
 @end

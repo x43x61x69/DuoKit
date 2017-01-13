@@ -102,19 +102,59 @@ void setup()
     //
     // Setup object pointers.
     //
-    objects[0] = {"r", &r};
-    objects[1] = {"g", &g};
-    objects[2] = {"b", &b};
+    objects[0].type         = DuoDoubleType;
+    objects[0].name         = "r";
+    objects[0].doublePtr    = &r;
+
+    objects[1].type         = DuoDoubleType;
+    objects[1].name         = "g";
+    objects[1].doublePtr    = &g;
+
+    objects[2].type         = DuoDoubleType;
+    objects[2].name         = "b";
+    objects[2].doublePtr    = &b;
+
+
     duokit.setObjetcs(objects, OBJECTS_LENGTH);
 
     //
     // Setup layouts.
     //
-    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,          false,  0,          0};
-    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,          true,   0xFF5B37,   10};
-    layout[2] = {DuoUISlider,       "Red",              0,   "r",       0,  LED_MAX,    true,   0xFF3B30,   10};
-    layout[3] = {DuoUISlider,       "Green",            0,   "g",       0,  LED_MAX,    true,   0x0BD318,   10};
-    layout[4] = {DuoUISlider,       "Blue",             0,   "b",       0,  LED_MAX,    true,   0x1D62F0,   10};
+    layout[0].type      = DuoUIWebUI;
+    layout[0].name      = "Access WebUI";
+
+    layout[1].type      = DuoUISwitch;
+    layout[1].name      = "Built-in LED";
+    layout[1].pin       = 13;
+    layout[1].interval  = 10;
+
+    layout[2].type      = DuoUISlider;
+    layout[2].name      = "Red";
+    layout[2].key       = "r";
+    layout[2].min       = 0;
+    layout[2].max       = LED_MAX;
+    layout[2].useColor  = true;
+    layout[2].color     = 0xFF3B30;
+    layout[2].interval  = 10;
+
+    layout[3].type      = DuoUISlider;
+    layout[3].name      = "Green";
+    layout[3].key       = "g";
+    layout[3].min       = 0;
+    layout[3].max       = LED_MAX;
+    layout[3].useColor  = true;
+    layout[3].color     = 0x0BD318;
+    layout[3].interval  = 10;
+
+    layout[4].type      = DuoUISlider;
+    layout[4].name      = "Blue";
+    layout[4].key       = "b";
+    layout[4].min       = 0;
+    layout[4].max       = LED_MAX;
+    layout[4].useColor  = true;
+    layout[4].color     = 0x1D62F0;
+    layout[4].interval  = 10;
+
     duokit.setLayout(layout, LAYOUT_LENGTH);
 }
 

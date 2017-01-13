@@ -40,6 +40,7 @@
 #define kRemoveCommand  @"remove"
 #define kPin            @"pin"
 #define kValue          @"value"
+#define kValueType      @"valueType"
 #define kMode           @"mode"
 #define kMessage        @"message"
 #define kVersion        @"version"
@@ -303,7 +304,7 @@
 }
 
 #pragma mark Read Value
-- (void)readValueWithKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *result, NSError *error))completionHandler
+- (void)readValueWithKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *stringValue, NSString *result, NSError *error))completionHandler
 {
     NSString *path = [NSString stringWithFormat:kReadCommand @"/%@",
                       key];
@@ -315,14 +316,30 @@
                             NSError *error)
      {
          if (status) {
-             double value = [[result objectForKey:kValue] doubleValue];
-             completionHandler(api, status, value, nil, nil);
+             DuoObjectType type = [[result objectForKey:kValueType] integerValue];
+             switch (type) {
+                 case DuoIntType:
+                 case DuoDoubleType: {
+                     double _value = [[result objectForKey:kValue] doubleValue];
+                     completionHandler(api, status, _value, nil, nil, nil);
+                     break;
+                 }
+                 case DuoStringType: {
+                     NSString *_value = [result objectForKey:kValue];
+                     completionHandler(api, status, 0, _value, nil, nil);
+                     break;
+                 }
+                 default: {
+                     completionHandler(api, status, 0, nil, nil, nil);
+                     break;
+                 }
+             }
          } else {
              if (result) {
                  NSString *message = [result objectForKey:kMessage];
-                 completionHandler(api, status, 0, message, error);
+                 completionHandler(api, status, 0, nil, message, error);
              } else {
-                 completionHandler(api, status, 0, nil, error);
+                 completionHandler(api, status, 0, nil, nil, error);
              }
          }
      }];
@@ -348,11 +365,20 @@
 }
 
 #pragma mark Update Value
-- (void)updateValue:(double)value withKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *result, NSError *error))completionHandler
+- (void)updateValue:(double)value stringValue:(NSString *)stringValue withKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *stringValue, NSString *result, NSError *error))completionHandler
 {
-    NSString *path = [NSString stringWithFormat:kUpdateCommand @"/%@/%.2f",
+    NSData *stringData;
+    if (stringValue) {
+        stringData = [stringValue dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:NO];
+    }
+    NSString *path = [NSString stringWithFormat:kUpdateCommand @"/%@/%@",
                       key,
-                      value];
+                      stringValue ? stringData ? [NSString stringWithFormat:@"%ld/%@",
+                                                  stringData.length,
+                                                  [stringData base64EncodedStringWithOptions:0]] : @"" :
+                      [NSString stringWithFormat:@"%.*f", 2, value]];
+    
+    NSLog(@"%s: %@", __PRETTY_FUNCTION__, path);
     
     [self commandWithPath:path
         completionHandler:^(NSInteger api,
@@ -361,14 +387,30 @@
                             NSError *error)
      {
          if (status) {
-             double value = [[result objectForKey:kValue] doubleValue];
-             completionHandler(api, status, value, nil, nil);
+             DuoObjectType type = [[result objectForKey:kValueType] integerValue];
+             switch (type) {
+                 case DuoIntType:
+                 case DuoDoubleType: {
+                     double _value = [[result objectForKey:kValue] doubleValue];
+                     completionHandler(api, status, _value, nil, nil, nil);
+                     break;
+                 }
+                 case DuoStringType: {
+                     NSString *_value = [result objectForKey:kValue];
+                     completionHandler(api, status, 0, _value, nil, nil);
+                     break;
+                 }
+                 default: {
+                     completionHandler(api, status, 0, nil, nil, nil);
+                     break;
+                 }
+             }
          } else {
              if (result) {
                  NSString *message = [result objectForKey:kMessage];
-                 completionHandler(api, status, 0, message, error);
+                 completionHandler(api, status, 0, nil, message, error);
              } else {
-                 completionHandler(0, status, 0, nil, error);
+                 completionHandler(0, status, 0, nil, nil, error);
              }
          }
      }];
@@ -418,9 +460,17 @@
                                                                     options:NSJSONReadingMutableContainers
                                                                       error:&err];
              if (err) {
-                 dispatch_async(dispatch_get_main_queue(),^{
-                     completionHandler(0, NO, @{kMessage : [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]}, err);
-                 });
+                 NSString *e = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                 if ([e hasPrefix:@"Could not connect to YunServer"]) {
+                     dispatch_async(dispatch_get_main_queue(),^{
+                         completionHandler(0, NO, @{kMessage : @"Bridge was not available. Please make sure you have setup YunBridge  correctly and wait until both MPU and MCU were fully initialized."}, nil);
+                     });
+                 } else {
+                     NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                     dispatch_async(dispatch_get_main_queue(),^{
+                         completionHandler(0, NO, @{kMessage : message ? message : @"Error"}, err);
+                     });
+                 }
              } else {
                  NSInteger api = [[result objectForKey:kApi] integerValue];
                  BOOL status = [[result objectForKey:kStatus] isEqualToString:kOK];

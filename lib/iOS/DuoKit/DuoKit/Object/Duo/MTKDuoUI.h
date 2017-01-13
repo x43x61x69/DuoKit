@@ -37,6 +37,13 @@ typedef enum : uint8_t {
     DuoUISlider
 } DuoUIType;
 
+typedef enum : uint8_t {
+    DuoNoneType  = 0,
+    DuoIntType,
+    DuoDoubleType,
+    DuoStringType
+} DuoObjectType;
+
 @interface MTKDuoUI : NSObject
 
 @property (nonatomic)       DuoUIType       type;
@@ -44,6 +51,8 @@ typedef enum : uint8_t {
 @property (nonatomic)       NSInteger       pin;
 @property (nonatomic, copy) NSString        *key;
 @property (nonatomic)       double          value;
+@property (nonatomic, copy) NSString        *stringValue;
+@property (nonatomic)       DuoObjectType   valueType;
 @property (nonatomic)       double          minimumValue;
 @property (nonatomic)       double          maximumValue;
 @property (nonatomic, copy) UIColor         *color;

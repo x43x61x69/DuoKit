@@ -70,6 +70,7 @@
          completionHandler:^(NSInteger api,
                              BOOL status,
                              double value,
+                             NSString *stringValue,
                              NSString *result,
                              NSError *error)
      {
@@ -88,7 +89,7 @@
              });
          } else {
              if (error) {
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
              } else {
                  NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
              }
@@ -102,10 +103,12 @@
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
         [_duo updateValue:_slider.value
+              stringValue:nil
                   withKey:_key
         completionHandler:^(NSInteger api,
                             BOOL status,
                             double value,
+                            NSString *stringValue,
                             NSString *result,
                             NSError *error)
          {
@@ -124,7 +127,7 @@
              } else {
                  
                  if (error) {
-                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
                  }

@@ -17,8 +17,8 @@ blink               KEYWORD2
 server              KEYWORD2
 setLayout           KEYWORD2
 setObjetcs          KEYWORD2
-valueForKey         KEYWORD2
-setValueForKey      KEYWORD2
+objectForKey        KEYWORD2
+setObjectForKey     KEYWORD2
 updateValueForKey   KEYWORD2
 removeValueForKey   KEYWORD2
 layoutProfile       KEYWORD2
@@ -31,3 +31,6 @@ max                 KEYWORD2
 useColor            KEYWORD2
 color               KEYWORD2
 interval            KEYWORD2
+intPtr              KEYWORD2
+doublePtr           KEYWORD2
+stringPtr           KEYWORD2

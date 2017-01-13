@@ -36,8 +36,8 @@
 // test your layout/object settings with ping/read command before you deploy
 // your sketch.
 //
-#define LAYOUT_LENGTH   5
-#define OBJECTS_LENGTH  2
+#define LAYOUT_LENGTH   6
+#define OBJECTS_LENGTH  3
 
 #include <DuoKit.h>
 
@@ -45,13 +45,14 @@
 // Use "duokit(SERIAL_PORT_NUM)" to initialize a DuoKit object. Simply use
 // "duokit" if you don't need the serial output.
 //
-DuoKit duokit(9600);
+DuoKit duokit;
 
 DuoUI layout[LAYOUT_LENGTH];
 DuoObject objects[OBJECTS_LENGTH];
 
 double count = 0;
-double fixed = 1337;
+int fixed = 1337;
+String str = "I\'m a String!";
 
 void setup()
 {
@@ -66,10 +67,19 @@ void setup()
     // Setup variable pointers:
     // Format: {VAR_KEY_NAME, VAR_POINTER}
     // - VAR_KEY_NAME: A String object that will be referencing to the variable.
-    // - VAR_POINTER: A memory pointer that points to the variable (as double).
+    // - VAR_POINTER: A memory pointer that points to the variable. (.intPtr, .doublePtr, .stringPtr)
     //
-    objects[0] = {"count", &count};
-    objects[1] = {"fixed", &fixed};
+    objects[0].type         = DuoDoubleType;
+    objects[0].name         = "count";
+    objects[0].doublePtr    = &count;
+
+    objects[1].type         = DuoIntType;
+    objects[1].name         = "fixed";
+    objects[1].intPtr       = &fixed;
+
+    objects[2].type         = DuoStringType;
+    objects[2].name         = "str";
+    objects[2].stringPtr    = &str;
 
     //
     // Setup the DuoKit object with "duokit.setObjetcs(OBJECTS_ARRAY, OBJECTS_LENGTH)".
@@ -85,13 +95,37 @@ void setup()
     // - DuoUISwitch: Setup a switch for a pin. VAR_KEY_NAME, SLIDER_MIN and SLIDER_MAX will be ignored.
     // - DuoUIValueSetter: Setup a setter for a variable. PIN_NUM, SLIDER_MIN, SLIDER_MAX, USE_COLOR and COLOR will be ignored.
     // - DuoUIValueGetter: Setup a getter for a variable. PIN_NUM, SLIDER_MIN, SLIDER_MAX, USE_COLOR and COLOR will be ignored.
-    // - DuoUISlider: Setup a slider for a variable. PIN_NUM will be ignored.
+    // - DuoUISlider: Setup a slider for an analog pin or a variable. If PIN_NUM was provided, VAR_KEY_NAME will be ignored.
     //
-    layout[0] = {DuoUIWebUI,        "Access WebUI",     0,   "",        0,  0,      false,  0,          0};
-    layout[1] = {DuoUISwitch,       "Built-in LED",     13,  "",        0,  0,      true,   0xFF5B37,   10};
-    layout[2] = {DuoUIValueSetter,  "This is count",    0,   "count",   0,  0,      false,  0,          10};
-    layout[3] = {DuoUIValueGetter,  "This is fixed",    0,   "fixed",   0,  0,      false,  0,          10};
-    layout[4] = {DuoUISlider,       "Slider for fixed", 0,   "fixed",   0,  9999,   true,   0xF2BC00,   10};
+    layout[0].type      = DuoUIWebUI;
+    layout[0].name      = "Access WebUI";
+
+    layout[1].type      = DuoUISwitch;
+    layout[1].name      = "Built-in LED";
+    layout[1].pin       = 13;
+    layout[1].interval  = 10;
+
+    layout[2].type      = DuoUIValueSetter;
+    layout[2].name      = "This is count";
+    layout[2].key       = "count";
+    layout[2].interval  = 10;
+
+    layout[3].type      = DuoUIValueSetter;
+    layout[3].name      = "This is fixed";
+    layout[3].key       = "fixed";
+    layout[3].interval  = 10;
+
+    layout[4].type      = DuoUISlider;
+    layout[4].name      = "Slider for fixed";
+    layout[4].key       = "fixed";
+    layout[4].min       = 0;
+    layout[4].max       = 9999;
+    layout[4].interval  = 10;
+
+    layout[5].type      = DuoUIValueSetter;
+    layout[5].name      = "This is an ASCII string";
+    layout[5].key       = "str";
+    layout[5].interval  = 10;
 
     //
     // Setup the DuoKit layout with "duokit.setLayout(LAYOUT_ARRAY, LAYOUT_LENGTH)".

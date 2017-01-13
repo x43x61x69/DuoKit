@@ -56,12 +56,11 @@ typedef struct __attribute__((packed))
 {
     DuoObjectType type;
     String name;
-    void   *value;
-//    union {
-//        String  *stringValue;
-//        int     *intValue;
-//        double  *doubleValue;
-//    }
+    union {
+        int     *intPtr;
+        double  *doublePtr;
+        String  *stringPtr;
+    };
 } DuoObject;
 
 typedef struct __attribute__((packed))
@@ -91,7 +90,7 @@ public:
     bool objectForKey(DuoObject *object, const String &key);
     bool setObjectForKey(const DuoObject object, const String &key);
     bool updateValueForKey(const DuoObjectType type, void *value, const String &key);
-    bool removeValueForKey(const String &key);
+    bool removeKey(const String &key);
 private:
     bool _indicator;
     uint32_t _serialPort;
@@ -120,10 +119,12 @@ private:
     void modeSet(BridgeClient client);
     void layoutStatus(BridgeClient client);
     void read(BridgeClient client);
-    void list(BridgeClient client);
     void listStatus(BridgeClient client);
     void update(BridgeClient client);
     void remove(BridgeClient client);
+    
+    void decodeString(unsigned char *decoded, const unsigned char *encoded, const unsigned int decodedLength);
+    unsigned char encodedBinary(unsigned char c);
 };
 
 #endif

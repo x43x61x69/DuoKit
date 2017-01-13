@@ -82,21 +82,41 @@
          completionHandler:^(NSInteger api,
                              BOOL status,
                              double value,
+                             NSString *stringValue,
                              NSString *result,
                              NSError *error)
      {
          if (status) {
+             switch (_valueType) {
+                 case DuoStringType:
+                     _stringValue = stringValue;
+                     break;
+                 default:
+                     _value = value;
+                     break;
+             }
              dispatch_async(dispatch_get_main_queue(), ^{
-                 _value = value;
                  if (_textField &&
                      !_textField.isEditing &&
                      !actionUUID) {
-                     _textField.text = [NSString stringWithFormat:@"%.*f", 2, _value];
+                     switch (_valueType) {
+                         case DuoIntType:
+                             _textField.text = [NSString stringWithFormat:@"%ld", lroundf(_value)];
+                             break;
+                         case DuoDoubleType:
+                             _textField.text = [NSString stringWithFormat:@"%.*f", 2, _value];
+                             break;
+                         case DuoStringType:
+                             _textField.text = _stringValue;
+                             break;
+                         default:
+                             break;
+                     }
                  }
              });
          } else {
              if (error) {
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
              } else {
                  NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
              }
@@ -116,11 +136,13 @@
     if ([textField isEqual:_textField]) {
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
-        [_duo updateValue:[_textField.text floatValue]
+        [_duo updateValue:_valueType == DuoStringType ? 0 : [_textField.text floatValue]
+              stringValue:_valueType == DuoStringType ? _textField.text : nil
                   withKey:_key
         completionHandler:^(NSInteger api,
                             BOOL status,
                             double value,
+                            NSString *stringValue,
                             NSString *result,
                             NSError *error)
          {
@@ -128,13 +150,20 @@
                  dispatch_async(dispatch_get_main_queue(), ^{
                      if (!_textField.isEditing &&
                          thisAction == actionUUID) {
-                         _value = value;
+                         switch (_valueType) {
+                             case DuoStringType:
+                                 _stringValue = stringValue;
+                                 break;
+                             default:
+                                 _value = value;
+                                 break;
+                         }
                      }
                  });
              } else {
                  
                  if (error) {
-                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
                  }

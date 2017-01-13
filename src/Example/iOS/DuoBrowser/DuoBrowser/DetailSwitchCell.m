@@ -88,7 +88,7 @@
              });
          } else {
              if (error) {
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
              } else {
                  NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
              }
@@ -118,7 +118,7 @@
                      thisAction == actionUUID) {
                      [sender setOn:!sender.on animated:YES];
                  }
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
              } else {
                  NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
              }

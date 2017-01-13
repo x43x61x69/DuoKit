@@ -24,11 +24,10 @@
 
 #define LOGD(...)       LOG(__VA_ARGS__);
 #define DUOLAYOUT_NULL  (DuoUI){(DuoUIType)NULL, (String)NULL, (DuoPin)NULL, (String)NULL};
-#define DUOOBJECT_NULL  (DuoObject){(DuoObjectType)NULL, (String)NULL, (void *)NULL}
+#define DUOOBJECT_NULL  (DuoObject){(DuoObjectType)NULL, (String)NULL, (int *)NULL}
 #define BLINK_INTERVAL  20
 
 #include "DuoKit.h"
-#include <stdio.h>
 #include <Bridge.h>
 #include <BridgeClient.h>
 
@@ -140,21 +139,19 @@ bool DuoKit::updateValueForKey(const DuoObjectType type, void *value, const Stri
             if (_objects[i].type != type) {
                 break;
             }
-            // *_objects[i].value = value;
+            result = true;
             switch (type) {
                 case DuoIntType:
-                    *((int *)(_objects[i].value)) = *((int *)(value));
-                    result = true;
+                    *_objects[i].intPtr = *((int *)(value));
                     break;
                 case DuoDoubleType:
-                    *((double *)(_objects[i].value)) = *((double *)(value));
-                    result = true;
+                    *_objects[i].doublePtr = *((double *)(value));
                     break;
                 case DuoStringType:
-                    *((String *)(_objects[i].value)) = *((String *)(value));
-                    result = true;
+                    *_objects[i].stringPtr = *((String *)(value));
                     break;
                 default:
+                    result = false;
                     break;
             }
             break;
@@ -163,7 +160,7 @@ bool DuoKit::updateValueForKey(const DuoObjectType type, void *value, const Stri
     return result;
 }
 
-bool DuoKit::removeValueForKey(const String &key)
+bool DuoKit::removeKey(const String &key)
 {
     if (!key || !key.length()) {
         return false;
@@ -182,18 +179,22 @@ bool DuoKit::removeValueForKey(const String &key)
 void DuoKit::LOG(const String &message)
 {
     if (_serialPort) {
-        Serial.print(F("[DuoKit] "));
+        Serial.print(F("[D] "));
         Serial.println(message);
     }
 }
 
 int DuoKit::pinModeRead(const uint8_t pin)
 {
-    if (pin >= NUM_DIGITAL_PINS) return (-1);
+    if (pin >= NUM_DIGITAL_PINS) {
+        return -1;
+    }
     uint8_t bit = digitalPinToBitMask(pin);
     uint8_t port = digitalPinToPort(pin);
     volatile uint8_t *reg = portModeRegister(port);
-    if (*reg & bit) return (OUTPUT);
+    if (*reg & bit) {
+        return (OUTPUT);
+    }
     volatile uint8_t *out = portOutputRegister(port);
     return ((*out & bit) ? INPUT_PULLUP : INPUT);
 }
@@ -307,27 +308,28 @@ void DuoKit::layoutStatus(BridgeClient client)
                     String j;
                     j.concat(",\"pin\":");
                     j.concat(_layout[i].pin);
+                    j.concat(",\"value\":");
                     if (_layout[i].type == DuoUISwitch) {
-                        j.concat(",\"value\":");
                         j.concat(digitalRead(_layout[i].pin));
+                    } else {
+                        j.concat(analogRead(_layout[i].pin));
                     }
                     client.print(j);
-                }
-                if (_layout[i].key != "") {
+                } else if (_layout[i].key != "") {
                     String j;
                     DuoObject object;
                     if (objectForKey(&object, _layout[i].key)) {
                         String v;
                         switch (object.type) {
                             case DuoIntType:
-                                v = String(*(int *)object.value);
+                                v = String(*object.intPtr);
                                 break;
                             case DuoDoubleType:
-                                v = String(*(double *)object.value);
+                                v = String(*object.doublePtr);
                                 break;
                             case DuoStringType:
                                 v = "\"";
-                                v.concat(*(String *)object.value);
+                                v.concat(*object.stringPtr);
                                 v.concat("\"");
                                 break;
                             default:
@@ -335,9 +337,9 @@ void DuoKit::layoutStatus(BridgeClient client)
                         }
                         j.concat(",\"key\":\"");
                         j.concat(_layout[i].key);
-                        j.concat(",");
+                        j.concat("\",");
                         j.concat(keyPair("valueType", String(object.type), false));
-                        j.concat("\",\"value\":");
+                        j.concat(",\"value\":");
                         j.concat(v);
                         client.print(j);
                     }
@@ -390,14 +392,14 @@ String DuoKit::readStatus(const String &key)
         String v;
         switch (object.type) {
             case DuoIntType:
-                v = String(*(int *)object.value);
+                v = String(*object.intPtr);
                 break;
             case DuoDoubleType:
-                v = String(*(double *)object.value);
+                v = String(*object.doublePtr);
                 break;
             case DuoStringType:
                 v = "\"";
-                v.concat(*(String *)object.value);
+                v.concat(*object.stringPtr);
                 v.concat("\"");
                 break;
             default:
@@ -473,7 +475,7 @@ void DuoKit::command(BridgeClient client)
     } else if (command == "remove") {
         remove(client);
     } else if (command.startsWith("list")) {
-        list(client);
+        listStatus(client);
     } else if (command.startsWith("ping")) {
         layoutStatus(client);
     } else {
@@ -550,11 +552,6 @@ void DuoKit::read(BridgeClient client)
     LOGD(j);
 }
 
-void DuoKit::list(BridgeClient client)
-{
-    listStatus(client);
-}
-
 void DuoKit::update(BridgeClient client)
 {
     String j;
@@ -573,12 +570,21 @@ void DuoKit::update(BridgeClient client)
             *((double *)(value)) = client.parseFloat();
             break;
         case DuoStringType: {
-            String str = client.readString();
-            LOGD(str);
-            value = malloc(sizeof(str));
-            *((String *)(value)) = str;
-            String test = *((String *)(value));
-            LOGD(test);
+            unsigned int decodedLen = client.parseInt();
+            LOGD(String(decodedLen));
+            if (decodedLen &&
+                client.read() == '/') {
+                String str = client.readString();
+                const unsigned int encodedLen = str.length();
+                unsigned char encoded[encodedLen];
+                str.toCharArray((char *)encoded, encodedLen);
+                unsigned char decoded[decodedLen];
+                decodeString(decoded, encoded, decodedLen);
+                str = String((char *)decoded);
+                str.replace("\"", "\\\"");
+                value = malloc(sizeof(String));
+                *((String *)(value)) = str;
+            }
             break;
         }
         default:
@@ -594,8 +600,41 @@ void DuoKit::remove(BridgeClient client)
 {
     String key = client.readString();
     key.trim();
-    bool status = removeValueForKey(key);
+    bool status = removeKey(key);
     String j = removeStatus(key, status);
     client.print(j);
     LOGD(j);
+}
+
+void DuoKit::decodeString(unsigned char *decoded, const unsigned char *encoded, const unsigned int decodedLength)
+{
+    for (unsigned int i = 2; i < decodedLength; i += 3) {
+        decoded[0] = encodedBinary(encoded[0]) << 2 | encodedBinary(encoded[1]) >> 4;
+        decoded[1] = encodedBinary(encoded[1]) << 4 | encodedBinary(encoded[2]) >> 2;
+        decoded[2] = encodedBinary(encoded[2]) << 6 | encodedBinary(encoded[3]);
+        
+        encoded += 4;
+        decoded += 3;
+    }
+    
+    switch (decodedLength % 3) {
+        case 1:
+            decoded[0] = encodedBinary(encoded[0]) << 2 | encodedBinary(encoded[1]) >> 4;
+            break;
+        case 2:
+            decoded[0] = encodedBinary(encoded[0]) << 2 | encodedBinary(encoded[1]) >> 4;
+            decoded[1] = encodedBinary(encoded[1]) << 4 | encodedBinary(encoded[2]) >> 2;
+            break;
+    }
+    decoded[decodedLength] = '\0';
+}
+
+unsigned char DuoKit::encodedBinary(unsigned char c)
+{
+    if('A' <= c && c <= 'Z') return c - 'A';
+    if('a' <= c && c <= 'z') return c - 71;
+    if('0' <= c && c <= '9') return c + 4;
+    if(c == '+') return 62;
+    if(c == '/') return 63;
+    return 0xFF;
 }

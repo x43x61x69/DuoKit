@@ -32,10 +32,12 @@
 
 @interface DetailSliderCell : UITableViewCell
 
-@property (nonatomic, strong)   MTKDuo *duo;
-@property (nonatomic, strong)   NSString *key;
+@property (nonatomic, strong)   MTKDuo          *duo;
+@property (nonatomic)           DuoPin          pin;
+@property (nonatomic, strong)   NSString        *key;
 
-@property (nonatomic, strong)   NSTimer *timer;
+@property (nonatomic, strong)   NSTimer         *timer;
+
 @property (nonatomic, weak)     IBOutlet UILabel    *title;
 @property (nonatomic, weak)     IBOutlet UISlider   *slider;
 

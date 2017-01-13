@@ -39,6 +39,8 @@
         self.key            = [decoder decodeObjectForKey:@"key"];
         self.pin            = [decoder decodeIntegerForKey:@"pin"];
         self.value          = [decoder decodeDoubleForKey:@"value"];
+        self.stringValue    = [decoder decodeObjectForKey:@"stringValue"];
+        self.valueType      = [decoder decodeIntegerForKey:@"valueType"];
         self.minimumValue   = [decoder decodeDoubleForKey:@"minimumValue"];
         self.maximumValue   = [decoder decodeDoubleForKey:@"maximumValue"];
         self.color          = [decoder decodeObjectForKey:@"color"];
@@ -54,6 +56,8 @@
     [encoder encodeObject:_key              forKey:@"key"];
     [encoder encodeInteger:_pin             forKey:@"pin"];
     [encoder encodeDouble:_value            forKey:@"value"];
+    [encoder encodeObject:_stringValue      forKey:@"stringValue"];
+    [encoder encodeInteger:_valueType       forKey:@"valueType"];
     [encoder encodeDouble:_minimumValue     forKey:@"minimumValue"];
     [encoder encodeDouble:_maximumValue     forKey:@"maximumValue"];
     [encoder encodeObject:_color            forKey:@"color"];
@@ -76,8 +80,21 @@
             self.key = [dictionary objectForKey:@"key"];
         if ([dictionary objectForKey:@"pin"])
             self.pin = [[dictionary objectForKey:@"pin"] integerValue];
-        if ([dictionary objectForKey:@"value"])
-            self.value = [[dictionary objectForKey:@"value"] doubleValue];
+        if ([dictionary objectForKey:@"valueType"])
+            self.valueType = [[dictionary objectForKey:@"valueType"] integerValue];
+        switch (self.valueType) {
+            case DuoIntType:
+            case DuoDoubleType:
+                if ([dictionary objectForKey:@"value"])
+                    self.value = [[dictionary objectForKey:@"value"] doubleValue];
+                break;
+            case DuoStringType:
+                if ([dictionary objectForKey:@"value"])
+                    self.stringValue = [dictionary objectForKey:@"value"];
+                break;
+            default:
+                break;
+        }
         if ([dictionary objectForKey:@"min"])
             self.minimumValue = [[dictionary objectForKey:@"min"] doubleValue];
         if ([dictionary objectForKey:@"max"])

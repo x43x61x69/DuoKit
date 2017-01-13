@@ -96,9 +96,27 @@
                                             forIndexPath:indexPath];
             cell.title.text = ui.name;
             cell.duo = _duo;
+            cell.valueType = ui.valueType;
             cell.key = ui.key;
-            cell.value = ui.value;
-            cell.textField.text = [NSString stringWithFormat:@"%.*f", 2, ui.value];
+            switch (ui.valueType) {
+                case DuoIntType:
+                    cell.textField.keyboardType = UIKeyboardTypeNumberPad;
+                    cell.value = ui.value;
+                    cell.textField.text = [NSString stringWithFormat:@"%ld", lroundf(ui.value)];
+                    break;
+                case DuoDoubleType:
+                    cell.textField.keyboardType = UIKeyboardTypeDecimalPad;
+                    cell.value = ui.value;
+                    cell.textField.text = [NSString stringWithFormat:@"%.*f", 2, ui.value];
+                    break;
+                case DuoStringType:
+                    cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
+                    cell.stringValue = ui.stringValue;
+                    cell.textField.text = ui.stringValue;
+                    break;
+                default:
+                    break;
+            }
             cell.textField.userInteractionEnabled = ui.type == DuoUISetter;
             cell.textField.borderStyle = ui.type == DuoUISetter ? UITextBorderStyleRoundedRect :  UITextBorderStyleNone;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -112,7 +130,8 @@
                                             forIndexPath:indexPath];
             cell.title.text = ui.name;
             cell.duo = _duo;
-            cell.key = ui.key;
+            cell.pin = ui.pin;
+            if (ui.key) cell.key = ui.key;
             if (ui.color) cell.slider.tintColor = ui.color;
             cell.slider.maximumValue = ui.maximumValue;
             cell.slider.minimumValue = ui.minimumValue;
