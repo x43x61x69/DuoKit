@@ -7,6 +7,9 @@ DuoUIValueSetter    KEYWORD1
 DuoUIValueGetter    KEYWORD1
 DuoUIType           KEYWORD1
 DuoObject           KEYWORD1
+DuoIntType          KEYWORD1
+DuoDoubleType       KEYWORD1
+DuoStringType       KEYWORD1
 DuoUI               KEYWORD1
 begin               KEYWORD2
 loop                KEYWORD2

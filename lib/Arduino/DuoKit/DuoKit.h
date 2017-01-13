@@ -25,8 +25,8 @@
 #ifndef DUOKIT_H
 #define DUOKIT_H
 
-#define DUOKIT_VERSION          "1.0.3"
-#define DUOKIT_API_VERSION      2
+#define DUOKIT_VERSION          "1.0.4"
+#define DUOKIT_API_VERSION      3
 #define DUOKIT_INPUT            0x0
 #define DUOKIT_OUTPUT           0x1
 #define DUOKIT_INPUT_PULLUP     0x2
@@ -45,10 +45,23 @@ typedef enum : uint8_t
     DuoUISlider         = 0x5
 } DuoUIType;
 
+typedef enum : uint8_t {
+    DuoNoneType,
+    DuoIntType,
+    DuoDoubleType,
+    DuoStringType
+} DuoObjectType;
+
 typedef struct __attribute__((packed))
 {
+    DuoObjectType type;
     String name;
-    double *value;
+    void   *value;
+//    union {
+//        String  *stringValue;
+//        int     *intValue;
+//        double  *doubleValue;
+//    }
 } DuoObject;
 
 typedef struct __attribute__((packed))
@@ -75,9 +88,9 @@ public:
     void blink(const int blinks);
     void setLayout(DuoUI *layout, const int size);
     void setObjetcs(DuoObject *objects, const int size);
-    bool valueForKey(double *value, const String &key);
-    bool setValueForKey(double *value, const String &key);
-    bool updateValueForKey(double value, const String &key);
+    bool objectForKey(DuoObject *object, const String &key);
+    bool setObjectForKey(const DuoObject object, const String &key);
+    bool updateValueForKey(const DuoObjectType type, void *value, const String &key);
     bool removeValueForKey(const String &key);
 private:
     bool _indicator;
@@ -97,8 +110,8 @@ private:
     String analogPinStatus(const uint8_t pin);
     String modeErrorStatus(const uint8_t pin);
     String readStatus(const String &key);
-    String writeStatus(const String &key, double value, bool status);
-    String updateStatus(const String &key, double value, bool status);
+    String writeStatus(const String &key, void *value, bool status);
+    String updateStatus(const String &key, const DuoObjectType type, void *value);
     String removeStatus(const String &key, bool status);
 
     void command(BridgeClient client);

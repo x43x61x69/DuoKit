@@ -28,6 +28,13 @@
 		1FEB95E91DE93CBE00D98443 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FEB95F41DE9401D00D98443 /* MTKDuoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTKDuoBrowser.h; path = Bonjour/MTKDuoBrowser.h; sourceTree = "<group>"; };
 		1FEB95F51DE9401D00D98443 /* MTKDuoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTKDuoBrowser.m; path = Bonjour/MTKDuoBrowser.m; sourceTree = "<group>"; };
+		1FFB9F1C1E289F810052B2B8 /* DuoKit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DuoKit.cpp; sourceTree = "<group>"; };
+		1FFB9F1D1E289F810052B2B8 /* DuoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DuoKit.h; sourceTree = "<group>"; };
+		1FFB9F201E289F810052B2B8 /* Basic.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = Basic.ino; sourceTree = "<group>"; };
+		1FFB9F221E289F810052B2B8 /* RGB_LED.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = RGB_LED.ino; sourceTree = "<group>"; };
+		1FFB9F231E289F810052B2B8 /* keywords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
+		1FFB9F241E289F810052B2B8 /* library.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = library.properties; sourceTree = "<group>"; };
+		1FFB9F251E289F810052B2B8 /* README.adoc */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.adoc; sourceTree = "<group>"; };
 		426EC0EB1E234F0300D2D762 /* MTKDuoUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTKDuoUI.h; path = Object/Duo/MTKDuoUI.h; sourceTree = "<group>"; };
 		426EC0EC1E234F0300D2D762 /* MTKDuoUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTKDuoUI.m; path = Object/Duo/MTKDuoUI.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +73,7 @@
 		1FEB95DB1DE93CBE00D98443 = {
 			isa = PBXGroup;
 			children = (
+				1FFB9F1B1E289F810052B2B8 /* Arduino Library */,
 				1FEB95E71DE93CBE00D98443 /* DuoKit */,
 				1FEB95E61DE93CBE00D98443 /* Products */,
 			);
@@ -106,6 +114,45 @@
 				1FEB95F51DE9401D00D98443 /* MTKDuoBrowser.m */,
 			);
 			name = Browser;
+			sourceTree = "<group>";
+		};
+		1FFB9F1B1E289F810052B2B8 /* Arduino Library */ = {
+			isa = PBXGroup;
+			children = (
+				1FFB9F1E1E289F810052B2B8 /* examples */,
+				1FFB9F1D1E289F810052B2B8 /* DuoKit.h */,
+				1FFB9F1C1E289F810052B2B8 /* DuoKit.cpp */,
+				1FFB9F241E289F810052B2B8 /* library.properties */,
+				1FFB9F231E289F810052B2B8 /* keywords.txt */,
+				1FFB9F251E289F810052B2B8 /* README.adoc */,
+			);
+			name = "Arduino Library";
+			path = ../../Arduino/DuoKit;
+			sourceTree = "<group>";
+		};
+		1FFB9F1E1E289F810052B2B8 /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				1FFB9F1F1E289F810052B2B8 /* Basic */,
+				1FFB9F211E289F810052B2B8 /* RGB_LED */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		1FFB9F1F1E289F810052B2B8 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				1FFB9F201E289F810052B2B8 /* Basic.ino */,
+			);
+			path = Basic;
+			sourceTree = "<group>";
+		};
+		1FFB9F211E289F810052B2B8 /* RGB_LED */ = {
+			isa = PBXGroup;
+			children = (
+				1FFB9F221E289F810052B2B8 /* RGB_LED.ino */,
+			);
+			path = RGB_LED;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,7 +254,7 @@
 		};
 		1FEB95F11DE93D0300D98443 /* Increase Subversion Number */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -215,7 +262,7 @@
 			name = "Increase Subversion Number";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "VERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};

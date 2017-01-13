@@ -25,7 +25,7 @@
 //  SOFTWARE.
 //
 
-#define kDuoKitMinVersion   2
+#define kDuoKitMinVersion   3
 
 #import <Foundation/Foundation.h>
 #import "MTKDuoUI.h"
