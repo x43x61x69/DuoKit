@@ -18,6 +18,8 @@
 		1FEB96511DE95EF600D98443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEB964F1DE95EF600D98443 /* Main.storyboard */; };
 		1FEB96531DE95EF600D98443 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FEB96521DE95EF600D98443 /* Assets.xcassets */; };
 		1FEB96561DE95EF600D98443 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEB96541DE95EF600D98443 /* LaunchScreen.storyboard */; };
+		1FF343811E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF343801E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m */; };
+		1FF343841E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */; };
 		420C50811E11EB0C008B1D3D /* DuoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C50801E11EB0C008B1D3D /* DuoKit.framework */; };
 		420C50821E11EB0C008B1D3D /* DuoKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 420C50801E11EB0C008B1D3D /* DuoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4266C7811E163A730056FE02 /* DetailSetterCell.m */; };
@@ -59,6 +61,10 @@
 		1FEB96521DE95EF600D98443 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FEB96551DE95EF600D98443 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FEB96571DE95EF600D98443 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FF3437F1E2CEF71009F2DC7 /* DetailAddItemDefaultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailAddItemDefaultCell.h; sourceTree = "<group>"; };
+		1FF343801E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailAddItemDefaultCell.m; sourceTree = "<group>"; };
+		1FF343821E2CEFDA009F2DC7 /* DetailAddItemTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailAddItemTypeCell.h; sourceTree = "<group>"; };
+		1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailAddItemTypeCell.m; sourceTree = "<group>"; };
 		420C50801E11EB0C008B1D3D /* DuoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DuoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4266C7801E163A730056FE02 /* DetailSetterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSetterCell.h; sourceTree = "<group>"; };
 		4266C7811E163A730056FE02 /* DetailSetterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSetterCell.m; sourceTree = "<group>"; };
@@ -177,6 +183,10 @@
 				4266C7811E163A730056FE02 /* DetailSetterCell.m */,
 				1FEB23B11E2511A600918646 /* DetailSliderCell.h */,
 				1FEB23B21E2511A600918646 /* DetailSliderCell.m */,
+				1FF3437F1E2CEF71009F2DC7 /* DetailAddItemDefaultCell.h */,
+				1FF343801E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m */,
+				1FF343821E2CEFDA009F2DC7 /* DetailAddItemTypeCell.h */,
+				1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -290,10 +300,12 @@
 				1FEB964B1DE95EF600D98443 /* AppDelegate.m in Sources */,
 				1F4B84F51DEB454600CF1163 /* ServicesTVC.m in Sources */,
 				1FBC90E11E256CE200085360 /* DetailWebUICell.m in Sources */,
+				1FF343841E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m in Sources */,
 				1FEB96481DE95EF600D98443 /* main.m in Sources */,
 				1FEB23B31E2511A600918646 /* DetailSliderCell.m in Sources */,
 				4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */,
 				426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */,
+				1FF343811E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m in Sources */,
 				1F4B84F21DEB403B00CF1163 /* DomainsTVC.m in Sources */,
 				1FADE3F11E02C2F600E32630 /* DetailTVC.m in Sources */,
 				1F7030FF1E2CBFB1005F4816 /* DetailAddItemTVC.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  DetailAddItemTVC.h
+//  DetailAddItemDefaultCell.h
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -25,20 +25,13 @@
 //  SOFTWARE.
 //
 
+#define kDetailAddItemDefaultCellIdentifer  @"DetailAddItemDefaultCell"
+
 #import <UIKit/UIKit.h>
-#import <DuoKit/DuoKit.h>
 
-#define kDetailAddItemSegueIdentifer  @"DetailAddItemSegue"
+@interface DetailAddItemDefaultCell : UITableViewCell
 
-@protocol DetailAddItemDelegate <NSObject>
-
-- (void)newItemAdded:(MTKDuoUI *)newUI;
-
-@end
-
-@interface DetailAddItemTVC : UITableViewController
-
-@property (nonatomic, assign) id<DetailAddItemDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *layout;
+@property (nonatomic, weak) IBOutlet UILabel     *title;
+@property (nonatomic, weak) IBOutlet UITextField *textField;
 
 @end

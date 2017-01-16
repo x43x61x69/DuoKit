@@ -1,5 +1,5 @@
 //
-//  DetailAddItemTVC.h
+//  DetailAddItemTypeCell.h
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -25,20 +25,19 @@
 //  SOFTWARE.
 //
 
+#define kDetailAddItemTypeCellIdentifer  @"DetailAddItemTypeCell"
+
 #import <UIKit/UIKit.h>
-#import <DuoKit/DuoKit.h>
 
-#define kDetailAddItemSegueIdentifer  @"DetailAddItemSegue"
+@interface UICaretTextField : UITextField
 
-@protocol DetailAddItemDelegate <NSObject>
-
-- (void)newItemAdded:(MTKDuoUI *)newUI;
+@property (nonatomic) BOOL hideCaret;
 
 @end
 
-@interface DetailAddItemTVC : UITableViewController
+@interface DetailAddItemTypeCell : UITableViewCell
 
-@property (nonatomic, assign) id<DetailAddItemDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *layout;
+@property (nonatomic, weak) IBOutlet UILabel *title;
+@property (nonatomic, weak) IBOutlet UICaretTextField *textField;
 
 @end

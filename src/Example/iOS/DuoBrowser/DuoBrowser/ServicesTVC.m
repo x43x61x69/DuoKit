@@ -44,11 +44,7 @@
 {
     [super viewDidLoad];
     
-    NSString *domain = _domain;
-    
-    self.navigationItem.title = [domain hasSuffix:@"."] ?
-    [domain substringToIndex:domain.length-1] :
-    domain;
+    self.navigationItem.title = @"Select a Service";
     
     _dataSource = [NSMutableArray new];
     
@@ -124,6 +120,19 @@
 
 #pragma mark - Table view data source
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return [NSString stringWithFormat:@"Available Services in \"%@\"",
+                    [_domain hasSuffix:@"."] ?
+                    [_domain substringToIndex:_domain.length-1] :
+                    _domain];
+        default:
+            return nil;
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -151,6 +160,19 @@
     MTKDuo *duo = (MTKDuo *)[_dataSource objectAtIndex:indexPath.row];
     [_browser resolveService:duo.service
                  withTimeout:30.f];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.alpha = .0f;
+    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
+    [UIView animateWithDuration:.2f
+                          delay:indexPath.row * .1f
+                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
+                     animations:^ {
+                         cell.transform = CGAffineTransformIdentity;
+                         cell.alpha = 1.0f;
+                     } completion:nil];
 }
 
 @end

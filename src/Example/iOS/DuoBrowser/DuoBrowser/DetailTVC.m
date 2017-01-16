@@ -227,6 +227,19 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.alpha = .0f;
+    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
+    [UIView animateWithDuration:.2f
+                          delay:indexPath.row * .1f
+                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
+                     animations:^ {
+                         cell.transform = CGAffineTransformIdentity;
+                         cell.alpha = 1.0f;
+                     } completion:nil];
+}
+
 - (IBAction)addButtonAction:(id)sender
 {
     [self performSegueWithIdentifier:kDetailAddItemSegueIdentifer sender:sender];

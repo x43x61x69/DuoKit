@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 #import "DomainsTVC.h"
 #import "ServicesTVC.h"
 
@@ -46,6 +48,19 @@
 {
     [super viewDidLoad];
     
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    
+    navigationBar.tintColor       = [UIColor whiteColor];
+    navigationBar.barTintColor    = UIColorFromRGB(0xFF3B30);
+    navigationBar.translucent     = NO;
+    
+    navigationBar.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:navigationBar.bounds
+                                                                cornerRadius:navigationBar.layer.cornerRadius].CGPath;
+    [navigationBar.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+    [navigationBar.layer setShadowOffset:CGSizeMake(.0f, 1.f)];
+    [navigationBar.layer setShadowRadius:1.f];
+    [navigationBar.layer setShadowOpacity:.3f];
+    
     _dataSource = [NSMutableArray new];
     
     _browser = [MTKDuoBrowser sharedInstance];
@@ -62,6 +77,16 @@
 }
 
 #pragma mark - Table view data source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"Available Domains";
+        default:
+            return nil;
+    }
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -105,6 +130,19 @@
         vc.domain = [_dataSource objectAtIndex:indexPath.row];
         vc.serviceType = kBonjourServiceTypeHTTP;
     }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.alpha = .0f;
+    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
+    [UIView animateWithDuration:.2f
+                          delay:indexPath.row * .1f
+                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
+                     animations:^ {
+                         cell.transform = CGAffineTransformIdentity;
+                         cell.alpha = 1.0f;
+                     } completion:nil];
 }
 
 @end
