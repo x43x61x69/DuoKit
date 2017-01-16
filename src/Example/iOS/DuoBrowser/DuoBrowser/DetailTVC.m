@@ -26,16 +26,30 @@
 //
 
 #import "DetailTVC.h"
+#import "DetailAddItemTVC.h"
 #import "DetailWebUICell.h"
 #import "DetailSwitchCell.h"
 #import "DetailSetterCell.h"
 #import "DetailSliderCell.h"
 
-@interface DetailTVC () <UITextFieldDelegate>
+@interface DetailTVC () <UITextFieldDelegate, DetailAddItemDelegate>
 
 @end
 
 @implementation DetailTVC
+
+- (void)loadView
+{
+    [super loadView];
+    
+    _layout = [NSMutableArray new];
+    
+    UIBarButtonItem *addButton
+    = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                    target:self
+                                                    action:@selector(addButtonAction:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -48,21 +62,61 @@
     }
 }
 
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [super prepareForSegue:segue sender:sender];
+    
+    if ([segue.identifier isEqualToString:kDetailAddItemSegueIdentifer]) {
+        DetailAddItemTVC *vc = segue.destinationViewController;
+        vc.delegate = self;
+    }
+}
+
 #pragma mark - Table view data source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"Pre-Defined by Arduino";
+        case 1:
+            return @"User Defined";
+        default:
+            return nil;
+    }
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return (_duo.layout.count > 0) + (_layout.count > 0);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _duo.layout.count;
+    switch (section) {
+        case 0:
+            return _duo.layout.count;
+        case 1:
+            return _layout.count;
+        default:
+            return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MTKDuoUI *ui = [_duo.layout objectAtIndex:indexPath.row];
+    MTKDuoUI *ui;
+    switch (indexPath.section) {
+        case 1:
+            ui = [_layout objectAtIndex:indexPath.row];
+            break;
+        default:
+            ui = [_duo.layout objectAtIndex:indexPath.row];
+            break;
+    }
+    
     switch (ui.type) {
         case DuoUIWebUI: {
             DetailWebUICell *cell =
@@ -152,7 +206,17 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    switch ([_duo.layout objectAtIndex:indexPath.row].type) {
+    NSArray<MTKDuoUI *> *source;
+    switch (indexPath.section) {
+        case 1:
+            source = _layout;
+            break;
+        default:
+            source = _duo.layout;
+            break;
+    }
+    
+    switch ([source objectAtIndex:indexPath.row].type) {
         case DuoUIWebUI: {
             DetailWebUICell *cell = [[tableView visibleCells] objectAtIndex:indexPath.row];
             [cell openWebUI];
@@ -161,6 +225,19 @@
         default:
             break;
     }
+}
+
+- (IBAction)addButtonAction:(id)sender
+{
+    [self performSegueWithIdentifier:kDetailAddItemSegueIdentifer sender:sender];
+}
+
+#pragma mark - DetailAddItemDelegate
+
+- (void)newItemAdded:(MTKDuoUI *)newUI
+{
+    [_layout addObject:newUI];
+    [self.tableView reloadData];
 }
 
 @end

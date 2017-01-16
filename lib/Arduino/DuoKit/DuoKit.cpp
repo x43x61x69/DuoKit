@@ -22,7 +22,11 @@
  SOFTWARE.
  */
 
-#define LOGD(...)       LOG(__VA_ARGS__);
+#ifdef USE_DUOKIT_DEBUG
+#define LOGD(...)  LOG(__VA_ARGS__);
+#else
+#define LOGD(...)
+#endif
 #define DUOLAYOUT_NULL  (DuoUI){(DuoUIType)NULL, (String)NULL, (DuoPin)NULL, (String)NULL};
 #define DUOOBJECT_NULL  (DuoObject){(DuoObjectType)NULL, (String)NULL, (int *)NULL}
 #define BLINK_INTERVAL  20
@@ -31,38 +35,22 @@
 #include <Bridge.h>
 #include <BridgeClient.h>
 
+extern String __doubleQuoteEscaped = "\"";
+
 // public:
 
-DuoKit::DuoKit(uint32_t serialPort, bool indicator)
+DuoKit::DuoKit()
 {
-    _serialPort = serialPort;
-    _indicator = indicator;
+    
 }
 
-void DuoKit::begin(bool shouldWaitForSerial)
+void DuoKit::begin()
 {
-    blink(2);
     digitalWrite(LED_BUILTIN, HIGH);
     Bridge.begin();
     server.listenOnLocalhost();
     server.begin();
     digitalWrite(LED_BUILTIN, LOW);
-    if (_serialPort) {
-        Serial.begin(_serialPort);
-        if (shouldWaitForSerial) {
-            while (!Serial) {
-                blink(1);
-            }
-        }
-        String log = "v";
-        log.concat(DUOKIT_VERSION);
-        log.concat(" (");
-        log.concat(__DATE__);
-        log.concat(" ");
-        log.concat(__TIME__);
-        log.concat(")");
-        LOGD(log);
-    }
     blink(5);
 }
 
@@ -70,7 +58,6 @@ void DuoKit::loop()
 {
     BridgeClient client = server.accept();
     if (client) {
-        blink(_indicator);
         command(client);
         client.stop();
     }
@@ -90,15 +77,15 @@ void DuoKit::blink(const int blinks)
     digitalWrite(LED_BUILTIN, ledStatus);
 }
 
+#ifdef USE_DUOKIT_OBJECT
 bool DuoKit::objectForKey(DuoObject *object, const String &key)
 {
-    if (!key || !key.length()) {
-        return false;
-    }
-    for (int i = 0; i < _objectsSize; i++) {
-        if (_objects[i].name == key) {
-            *object = _objects[i];
-            return true;
+    if (key && key.length()) {
+        for (int i = 0; i < _objectsSize; i++) {
+            if (_objects[i].name == key) {
+                *object = _objects[i];
+                return true;
+            }
         }
     }
     return false;
@@ -106,83 +93,83 @@ bool DuoKit::objectForKey(DuoObject *object, const String &key)
 
 bool DuoKit::setObjectForKey(const DuoObject object, const String &key)
 {
-    if (!key || !key.length()) {
-        return false;
-    }
-    int index = -1;
-    bool result = false;
-    for (int i = 0; i < _objectsSize; i++) {
-        if (_objects[i].name == key) {
-            index = i;
-            break;
-        }
-        if (_objects[i].name == (String)NULL) {
-            index = i;
-        }
-    }
-    if (index >= 0) {
-        result = true;
-        _objects[index] = object;
-    }
-    return result;
-}
-
-bool DuoKit::updateValueForKey(const DuoObjectType type, void *value, const String &key)
-{
-    if (!key || !key.length()) {
-        return false;
-    }
-    int index = -1;
-    bool result = false;
-    for (int i = 0; i < _objectsSize; i++) {
-        if (_objects[i].name == key) {
-            if (_objects[i].type != type) {
+    if (key && key.length()) {
+        int index = -1;
+        for (int i = 0; i < _objectsSize; i++) {
+            if (_objects[i].name == key) {
+                index = i;
                 break;
             }
-            result = true;
-            switch (type) {
-                case DuoIntType:
-                    *_objects[i].intPtr = *((int *)(value));
-                    break;
-                case DuoDoubleType:
-                    *_objects[i].doublePtr = *((double *)(value));
-                    break;
-                case DuoStringType:
-                    *_objects[i].stringPtr = *((String *)(value));
-                    break;
-                default:
-                    result = false;
-                    break;
+            if (_objects[i].name == (String)NULL) {
+                index = i;
             }
-            break;
         }
-    }
-    return result;
-}
-
-bool DuoKit::removeKey(const String &key)
-{
-    if (!key || !key.length()) {
-        return false;
-    }
-    for (int i = 0; i < _objectsSize; i++) {
-        if (_objects[i].name == key) {
-            _objects[i] = DUOOBJECT_NULL;
+        if (index >= 0) {
+            _objects[index] = object;
             return true;
         }
     }
     return false;
 }
 
+bool DuoKit::updateValueForKey(const DuoObjectType type, void *value, const String &key)
+{
+    bool result = false;
+    if (key && key.length()) {
+        int index = -1;
+        for (int i = 0; i < _objectsSize; i++) {
+            if (_objects[i].name == key) {
+                if (_objects[i].type != type) {
+                    break;
+                }
+                result = true;
+                switch (type) {
+                    case DuoIntType:
+                        *_objects[i].intPtr = *((int *)(value));
+                        break;
+                    case DuoDoubleType:
+                        *_objects[i].doublePtr = *((double *)(value));
+                        break;
+                    case DuoStringType:
+                        *_objects[i].stringPtr = *((String *)(value));
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+                break;
+            }
+        }
+    }
+    return result;
+}
+
+#ifdef USE_DUOKIT_COMMMAND_REMOVE
+bool DuoKit::removeKey(const String &key)
+{
+    if (key && key.length()) {
+        for (int i = 0; i < _objectsSize; i++) {
+            if (_objects[i].name == key) {
+                _objects[i] = DUOOBJECT_NULL;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+#endif
+
+#endif
+
 // private:
 
+#ifdef USE_DUOKIT_DEBUG
 void DuoKit::LOG(const String &message)
 {
-    if (_serialPort) {
-        Serial.print(F("[D] "));
-        Serial.println(message);
-    }
+    Serial.print(F("[D] "));
+    Serial.println(message);
 }
+#endif
 
 int DuoKit::pinModeRead(const uint8_t pin)
 {
@@ -199,17 +186,21 @@ int DuoKit::pinModeRead(const uint8_t pin)
     return ((*out & bit) ? INPUT_PULLUP : INPUT);
 }
 
+#ifdef USE_DUOKIT_LAYOUT
 void DuoKit::setLayout(DuoUI *layout, const int size)
 {
     _layout = layout;
     _layoutSize = size;
 }
+#endif
 
+#ifdef USE_DUOKIT_OBJECT
 void DuoKit::setObjetcs(DuoObject *objects, const int size)
 {
     _objects = objects;
     _objectsSize = size;
 }
+#endif
 
 String DuoKit::keyPair(const String &key, const String &value, bool isString)
 {
@@ -289,6 +280,7 @@ void DuoKit::layoutStatus(BridgeClient client)
     client.print("{");
     client.print(keyPair("api", String(DUOKIT_API_VERSION), false));
     client.print(",");
+#ifdef USE_DUOKIT_LAYOUT
     if (_layout) {
         client.print("\"layout\":[");
         int count = 0;
@@ -376,10 +368,12 @@ void DuoKit::layoutStatus(BridgeClient client)
         client.print(keyPair("count", String(count), false));
         client.print(",");
     }
+#endif
     client.print(keyPair("status", "ok"));
     client.print("}");
 }
 
+#ifdef USE_DUOKIT_OBJECT
 String DuoKit::readStatus(const String &key)
 {
     String j = keyPair("key", key);
@@ -412,6 +406,7 @@ String DuoKit::readStatus(const String &key)
     return JSONStatus(status, j);
 }
 
+#ifdef USE_DUOKIT_COMMMAND_LIST
 void DuoKit::listStatus(BridgeClient client)
 {
     client.print("{");
@@ -434,6 +429,7 @@ void DuoKit::listStatus(BridgeClient client)
     client.print(keyPair("status", "ok"));
     client.print("}");
 }
+#endif
 
 String DuoKit::updateStatus(const String &key, const DuoObjectType type, void *value)
 {
@@ -449,6 +445,7 @@ String DuoKit::updateStatus(const String &key, const DuoObjectType type, void *v
     return JSONStatus(status, j);
 }
 
+#ifdef USE_DUOKIT_COMMMAND_REMOVE
 String DuoKit::removeStatus(const String &key, bool status)
 {
     String j = keyPair("key", key);
@@ -458,6 +455,9 @@ String DuoKit::removeStatus(const String &key, bool status)
     }
     return JSONStatus(status, j);
 }
+#endif
+
+#endif
 
 void DuoKit::command(BridgeClient client)
 {
@@ -468,14 +468,20 @@ void DuoKit::command(BridgeClient client)
         analogSet(client);
     } else if (command == "mode") {
         modeSet(client);
+#ifdef USE_DUOKIT_OBJECT
     } else if (command == "read") {
         read(client);
     } else if (command == "update") {
         update(client);
+#ifdef USE_DUOKIT_COMMMAND_REMOVE
     } else if (command == "remove") {
-        remove(client);
+        remove(client);;
+#endif
+#ifdef USE_DUOKIT_COMMMAND_LIST
     } else if (command.startsWith("list")) {
         listStatus(client);
+#endif
+#endif
     } else if (command.startsWith("ping")) {
         layoutStatus(client);
     } else {
@@ -543,6 +549,7 @@ void DuoKit::modeSet(BridgeClient client)
     LOGD(j);
 }
 
+#ifdef USE_DUOKIT_OBJECT
 void DuoKit::read(BridgeClient client)
 {
     String key = client.readStringUntil('/');
@@ -596,6 +603,7 @@ void DuoKit::update(BridgeClient client)
     LOGD(j);
 }
 
+#ifdef USE_DUOKIT_COMMMAND_REMOVE
 void DuoKit::remove(BridgeClient client)
 {
     String key = client.readString();
@@ -605,6 +613,7 @@ void DuoKit::remove(BridgeClient client)
     client.print(j);
     LOGD(j);
 }
+#endif
 
 void DuoKit::decodeString(unsigned char *decoded, const unsigned char *encoded, const unsigned int decodedLength)
 {
@@ -638,3 +647,4 @@ unsigned char DuoKit::encodedBinary(unsigned char c)
     if(c == '/') return 63;
     return 0xFF;
 }
+#endif

@@ -41,10 +41,6 @@
 
 #include <DuoKit.h>
 
-//
-// Use "duokit(SERIAL_PORT_NUM)" to initialize a DuoKit object. Simply use
-// "duokit" if you don't need the serial output.
-//
 DuoKit duokit;
 
 DuoUI layout[LAYOUT_LENGTH];
@@ -52,7 +48,7 @@ DuoObject objects[OBJECTS_LENGTH];
 
 double count = 0;
 int fixed = 1337;
-String str = "I\'m a String!";
+String boot = "0 secs ago.";
 
 void setup()
 {
@@ -69,17 +65,19 @@ void setup()
     // - VAR_KEY_NAME: A String object that will be referencing to the variable.
     // - VAR_POINTER: A memory pointer that points to the variable. (.intPtr, .doublePtr, .stringPtr)
     //
-    objects[0].type         = DuoDoubleType;
-    objects[0].name         = "count";
-    objects[0].doublePtr    = &count;
 
-    objects[1].type         = DuoIntType;
-    objects[1].name         = "fixed";
-    objects[1].intPtr       = &fixed;
+    uint8_t i = 0;
+    objects[i].type         = DuoDoubleType;
+    objects[i].name         = "count";
+    objects[i].doublePtr    = &count;
 
-    objects[2].type         = DuoStringType;
-    objects[2].name         = "str";
-    objects[2].stringPtr    = &str;
+    objects[++i].type       = DuoIntType;
+    objects[i].name         = "fixed";
+    objects[i].intPtr       = &fixed;
+
+    objects[++i].type       = DuoStringType;
+    objects[i].name         = "boot";
+    objects[i].stringPtr    = &boot;
 
     //
     // Setup the DuoKit object with "duokit.setObjetcs(OBJECTS_ARRAY, OBJECTS_LENGTH)".
@@ -97,35 +95,40 @@ void setup()
     // - DuoUIValueGetter: Setup a getter for a variable. PIN_NUM, SLIDER_MIN, SLIDER_MAX, USE_COLOR and COLOR will be ignored.
     // - DuoUISlider: Setup a slider for an analog pin or a variable. If PIN_NUM was provided, VAR_KEY_NAME will be ignored.
     //
-    layout[0].type      = DuoUIWebUI;
-    layout[0].name      = "Access WebUI";
 
-    layout[1].type      = DuoUISwitch;
-    layout[1].name      = "Built-in LED";
-    layout[1].pin       = 13;
-    layout[1].interval  = 10;
+    i = 0;
+    layout[i].type      = DuoUIWebUI;
+    layout[i].name      = "Access WebUI";
 
-    layout[2].type      = DuoUIValueSetter;
-    layout[2].name      = "This is count";
-    layout[2].key       = "count";
-    layout[2].interval  = 10;
+    layout[++i].type    = DuoUISwitch;
+    layout[i].name      = "Built-in LED";
+    layout[i].pin       = 13;
+    layout[i].interval  = 10;
 
-    layout[3].type      = DuoUIValueSetter;
-    layout[3].name      = "This is fixed";
-    layout[3].key       = "fixed";
-    layout[3].interval  = 10;
+    //
+    // Although String is supported, it's not recommanded as this might cause problems.
+    //
+    layout[++i].type    = DuoUIValueGetter;
+    layout[i].name      = "Program started";
+    layout[i].key       = "boot";
+    layout[i].interval  = 5;
 
-    layout[4].type      = DuoUISlider;
-    layout[4].name      = "Slider for fixed";
-    layout[4].key       = "fixed";
-    layout[4].min       = 0;
-    layout[4].max       = 9999;
-    layout[4].interval  = 10;
+    layout[++i].type    = DuoUIValueSetter;
+    layout[i].name      = "This is count";
+    layout[i].key       = "count";
+    layout[i].interval  = 10;
 
-    layout[5].type      = DuoUIValueSetter;
-    layout[5].name      = "This is an ASCII string";
-    layout[5].key       = "str";
-    layout[5].interval  = 10;
+    layout[++i].type    = DuoUIValueSetter;
+    layout[i].name      = "This is fixed";
+    layout[i].key       = "fixed";
+    layout[i].interval  = 10;
+
+    layout[++i].type    = DuoUISlider;
+    layout[i].name      = "Slider for fixed";
+    layout[i].key       = "fixed";
+    layout[i].min       = 0;
+    layout[i].max       = 9999;
+    layout[i].interval  = 10;
 
     //
     // Setup the DuoKit layout with "duokit.setLayout(LAYOUT_ARRAY, LAYOUT_LENGTH)".
@@ -146,4 +149,9 @@ void loop()
     // Update the variable "count" to see the changes via "read" command.
     //
     count += 0.01;
+
+    //
+    // Update the variable "str".
+    //
+    boot = String(millis()/1000, DEC) + " secs ago.";
 }

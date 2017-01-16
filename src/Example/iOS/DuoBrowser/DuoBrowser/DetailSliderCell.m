@@ -66,35 +66,63 @@
     if (_slider.isTouchInside || actionUUID) {
         return;
     }
-    [_duo readValueWithKey:_key
-         completionHandler:^(NSInteger api,
-                             BOOL status,
-                             double value,
-                             NSString *stringValue,
-                             NSString *result,
-                             NSError *error)
-     {
-         if (status) {
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 if (_slider &&
-                     !_slider.isTouchInside &&
-                     !actionUUID) {
-                     [UIView animateWithDuration:.5f
-                                           delay:.0f
-                                         options:UIViewAnimationOptionCurveLinear
-                                      animations:^{
-                                          [_slider setValue:value animated:YES];
-                                      } completion:nil];
-                 }
-             });
-         } else {
-             if (error) {
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+    if (_pin) {
+        [_duo readAnalogPin:_pin
+          completionHandler:^(NSInteger api,
+                              BOOL status,
+                              DuoPin pin,
+                              DuoPinValue value,
+                              NSString *result,
+                              NSError *error)
+         {
+             if (status) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self reloadSliderValue:value];
+                 });
              } else {
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                 if (error) {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+                 } else {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                 }
              }
-         }
-     }];
+         }];
+    } else if (_key) {
+        [_duo readValueWithKey:_key
+             completionHandler:^(NSInteger api,
+                                 BOOL status,
+                                 double value,
+                                 NSString *stringValue,
+                                 NSString *result,
+                                 NSError *error)
+         {
+             if (status) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self reloadSliderValue:value];
+                 });
+             } else {
+                 if (error) {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+                 } else {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                 }
+             }
+         }];
+    }
+}
+
+- (void)reloadSliderValue:(CGFloat)value
+{
+    if (_slider &&
+        !_slider.isTouchInside &&
+        !actionUUID) {
+        [UIView animateWithDuration:.5f
+                              delay:.0f
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             [_slider setValue:value animated:YES];
+                         } completion:nil];
+    }
 }
 
 - (void)sliderDidEndEditng:(UISlider *)slider
@@ -102,41 +130,69 @@
     if ([slider isEqual:_slider]) {
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
-        [_duo updateValue:_slider.value
-              stringValue:nil
-                  withKey:_key
-        completionHandler:^(NSInteger api,
-                            BOOL status,
-                            double value,
-                            NSString *stringValue,
-                            NSString *result,
-                            NSError *error)
-         {
-             if (status) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     if (!_slider.isTouchInside &&
-                         thisAction == actionUUID) {
-                         [UIView animateWithDuration:.5f
-                                               delay:.0f
-                                             options:UIViewAnimationOptionCurveLinear
-                                          animations:^{
-                                              [_slider setValue:value animated:YES];
-                                          } completion:nil];
-                     }
-                 });
-             } else {
-                 
-                 if (error) {
+        __unsafe_unretained typeof(self) weakSelf = self;
+        if (_pin) {
+            [_duo setPinType:DuoSetPinAnalog
+                         pin:_pin
+                       value:_slider.value
+           completionHandler:^(NSInteger api,
+                               BOOL status,
+                               DuoPin pin,
+                               DuoPinValue value,
+                               DuoPinMode mode,
+                               NSString *result,
+                               NSError *error)
+             {
+                 if (!status) {
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [weakSelf updateSliderValue:value action:thisAction];
+                     });
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
                  }
-             }
-             
-             if (thisAction == actionUUID) {
-                 actionUUID = nil;
-             }
-         }];
+             }];
+        } else if (_key) {
+            [_duo updateValue:_slider.value
+                  stringValue:nil
+                      withKey:_key
+            completionHandler:^(NSInteger api,
+                                BOOL status,
+                                double value,
+                                NSString *stringValue,
+                                NSString *result,
+                                NSError *error)
+             {
+                 if (status) {
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [self updateSliderValue:value action:thisAction];
+                     });
+                 } else {
+                     if (error) {
+                         NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+                     } else {
+                         NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                     }
+                 }
+                 
+                 if (thisAction == actionUUID) {
+                     actionUUID = nil;
+                 }
+             }];
+        }
+    }
+}
+
+- (void)updateSliderValue:(CGFloat)value action:(NSUUID *)action
+{
+    if (!_slider.isTouchInside &&
+        action == actionUUID) {
+        [UIView animateWithDuration:.5f
+                              delay:.0f
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             [_slider setValue:value animated:YES];
+                         } completion:nil];
     }
 }
 

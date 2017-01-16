@@ -23,6 +23,8 @@
 		1F4B84F91DEB46BA00CF1163 /* MTKDuo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTKDuo.m; path = Object/Duo/MTKDuo.m; sourceTree = "<group>"; };
 		1F4B84FD1DEB568900CF1163 /* NSNetService+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNetService+Extension.h"; path = "Extension/NSNetService+Extension.h"; sourceTree = "<group>"; };
 		1F4B84FE1DEB568900CF1163 /* NSNetService+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNetService+Extension.m"; path = "Extension/NSNetService+Extension.m"; sourceTree = "<group>"; };
+		1F7030FA1E2CB57F005F4816 /* RGB_LED_Transition.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = RGB_LED_Transition.ino; sourceTree = "<group>"; };
+		1F7030FC1E2CB5E3005F4816 /* RGB_LED.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = RGB_LED.ino; sourceTree = "<group>"; };
 		1FEB95E51DE93CBE00D98443 /* DuoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DuoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FEB95E81DE93CBE00D98443 /* DuoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DuoKit.h; sourceTree = "<group>"; };
 		1FEB95E91DE93CBE00D98443 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -31,7 +33,6 @@
 		1FFB9F1C1E289F810052B2B8 /* DuoKit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DuoKit.cpp; sourceTree = "<group>"; };
 		1FFB9F1D1E289F810052B2B8 /* DuoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DuoKit.h; sourceTree = "<group>"; };
 		1FFB9F201E289F810052B2B8 /* Basic.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = Basic.ino; sourceTree = "<group>"; };
-		1FFB9F221E289F810052B2B8 /* RGB_LED.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = RGB_LED.ino; sourceTree = "<group>"; };
 		1FFB9F231E289F810052B2B8 /* keywords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
 		1FFB9F241E289F810052B2B8 /* library.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = library.properties; sourceTree = "<group>"; };
 		1FFB9F251E289F810052B2B8 /* README.adoc */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.adoc; sourceTree = "<group>"; };
@@ -68,6 +69,22 @@
 				1F4B84FE1DEB568900CF1163 /* NSNetService+Extension.m */,
 			);
 			name = Extension;
+			sourceTree = "<group>";
+		};
+		1F7030F91E2CB57F005F4816 /* RGB_LED_Transition */ = {
+			isa = PBXGroup;
+			children = (
+				1F7030FA1E2CB57F005F4816 /* RGB_LED_Transition.ino */,
+			);
+			path = RGB_LED_Transition;
+			sourceTree = "<group>";
+		};
+		1F7030FB1E2CB5E3005F4816 /* RGB_LED */ = {
+			isa = PBXGroup;
+			children = (
+				1F7030FC1E2CB5E3005F4816 /* RGB_LED.ino */,
+			);
+			path = RGB_LED;
 			sourceTree = "<group>";
 		};
 		1FEB95DB1DE93CBE00D98443 = {
@@ -134,7 +151,8 @@
 			isa = PBXGroup;
 			children = (
 				1FFB9F1F1E289F810052B2B8 /* Basic */,
-				1FFB9F211E289F810052B2B8 /* RGB_LED */,
+				1F7030FB1E2CB5E3005F4816 /* RGB_LED */,
+				1F7030F91E2CB57F005F4816 /* RGB_LED_Transition */,
 			);
 			path = examples;
 			sourceTree = "<group>";
@@ -145,14 +163,6 @@
 				1FFB9F201E289F810052B2B8 /* Basic.ino */,
 			);
 			path = Basic;
-			sourceTree = "<group>";
-		};
-		1FFB9F211E289F810052B2B8 /* RGB_LED */ = {
-			isa = PBXGroup;
-			children = (
-				1FFB9F221E289F810052B2B8 /* RGB_LED.ino */,
-			);
-			path = RGB_LED;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
