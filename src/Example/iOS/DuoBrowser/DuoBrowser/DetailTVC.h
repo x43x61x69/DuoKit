@@ -27,10 +27,11 @@
 
 #import <UIKit/UIKit.h>
 #import <DuoKit/DuoKit.h>
+#import "BrowserTVC.h"
 
 #define kDetailSegueIdentifer    @"DetailSegue"
 
-@interface DetailTVC : UITableViewController
+@interface DetailTVC : BrowserTVC
 
 @property (nonatomic, strong) Duo *duo;
 @property (nonatomic, strong) NSMutableArray<DuoUI *> *layout;

@@ -32,6 +32,7 @@
 
 @interface ServicesTVC () <DuoBrowserDelegate>
 {
+    BOOL isResolving;
     UIActivityIndicatorView *indicator;
 }
 
@@ -103,12 +104,12 @@
 {
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Didn't See Your Devices?"
-                                                                   message:@"Make sure you included the required library properly in your sketches.\n\nCheck out \"Help\" for more info."
+                                                                   message:@"Make sure you included the required library properly in your sketches and has connected to the same network as your devices.\n\nCheck out \"Help\" for more info."
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
                                                             style:UIAlertActionStyleDefault
                                                           handler:nil];
-    alert.view.tintColor = kColorBase;
+    alert.view.tintColor = kColorButtonDefault;
     [alert addAction:defaultAction];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -174,8 +175,9 @@
                                                                             style:UIAlertActionStyleDefault
                                                                           handler:^(UIAlertAction * action) {
                                                                               self.tableView.userInteractionEnabled = YES;
+                                                                              isResolving = NO;
                                                                           }];
-                    alert.view.tintColor = kColorBase;
+                    alert.view.tintColor = kColorButtonDefault;
                     [alert addAction:defaultAction];
                     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
                                                                                                      animated:YES
@@ -190,6 +192,7 @@
         [indicator stopAnimating];
     }
     self.tableView.userInteractionEnabled = YES;
+    isResolving = NO;
 }
 
 #pragma mark - Navigation
@@ -206,6 +209,7 @@
             [indicator stopAnimating];
         }
         self.tableView.userInteractionEnabled = YES;
+        isResolving = NO;
     }
 }
 
@@ -257,14 +261,16 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    self.tableView.userInteractionEnabled = NO;
-    
-    ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [cell.indicator startAnimating];
-    
-    Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
-    [_browser resolveService:duo.service
-                 withTimeout:5.f];
+    if (!isResolving) {
+        isResolving = YES;
+        self.tableView.userInteractionEnabled = NO;
+        ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell.indicator startAnimating];
+        
+        Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
+        [_browser resolveService:duo.service
+                     withTimeout:5.f];
+    }
 }
 
 @end

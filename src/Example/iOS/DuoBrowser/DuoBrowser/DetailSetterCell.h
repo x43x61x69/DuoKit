@@ -36,7 +36,8 @@
 @property (nonatomic)           CGFloat         value;
 @property (nonatomic, strong)   NSString        *stringValue;
 
-@property (nonatomic, strong)   Duo          *duo;
+@property (nonatomic, strong)   Duo             *duo;
+@property (nonatomic)           DuoPin          pin;
 @property (nonatomic, strong)   NSString        *key;
 
 @property (nonatomic, strong)   NSTimer         *timer;

@@ -33,6 +33,7 @@
 @protocol DetailAddItemDelegate <NSObject>
 
 - (void)newItemAdded:(DuoUI *)newUI;
+- (void)itemEdited:(DuoUI *)newUI atIndex:(NSUInteger)index;
 
 @end
 
@@ -40,5 +41,8 @@
 
 @property (nonatomic, assign) id<DetailAddItemDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *layout;
+
+@property (nonatomic, strong) DuoUI           *editLayout;
+@property (nonatomic)         NSInteger       editIndex;
 
 @end

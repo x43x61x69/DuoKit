@@ -25,8 +25,11 @@
 //  SOFTWARE.
 //
 
+#define kMaxUIElements  10
+
 #import <CommonCrypto/CommonDigest.h>
 #import "DetailTVC.h"
+#import "Common.h"
 #import "DetailAddItemTVC.h"
 #import "DetailWebUICell.h"
 #import "DetailSwitchCell.h"
@@ -65,6 +68,7 @@ typedef enum : uint8_t {
 @interface DetailTVC () <UITableViewDataSource, UITextFieldDelegate, DetailAddItemDelegate>
 {
     NSString *hash;
+    NSInteger editIndex;
 }
 
 @end
@@ -127,18 +131,6 @@ typedef enum : uint8_t {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    [super prepareForSegue:segue sender:sender];
-    
-    if ([segue.identifier isEqualToString:kDetailAddItemSegueIdentifer]) {
-        DetailAddItemTVC *vc = segue.destinationViewController;
-        vc.delegate = self;
-    }
-}
-
 #pragma mark - Table view data source
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -177,8 +169,8 @@ typedef enum : uint8_t {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section != 2) {
-        return 50;
+    if (indexPath.section != [tableView numberOfSections] - 1) {
+        return 54;
     }
     return 44;
 }
@@ -191,7 +183,7 @@ typedef enum : uint8_t {
                 DetailMiscDefaultCell *cell =
                 [tableView dequeueReusableCellWithIdentifier:kDetailMiscDefaultCellIdentifer
                                                 forIndexPath:indexPath];
-                cell.textLabel.text = @"Change PIN Mode";
+                cell.textLabel.text = @"PIN Mode";
                 return cell;
             }
             default:
@@ -227,9 +219,9 @@ typedef enum : uint8_t {
                 cell.textLabel.text = ui.name;
                 cell.duo = _duo;
                 cell.pin = ui.pin;
-                if (ui.color) cell.pinSwitch.onTintColor = ui.color;
+                cell.pinSwitch.onTintColor = ui.color ? ui.color : kColorUIDefault;
                 [cell.pinSwitch setOn:ui.value animated:NO];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((indexPath.section + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [cell setReloadInterval:ui.reloadInterval];
                 });
                 return cell;
@@ -241,6 +233,7 @@ typedef enum : uint8_t {
                                                 forIndexPath:indexPath];
                 cell.title.text = ui.name;
                 cell.duo = _duo;
+                cell.pin = ui.pin;
                 cell.valueType = ui.valueType;
                 cell.key = ui.key;
                 switch (ui.valueType) {
@@ -264,7 +257,7 @@ typedef enum : uint8_t {
                 }
                 cell.textField.userInteractionEnabled = ui.type == DuoUISetter;
                 cell.textField.borderStyle = ui.type == DuoUISetter ? UITextBorderStyleRoundedRect :  UITextBorderStyleNone;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((indexPath.section + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [cell setReloadInterval:ui.reloadInterval];
                 });
                 return cell;
@@ -277,11 +270,11 @@ typedef enum : uint8_t {
                 cell.duo = _duo;
                 cell.pin = ui.pin;
                 if (ui.key) cell.key = ui.key;
-                if (ui.color) cell.slider.tintColor = ui.color;
+                cell.slider.tintColor = ui.color ? ui.color : kColorUIDefault;
                 cell.slider.maximumValue = ui.maximumValue;
                 cell.slider.minimumValue = ui.minimumValue;
                 cell.slider.value = ui.value;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((indexPath.section + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [cell setReloadInterval:ui.reloadInterval];
                 });
                 return cell;
@@ -331,41 +324,96 @@ typedef enum : uint8_t {
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    cell.alpha = .0f;
-    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
-    [UIView animateWithDuration:.2f
-                          delay:indexPath.row * .1f
-                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
-                     animations:^ {
-                         cell.transform = CGAffineTransformIdentity;
-                         cell.alpha = 1.0f;
-                     } completion:nil];
-}
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return indexPath.section == 1;
 }
 
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *editAction
+    = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal
+                                         title:@"Edit"
+                                       handler:^(UITableViewRowAction *action,
+                                                 NSIndexPath *indexPath)
+       {
+           if (indexPath.row < _layout.count) {
+               editIndex = indexPath.row;
+               [self performSegueWithIdentifier:kDetailAddItemSegueIdentifer
+                                         sender:[_layout objectAtIndex:indexPath.row]];
+           }
+       }];
+    editAction.backgroundColor = kColorButtonDefault;
+    
+    UITableViewRowAction *deleteAction
+    = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive
+                                         title:@"Delete"
+                                       handler:^(UITableViewRowAction *action,
+                                                 NSIndexPath *indexPath)
+       {
+           [_layout removeObjectAtIndex:indexPath.row];
+           [self saveLayout];
+           [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+       }];
+    deleteAction.backgroundColor = kColorBase;
+    return @[deleteAction, editAction];
+}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        if (indexPath.row < _layout.count) {
-            [_layout removeObjectAtIndex:indexPath.row];
-            [self saveLayout];
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-            
-        }
-    }
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        if (indexPath.row < _layout.count) {
+//            [_layout removeObjectAtIndex:indexPath.row];
+//            [self saveLayout];
+//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//            
+//        }
+//    }
 }
 
 - (IBAction)addButtonAction:(id)sender
 {
-    [self performSegueWithIdentifier:kDetailAddItemSegueIdentifer sender:sender];
+    editIndex = -1;
+    if (_duo.layout.count + _layout.count >= kMaxUIElements) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning"
+                                                                       message:[NSString stringWithFormat:@"You already have %lu controls in the list.\n\nToo many requests will make the device unstable.\n\nPlease remove some of the items before you continue.", _duo.layout.count + _layout.count]
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Abort"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:nil];
+        UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Continue"
+                                                                style:UIAlertActionStyleDestructive
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self performSegueWithIdentifier:kDetailAddItemSegueIdentifer sender:sender];
+                                                              }];
+        alert.view.tintColor = kColorButtonDefault;
+        [alert addAction:addAction];
+        [alert addAction:defaultAction];
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
+                                                                                         animated:YES
+                                                                                       completion:nil];
+    } else {
+        [self performSegueWithIdentifier:kDetailAddItemSegueIdentifer sender:sender];
+    }
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [super prepareForSegue:segue sender:sender];
+    
+    if ([segue.identifier isEqualToString:kDetailAddItemSegueIdentifer]) {
+        DetailAddItemTVC *vc = segue.destinationViewController;
+        vc.delegate = self;
+        if (editIndex >= 0 && editIndex < _layout.count) {
+            vc.editIndex = editIndex;
+            vc.editLayout = [_layout objectAtIndex:editIndex];
+        } else {
+            vc.editIndex = -1;
+        }
+    }
 }
 
 #pragma mark - DetailAddItemDelegate
@@ -375,6 +423,16 @@ typedef enum : uint8_t {
     [_layout addObject:newUI];
     [self.tableView reloadData];
     [self saveLayout];
+}
+
+- (void)itemEdited:(DuoUI *)newUI atIndex:(NSUInteger)index
+{
+    if (index < _layout.count) {
+        [_layout removeObjectAtIndex:index];
+        [_layout insertObject:newUI atIndex:index];
+        [self.tableView reloadData];
+        [self saveLayout];
+    }
 }
 
 #pragma mark - Sync User Defaults

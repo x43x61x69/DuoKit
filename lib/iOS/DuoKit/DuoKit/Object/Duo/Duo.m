@@ -463,7 +463,7 @@
                  NSString *e = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                  if ([e hasPrefix:@"Could not connect to YunServer"]) {
                      dispatch_async(dispatch_get_main_queue(),^{
-                         completionHandler(0, NO, @{kMessage : @"Bridge was not available. Please make sure you have setup YunBridge  correctly and wait until both MPU and MCU were fully initialized."}, nil);
+                         completionHandler(0, NO, @{kMessage : @"Bridge was not available.\n\nPlease make sure you have setup YunBridge correctly and wait until both MPU and MCU were fully initialized."}, nil);
                      });
                  } else {
                      NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];

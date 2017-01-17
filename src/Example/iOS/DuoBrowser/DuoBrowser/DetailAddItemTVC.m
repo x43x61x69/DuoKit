@@ -41,18 +41,18 @@ typedef enum {
 
 @interface DetailAddItemTVC () <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
-@property (nonatomic, strong)   NSMutableArray  *typeDataSource;
-@property (nonatomic, strong)   UIPickerView    *typePicker;
+@property (nonatomic, strong) NSMutableArray  *typeDataSource;
+@property (nonatomic, strong) UIPickerView    *typePicker;
 
-@property (nonatomic, strong)   NSMutableArray  *modeDataSource;
-@property (nonatomic, strong)   UIPickerView    *modePicker;
+@property (nonatomic, strong) NSMutableArray  *modeDataSource;
+@property (nonatomic, strong) UIPickerView    *modePicker;
 
-@property (nonatomic, strong)   UITextField     *nameTextField;
-@property (nonatomic, strong)   UITextField     *typeTextField;
-@property (nonatomic, strong)   UITextField     *pinTextField;
-@property (nonatomic, strong)   UITextField     *modeTextField;
-@property (nonatomic, strong)   UITextField     *intervalTextField;
-@property (nonatomic, strong)   UITextField     *colorTextField;
+@property (nonatomic, strong) UITextField     *nameTextField;
+@property (nonatomic, strong) UITextField     *typeTextField;
+@property (nonatomic, strong) UITextField     *pinTextField;
+@property (nonatomic, strong) UITextField     *modeTextField;
+@property (nonatomic, strong) UITextField     *intervalTextField;
+@property (nonatomic, strong) UITextField     *colorTextField;
 
 @end
 
@@ -90,12 +90,28 @@ typedef enum {
     _typePicker.showsSelectionIndicator = YES;
     [_typePicker selectRow:0 inComponent:0 animated:NO];
     
-    _modeDataSource = [NSMutableArray arrayWithArray:@[@"Ouput", @"Input", @"Input Pullup"]];
+    _modeDataSource = [NSMutableArray arrayWithArray:@[@"Ouput", @"Input"]]; // , @"Input Pullup"
     _modePicker = [UIPickerView new];
     _modePicker.dataSource = self;
     _modePicker.delegate = self;
     _modePicker.showsSelectionIndicator = YES;
     [_modePicker selectRow:1 inComponent:0 animated:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (_editIndex >= 0 && _editLayout) {
+        self.navigationItem.title = [NSString stringWithFormat:@"Edit \"%@\"", _editLayout.name ? _editLayout.name : @"--"];
+        _nameTextField.text = _editLayout.name ? _editLayout.name : @"";
+        _pinTextField.text = _editLayout.pin ? [NSString stringWithFormat:@"%ld", _editLayout.pin] : @"";
+        [_typePicker selectRow:_editLayout.type == DuoUISwitch ? 0 : 1 inComponent:0 animated:NO];
+        _typeTextField.text = _typeDataSource[_editLayout.type == DuoUISwitch ? 0 : 1];
+        [_modePicker selectRow:_editLayout.type == DuoUIGetter ? 0 : 1 inComponent:0 animated:NO];
+        _modeTextField.text = _modeDataSource[_editLayout.type == DuoUIGetter ? 0 : 1];
+        _intervalTextField.text = _editLayout.reloadInterval ? [NSString stringWithFormat:@"%.f", MAX(3.f, _editLayout.reloadInterval)] : @"";
+    }
 }
 
 #pragma mark - Table view data source
@@ -399,15 +415,21 @@ typedef enum {
     
     DuoUI *newUI = [DuoUI new];
 
-    newUI.type  = [_intervalTextField.text integerValue] == DuoPinOutput ? DuoUIGetter : [_typePicker selectedRowInComponent:0] == DuoSetPinDigital ? DuoUISwitch : DuoUISlider;
+    newUI.type  = [_modePicker selectedRowInComponent:0] == DuoPinOutput ? DuoUIGetter : [_typePicker selectedRowInComponent:0] == DuoSetPinDigital ? DuoUISwitch : DuoUISlider;
     newUI.name  = _nameTextField.text;
     newUI.pin   = [_pinTextField.text integerValue];
-    newUI.minimumValue = 0;
-    newUI.maximumValue = 0xFF;
+    if (newUI.type == DuoUISlider) {
+        newUI.minimumValue = 0;
+        newUI.maximumValue = 0xFF;
+    }
     newUI.reloadInterval = [_intervalTextField.text integerValue];
     newUI.color = [UIColor darkGrayColor];
     
-    [_delegate newItemAdded:newUI];
+    if (_editIndex >= 0) {
+        [_delegate itemEdited:newUI atIndex:_editIndex];
+    } else {
+        [_delegate newItemAdded:newUI];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
