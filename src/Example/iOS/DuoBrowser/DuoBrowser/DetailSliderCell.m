@@ -45,6 +45,10 @@
     [_slider addTarget:self
                 action:@selector(sliderDidEndEditng:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    [_slider addTarget:self
+                action:@selector(sliderValueDidChange:)
+      forControlEvents:UIControlEventTouchDragInside];
 }
 
 - (void)setReloadInterval:(NSTimeInterval)interval
@@ -128,6 +132,9 @@
 - (void)sliderDidEndEditng:(UISlider *)slider
 {
     if ([slider isEqual:_slider]) {
+        
+        _sliderValueLabel.text = @"";
+        
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
         __unsafe_unretained typeof(self) weakSelf = self;
@@ -195,5 +202,13 @@
                          } completion:nil];
     }
 }
+
+- (void)sliderValueDidChange:(UISlider *)slider
+{
+    if ([slider isEqual:_slider]) {
+        _sliderValueLabel.text = [NSString stringWithFormat:@"%ld", lroundf(_slider.value)];
+    }
+}
+
 
 @end

@@ -352,11 +352,24 @@
                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57x-xp-iFV">
                                             <rect key="frame" x="221" y="7" width="144" height="31"/>
                                         </slider>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwH-Qc-dJU" userLabel="Value">
+                                            <rect key="frame" x="16" y="11" width="187" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="c16-PT-PgC"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="1ju-db-71R" firstAttribute="bottom" secondItem="SwH-Qc-dJU" secondAttribute="bottom" id="6Qb-lM-Gy9"/>
                                         <constraint firstItem="1ju-db-71R" firstAttribute="leading" secondItem="tKi-fK-IAZ" secondAttribute="leadingMargin" constant="8" id="6si-cn-Ino"/>
+                                        <constraint firstItem="1ju-db-71R" firstAttribute="trailing" secondItem="SwH-Qc-dJU" secondAttribute="trailing" id="IXs-Lm-M8H"/>
                                         <constraint firstAttribute="trailing" secondItem="57x-xp-iFV" secondAttribute="trailing" constant="12" id="LWX-7r-TS3"/>
+                                        <constraint firstItem="1ju-db-71R" firstAttribute="leading" secondItem="SwH-Qc-dJU" secondAttribute="leading" id="NYo-RZ-Ssz"/>
                                         <constraint firstItem="1ju-db-71R" firstAttribute="centerY" secondItem="tKi-fK-IAZ" secondAttribute="centerY" id="NaO-4E-i8I"/>
+                                        <constraint firstItem="1ju-db-71R" firstAttribute="top" secondItem="SwH-Qc-dJU" secondAttribute="top" id="RsI-QY-1Sz"/>
                                         <constraint firstItem="57x-xp-iFV" firstAttribute="centerY" secondItem="tKi-fK-IAZ" secondAttribute="centerY" id="d02-Sz-Vki"/>
                                         <constraint firstItem="57x-xp-iFV" firstAttribute="width" secondItem="1ju-db-71R" secondAttribute="width" multiplier="3:4" id="elu-sm-phV"/>
                                         <constraint firstItem="57x-xp-iFV" firstAttribute="leading" secondItem="1ju-db-71R" secondAttribute="trailing" constant="20" id="gLg-Uf-Der"/>
@@ -364,6 +377,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="slider" destination="57x-xp-iFV" id="nNi-xp-RlR"/>
+                                    <outlet property="sliderValueLabel" destination="SwH-Qc-dJU" id="7pY-0h-rl9"/>
                                     <outlet property="title" destination="1ju-db-71R" id="sjk-Jm-Aqo"/>
                                 </connections>
                             </tableViewCell>
