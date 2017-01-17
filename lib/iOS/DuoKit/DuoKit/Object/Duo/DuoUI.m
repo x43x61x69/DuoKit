@@ -102,7 +102,7 @@
         if ([dictionary objectForKey:@"color"])
             self.color = UIColorFromRGB([[dictionary objectForKey:@"color"] integerValue]);
         if ([dictionary objectForKey:@"interval"])
-            self.reloadInterval = [[dictionary objectForKey:@"interval"] doubleValue];
+            self.reloadInterval = MAX(3.f, [[dictionary objectForKey:@"interval"] doubleValue]);
     }
     return self;
 }

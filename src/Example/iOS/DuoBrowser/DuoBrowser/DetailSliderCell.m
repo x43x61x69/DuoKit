@@ -47,6 +47,10 @@
       forControlEvents:UIControlEventTouchUpInside];
     
     [_slider addTarget:self
+                action:@selector(sliderDidEndEditng:)
+      forControlEvents:UIControlEventTouchUpOutside];
+    
+    [_slider addTarget:self
                 action:@selector(sliderValueDidChange:)
       forControlEvents:UIControlEventTouchDragInside];
 }

@@ -30,8 +30,6 @@
 
 @interface HelpTVC ()
 
-@property (nonatomic, strong) NSMutableArray<NSString *>    *dataSource;
-
 @end
 
 @implementation HelpTVC
@@ -48,7 +46,6 @@
     if (section != [tableView numberOfSections] - 1) {
         return [super tableView:tableView heightForFooterInSection:section];
     }
-    
     return 50.f;
 }
 

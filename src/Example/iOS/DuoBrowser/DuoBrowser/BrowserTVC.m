@@ -68,7 +68,7 @@
     cell.alpha = .0f;
     cell.transform = CGAffineTransformMakeScale(.8f, .5f);
     [UIView animateWithDuration:.2f
-                          delay:indexPath.row * .1f
+                          delay:(indexPath.section + indexPath.row) * .05f
                         options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
                      animations:^ {
                          cell.transform = CGAffineTransformIdentity;

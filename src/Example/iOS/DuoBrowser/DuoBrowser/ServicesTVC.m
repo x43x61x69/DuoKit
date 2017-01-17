@@ -48,6 +48,13 @@
     
     self.navigationItem.title = @"Select a Service";
     
+    UIBarButtonItem *hintButton
+    = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tab-info"]
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(hintButtonAction:)];
+    self.navigationItem.rightBarButtonItem = hintButton;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(searchForServices)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -90,6 +97,25 @@
     _browser.delegate = self;
     [_browser searchForServicesOfType:_serviceType
                              inDomain:_domain];
+}
+
+- (void)hintButtonAction:(id)sender
+{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Didn't See Your Devices?"
+                                                                   message:@"Make sure you included the required library properly in your sketches.\n\nCheck out \"Help\" for more info."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:nil];
+    alert.view.tintColor = kColorBase;
+    [alert addAction:defaultAction];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
+                                                                                         animated:YES
+                                                                                       completion:nil];
+    });
 }
 
 #pragma mark - DuoBrowserDelegate
@@ -149,6 +175,7 @@
                                                                           handler:^(UIAlertAction * action) {
                                                                               self.tableView.userInteractionEnabled = YES;
                                                                           }];
+                    alert.view.tintColor = kColorBase;
                     [alert addAction:defaultAction];
                     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
                                                                                                      animated:YES
@@ -183,6 +210,11 @@
 }
 
 #pragma mark - Table view data source
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 48;
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
