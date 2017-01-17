@@ -44,6 +44,9 @@ typedef enum {
 @property (nonatomic, strong)   NSMutableArray  *typeDataSource;
 @property (nonatomic, strong)   UIPickerView    *typePicker;
 
+@property (nonatomic, strong)   NSMutableArray  *modeDataSource;
+@property (nonatomic, strong)   UIPickerView    *modePicker;
+
 @property (nonatomic, strong)   UITextField     *nameTextField;
 @property (nonatomic, strong)   UITextField     *typeTextField;
 @property (nonatomic, strong)   UITextField     *pinTextField;
@@ -86,6 +89,13 @@ typedef enum {
     _typePicker.delegate = self;
     _typePicker.showsSelectionIndicator = YES;
     [_typePicker selectRow:0 inComponent:0 animated:NO];
+    
+    _modeDataSource = [NSMutableArray arrayWithArray:@[@"Ouput", @"Input", @"Input Pullup"]];
+    _modePicker = [UIPickerView new];
+    _modePicker.dataSource = self;
+    _modePicker.delegate = self;
+    _modePicker.showsSelectionIndicator = YES;
+    [_modePicker selectRow:1 inComponent:0 animated:NO];
 }
 
 #pragma mark - Table view data source
@@ -133,8 +143,6 @@ typedef enum {
             _typeTextField = cell.textField;
             _typeTextField.delegate = self;
             
-            [_typePicker selectRow:0 inComponent:0 animated:YES];
-            
             UIBarButtonItem *flexibleItem
             = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                             target:nil
@@ -175,10 +183,13 @@ typedef enum {
             return cell;
         }
         case DetailAddItemMode: {
-            DetailAddItemDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailAddItemDefaultCellIdentifer
-                                                                             forIndexPath:indexPath];
+            DetailAddItemTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailAddItemTypeCellIdentifer
+                                                                          forIndexPath:indexPath];
+            cell.textField.hideCaret = YES;
+            
             cell.title.text = @"PIN Mode";
-            cell.textField.keyboardType = UIKeyboardTypeNumberPad;
+            cell.textField.text = _modeDataSource[1];
+            [cell.textField setInputView:_modePicker];
             _modeTextField = cell.textField;
             _modeTextField.delegate = self;
             
@@ -189,11 +200,10 @@ typedef enum {
             UIBarButtonItem *doneButton =
             [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                           target:self
-                                                          action:@selector(dissmissInputView:)];
+                                                          action:@selector(dissmissModeInputView)];
             UIToolbar *inputToolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(.0f, .0f,
                                                                                    self.tableView.contentSize.width,
                                                                                    44.f)];
-            
             [inputToolbar setItems:@[flexibleItem, doneButton] animated:NO];
             cell.textField.inputAccessoryView = inputToolbar;
             return cell;
@@ -256,24 +266,39 @@ typedef enum {
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return _typeDataSource.count;
+    if (pickerView == _typePicker) {
+        return _typeDataSource.count;
+    } else if (pickerView == _modePicker) {
+        return _modeDataSource.count;
+    }
+    return 0;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return _typeDataSource[row];
+    if (pickerView == _typePicker) {
+        return _typeDataSource[row];
+    } else if (pickerView == _modePicker) {
+        return _modeDataSource[row];
+    }
+    return nil;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    _typeTextField.text = _typeDataSource[row];
+    if (pickerView == _typePicker) {
+        _typeTextField.text = _typeDataSource[row];
+    } else if (pickerView == _modePicker) {
+        _modeTextField.text = _modeDataSource[row];
+    }
 }
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == _typeTextField) {
+    if (textField == _typeTextField ||
+        textField == _modeTextField) {
         return NO;
     }
     return YES;
@@ -305,6 +330,14 @@ typedef enum {
     [self checkTextFields];
 }
 
+- (void)dissmissModeInputView
+{
+    NSInteger selected = [_modePicker selectedRowInComponent:0];
+    _modeTextField.text = _modeDataSource[selected];
+    [_modeTextField resignFirstResponder];
+    [self checkTextFields];
+}
+
 - (void)checkTextFields
 {
     if (!_nameTextField.text.length) {
@@ -314,8 +347,7 @@ typedef enum {
     } else if (![_pinTextField.text integerValue]) {
         _pinTextField.text = @"";
         [_pinTextField becomeFirstResponder];
-    } else if ([_modeTextField.text integerValue] < DuoPinOutput || [_modeTextField.text integerValue] > DuoPinInputPullup) {
-        _modeTextField.text = @"";
+    } else if ([_modePicker selectedRowInComponent:0] < DuoPinOutput || [_modePicker selectedRowInComponent:0] > DuoPinInputPullup) {
         [_modeTextField becomeFirstResponder];
     } else if ([_intervalTextField.text integerValue] != 0 && [_intervalTextField.text integerValue] < 3) {
         _intervalTextField.text = @"";
@@ -339,7 +371,7 @@ typedef enum {
     } else if (![_pinTextField.text integerValue]) {
         error = @"Invalid PIN number!";
         errorTextField = _pinTextField;
-    } else if ([_modeTextField.text integerValue] < DuoPinOutput || [_modeTextField.text integerValue] > DuoPinInputPullup) {
+    } else if ([_modePicker selectedRowInComponent:0] < DuoPinOutput || [_modePicker selectedRowInComponent:0] > DuoPinInputPullup) {
         error = @"Invalid PIN mode!";
         errorTextField = _modeTextField;
     } else if ([_intervalTextField.text integerValue] != 0 && [_intervalTextField.text integerValue] < 3) {
@@ -367,7 +399,7 @@ typedef enum {
     
     DuoUI *newUI = [DuoUI new];
 
-    newUI.type  = [_typePicker selectedRowInComponent:0] == DuoSetPinDigital ? DuoUISwitch : DuoUISlider;
+    newUI.type  = [_intervalTextField.text integerValue] == DuoPinOutput ? DuoUIGetter : [_typePicker selectedRowInComponent:0] == DuoSetPinDigital ? DuoUISwitch : DuoUISlider;
     newUI.name  = _nameTextField.text;
     newUI.pin   = [_pinTextField.text integerValue];
     newUI.minimumValue = 0;

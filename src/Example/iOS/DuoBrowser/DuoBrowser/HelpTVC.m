@@ -28,10 +28,7 @@
 #import "HelpTVC.h"
 #import <DuoKit/DuoKit.h>
 
-@interface HelpTVC () <DuoBrowserDelegate>
-{
-    UIActivityIndicatorView *indicator;
-}
+@interface HelpTVC ()
 
 @property (nonatomic, strong) NSMutableArray<NSString *>    *dataSource;
 
@@ -46,45 +43,49 @@
 
 #pragma mark - Table view data source
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return @"General";
-        default:
-            return nil;
+    if (section != [tableView numberOfSections] - 1) {
+        return [super tableView:tableView heightForFooterInSection:section];
     }
+    
+    return 50.f;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _dataSource.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    DomainCell *cell = [tableView dequeueReusableCellWithIdentifier:kDomainCellIdentifer
-//                                                       forIndexPath:indexPath];
-//    
-//    NSString *domain = [_dataSource objectAtIndex:indexPath.row];
-//    
-//    cell.title.text = [domain hasSuffix:@"."] ?
-//    [domain substringToIndex:domain.length-1] :
-//    domain;
-//    [cell.indicator stopAnimating];
-//    
-//    return cell;
-    return [UITableViewCell new];
+    if (section != [tableView numberOfSections] - 1) {
+        return nil;
+    }
+    
+    UILabel *label
+    = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
+                                                self.view.frame.size.width,
+                                                44.f)];
+    
+    label.text = [NSString stringWithFormat:@"Version: %@ (%@)",
+                  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
+                  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize] weight:UIFontWeightUltraLight];
+    label.textColor = [UIColor lightGrayColor];
+    
+    return label;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    switch (cell.tag) {
+        case 0: // Help
+            [self showHelp:self];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Navigation
@@ -92,6 +93,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [super prepareForSegue:segue sender:sender];
+}
+
+#pragma mark - Methods
+
+- (IBAction)showHelp:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kProjectURL]];
 }
 
 @end

@@ -41,9 +41,4 @@
 
 @implementation DetailAddItemTypeCell
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
-
 @end

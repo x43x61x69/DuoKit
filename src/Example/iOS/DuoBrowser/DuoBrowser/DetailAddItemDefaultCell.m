@@ -29,9 +29,4 @@
 
 @implementation DetailAddItemDefaultCell
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
-
 @end

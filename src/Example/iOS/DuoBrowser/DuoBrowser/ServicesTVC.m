@@ -71,8 +71,6 @@
     [super viewWillDisappear:animated];
     
     [self hideActivityView];
-    
-    _browser = nil;
 }
 
 - (void)dealloc
@@ -115,8 +113,6 @@
 
 - (void)didResolveDuo:(Duo *)duo
 {
-    self.tableView.userInteractionEnabled = YES;
-    
     [duo isDeviceReadyWithApi:kDuoKitMinVersion
             completionHandler:^(NSInteger api,
                                 BOOL isReady,
@@ -150,7 +146,9 @@
                                                                             preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
                                                                             style:UIAlertActionStyleDefault
-                                                                          handler:^(UIAlertAction * action) {}];
+                                                                          handler:^(UIAlertAction * action) {
+                                                                              self.tableView.userInteractionEnabled = YES;
+                                                                          }];
                     [alert addAction:defaultAction];
                     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
                                                                                                      animated:YES
@@ -180,6 +178,7 @@
         if (indicator) {
             [indicator stopAnimating];
         }
+        self.tableView.userInteractionEnabled = YES;
     }
 }
 

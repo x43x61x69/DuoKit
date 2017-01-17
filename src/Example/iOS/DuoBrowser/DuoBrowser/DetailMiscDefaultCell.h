@@ -1,5 +1,5 @@
 //
-//  DetailTVC.h
+//  DetailMiscDefaultCell.h
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -25,15 +25,10 @@
 //  SOFTWARE.
 //
 
+#define kDetailMiscDefaultCellIdentifer  @"DetailMiscDefaultCell"
+
 #import <UIKit/UIKit.h>
-#import <DuoKit/DuoKit.h>
 
-#define kDetailSegueIdentifer    @"DetailSegue"
-
-@interface DetailTVC : UITableViewController
-
-@property (nonatomic, strong) Duo *duo;
-@property (nonatomic, strong) NSMutableArray<DuoUI *> *layout;
-@property (nonatomic, strong) NSArray<NSNumber *> *misc;
+@interface DetailMiscDefaultCell : UITableViewCell
 
 @end

@@ -83,6 +83,7 @@
     
     [self showActivityView];
     
+    _browser = nil;
     _browser = [DuoBrowser new];
     _browser.delegate = self;
     [_browser searchForBrowsableDomains];
@@ -139,6 +140,7 @@
     cell.title.text = [domain hasSuffix:@"."] ?
     [domain substringToIndex:domain.length-1] :
     domain;
+    indicator = cell.indicator;
     [cell.indicator stopAnimating];
     
     return cell;
@@ -150,7 +152,6 @@
     
     DomainCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.indicator.color = kColorBase;
-    indicator = cell.indicator;
     [cell.indicator startAnimating];
     
     [self performSegueWithIdentifier:kServiceSegueIdentifer sender:indexPath];

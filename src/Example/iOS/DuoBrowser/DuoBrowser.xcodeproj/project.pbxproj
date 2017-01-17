@@ -28,6 +28,7 @@
 		423FFABB1E2DDBE0007E32DC /* BrowserTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFABA1E2DDBE0007E32DC /* BrowserTVC.m */; };
 		423FFABE1E2DDDAF007E32DC /* DomainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFABD1E2DDDAF007E32DC /* DomainCell.m */; };
 		423FFAC11E2DDDC9007E32DC /* HelpTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAC01E2DDDC9007E32DC /* HelpTVC.m */; };
+		423FFAC41E2DF681007E32DC /* DetailMiscDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAC31E2DF681007E32DC /* DetailMiscDefaultCell.m */; };
 		4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4266C7811E163A730056FE02 /* DetailSetterCell.m */; };
 		426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,8 @@
 		423FFABD1E2DDDAF007E32DC /* DomainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DomainCell.m; sourceTree = "<group>"; };
 		423FFABF1E2DDDC9007E32DC /* HelpTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTVC.h; sourceTree = "<group>"; };
 		423FFAC01E2DDDC9007E32DC /* HelpTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTVC.m; sourceTree = "<group>"; };
+		423FFAC21E2DF681007E32DC /* DetailMiscDefaultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMiscDefaultCell.h; sourceTree = "<group>"; };
+		423FFAC31E2DF681007E32DC /* DetailMiscDefaultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMiscDefaultCell.m; sourceTree = "<group>"; };
 		4266C7801E163A730056FE02 /* DetailSetterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSetterCell.h; sourceTree = "<group>"; };
 		4266C7811E163A730056FE02 /* DetailSetterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSetterCell.m; sourceTree = "<group>"; };
 		426EC0E81E2337B700D2D762 /* DetailSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSwitchCell.h; sourceTree = "<group>"; };
@@ -267,6 +270,8 @@
 				1FF343801E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m */,
 				1FF343821E2CEFDA009F2DC7 /* DetailAddItemTypeCell.h */,
 				1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */,
+				423FFAC21E2DF681007E32DC /* DetailMiscDefaultCell.h */,
+				423FFAC31E2DF681007E32DC /* DetailMiscDefaultCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -387,6 +392,7 @@
 				423FFAB11E2DA4D7007E32DC /* ServiceCell.m in Sources */,
 				423FFABB1E2DDBE0007E32DC /* BrowserTVC.m in Sources */,
 				4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */,
+				423FFAC41E2DF681007E32DC /* DetailMiscDefaultCell.m in Sources */,
 				426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */,
 				1FF343811E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m in Sources */,
 				423FFAC11E2DDDC9007E32DC /* HelpTVC.m in Sources */,

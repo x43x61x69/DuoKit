@@ -25,14 +25,47 @@
 //  SOFTWARE.
 //
 
+#import <CommonCrypto/CommonDigest.h>
 #import "DetailTVC.h"
 #import "DetailAddItemTVC.h"
 #import "DetailWebUICell.h"
 #import "DetailSwitchCell.h"
 #import "DetailSetterCell.h"
 #import "DetailSliderCell.h"
+#import "DetailMiscDefaultCell.h"
 
-@interface DetailTVC () <UITextFieldDelegate, DetailAddItemDelegate>
+@interface NSString (Extension)
+
+- (NSString *)md5;
+
+@end
+
+@implementation NSString (Extension)
+
+- (NSString *)md5
+{
+    const char *str = [self UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, (CC_LONG)strlen(str), result);
+    NSMutableString *ret
+    = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+        [ret appendFormat:@"%02x",result[i]];
+    }
+    return ret;
+}
+
+@end
+
+typedef enum : uint8_t {
+    DetailMiscNone  = 0,
+    DetailMiscMode
+} DetailMiscType;
+
+@interface DetailTVC () <UITableViewDataSource, UITextFieldDelegate, DetailAddItemDelegate>
+{
+    NSString *hash;
+}
 
 @end
 
@@ -42,7 +75,19 @@
 {
     [super loadView];
     
-    _layout = [NSMutableArray new];
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    
+    _misc = @[@(DetailMiscMode)];
+    
+    if (_duo.name && _duo.name.length) {
+        hash = [_duo.name md5];
+    }
+    
+    [self loadLayout];
+    
+    if (!_layout) {
+        _layout = [NSMutableArray new];
+    }
     
     UIBarButtonItem *addButton
     = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -57,7 +102,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backAction:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
+                                                 name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
 }
 
@@ -103,14 +148,17 @@
             return @"Pre-Defined by Arduino";
         case 1:
             return @"User Defined";
+        case 2:
+            return @"Misc";
         default:
-            return nil;
+            break;
     }
+    return nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return (_duo.layout.count > 0) + (_layout.count > 0);
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -120,105 +168,128 @@
             return _duo.layout.count;
         case 1:
             return _layout.count;
+        case 2:
+            return _misc.count;
         default:
             return 0;
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section != 2) {
+        return 50;
+    }
+    return 44;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DuoUI *ui;
-    switch (indexPath.section) {
-        case 1:
-            ui = [_layout objectAtIndex:indexPath.row];
-            break;
-        default:
-            ui = [_duo.layout objectAtIndex:indexPath.row];
-            break;
-    }
-    
-    switch (ui.type) {
-        case DuoUIWebUI: {
-            DetailWebUICell *cell =
-            [tableView dequeueReusableCellWithIdentifier:kDetailWebUICellIdentifer
-                                            forIndexPath:indexPath];
-            cell.duo = _duo;
-            cell.textLabel.text = ui.name ? ui.name : _duo.name;
-            cell.detailTextLabel.text = _duo.v4Addresses.count ?
-            [_duo.v4Addresses firstObject] : _duo.v6Addresses.count ?
-            [_duo.v6Addresses firstObject] : nil;
-            return cell;
-        }
-        case DuoUISwitch: {
-            DetailSwitchCell *cell =
-            [tableView dequeueReusableCellWithIdentifier:kDetailSwitchCellIdentifer
-                                            forIndexPath:indexPath];
-            cell.textLabel.text = ui.name;
-            cell.duo = _duo;
-            cell.pin = ui.pin;
-            if (ui.color) cell.pinSwitch.onTintColor = ui.color;
-            [cell.pinSwitch setOn:ui.value animated:NO];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [cell setReloadInterval:ui.reloadInterval];
-            });
-            return cell;
-        }
-        case DuoUISetter:
-        case DuoUIGetter: {
-            DetailSetterCell *cell =
-            [tableView dequeueReusableCellWithIdentifier:kDetailSetterCellIdentifer
-                                            forIndexPath:indexPath];
-            cell.title.text = ui.name;
-            cell.duo = _duo;
-            cell.valueType = ui.valueType;
-            cell.key = ui.key;
-            switch (ui.valueType) {
-                case DuoIntType:
-                    cell.textField.keyboardType = UIKeyboardTypeNumberPad;
-                    cell.value = ui.value;
-                    cell.textField.text = [NSString stringWithFormat:@"%ld", lroundf(ui.value)];
-                    break;
-                case DuoDoubleType:
-                    cell.textField.keyboardType = UIKeyboardTypeDecimalPad;
-                    cell.value = ui.value;
-                    cell.textField.text = [NSString stringWithFormat:@"%.*f", 2, ui.value];
-                    break;
-                case DuoStringType:
-                    cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
-                    cell.stringValue = ui.stringValue;
-                    cell.textField.text = ui.stringValue;
-                    break;
-                default:
-                    break;
+    if (indexPath.section == 2) {
+        switch ([[_misc objectAtIndex:indexPath.row] integerValue]) {
+            case DetailMiscMode: {
+                DetailMiscDefaultCell *cell =
+                [tableView dequeueReusableCellWithIdentifier:kDetailMiscDefaultCellIdentifer
+                                                forIndexPath:indexPath];
+                cell.textLabel.text = @"Change PIN Mode";
+                return cell;
             }
-            cell.textField.userInteractionEnabled = ui.type == DuoUISetter;
-            cell.textField.borderStyle = ui.type == DuoUISetter ? UITextBorderStyleRoundedRect :  UITextBorderStyleNone;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [cell setReloadInterval:ui.reloadInterval];
-            });
-            return cell;
+            default:
+                break;
         }
-        case DuoUISlider: {
-            DetailSliderCell *cell =
-            [tableView dequeueReusableCellWithIdentifier:kDetailSliderCellIdentifer
-                                            forIndexPath:indexPath];
-            cell.title.text = ui.name;
-            cell.duo = _duo;
-            cell.pin = ui.pin;
-            if (ui.key) cell.key = ui.key;
-            if (ui.color) cell.slider.tintColor = ui.color;
-            cell.slider.maximumValue = ui.maximumValue;
-            cell.slider.minimumValue = ui.minimumValue;
-            cell.slider.value = ui.value;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [cell setReloadInterval:ui.reloadInterval];
-            });
-            return cell;
+    } else {
+        DuoUI *ui;
+        switch (indexPath.section) {
+            case 1:
+                ui = [_layout objectAtIndex:indexPath.row];
+                break;
+            default:
+                ui = [_duo.layout objectAtIndex:indexPath.row];
+                break;
         }
-        default:
-            break;
+        
+        switch (ui.type) {
+            case DuoUIWebUI: {
+                DetailWebUICell *cell =
+                [tableView dequeueReusableCellWithIdentifier:kDetailWebUICellIdentifer
+                                                forIndexPath:indexPath];
+                cell.duo = _duo;
+                cell.textLabel.text = ui.name ? ui.name : _duo.name;
+                cell.detailTextLabel.text = _duo.v4Addresses.count ?
+                [_duo.v4Addresses firstObject] : _duo.v6Addresses.count ?
+                [_duo.v6Addresses firstObject] : nil;
+                return cell;
+            }
+            case DuoUISwitch: {
+                DetailSwitchCell *cell =
+                [tableView dequeueReusableCellWithIdentifier:kDetailSwitchCellIdentifer
+                                                forIndexPath:indexPath];
+                cell.textLabel.text = ui.name;
+                cell.duo = _duo;
+                cell.pin = ui.pin;
+                if (ui.color) cell.pinSwitch.onTintColor = ui.color;
+                [cell.pinSwitch setOn:ui.value animated:NO];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [cell setReloadInterval:ui.reloadInterval];
+                });
+                return cell;
+            }
+            case DuoUISetter:
+            case DuoUIGetter: {
+                DetailSetterCell *cell =
+                [tableView dequeueReusableCellWithIdentifier:kDetailSetterCellIdentifer
+                                                forIndexPath:indexPath];
+                cell.title.text = ui.name;
+                cell.duo = _duo;
+                cell.valueType = ui.valueType;
+                cell.key = ui.key;
+                switch (ui.valueType) {
+                    case DuoIntType:
+                        cell.textField.keyboardType = UIKeyboardTypeNumberPad;
+                        cell.value = ui.value;
+                        cell.textField.text = [NSString stringWithFormat:@"%ld", lroundf(ui.value)];
+                        break;
+                    case DuoDoubleType:
+                        cell.textField.keyboardType = UIKeyboardTypeDecimalPad;
+                        cell.value = ui.value;
+                        cell.textField.text = [NSString stringWithFormat:@"%.*f", 2, ui.value];
+                        break;
+                    case DuoStringType:
+                        cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
+                        cell.stringValue = ui.stringValue;
+                        cell.textField.text = ui.stringValue;
+                        break;
+                    default:
+                        break;
+                }
+                cell.textField.userInteractionEnabled = ui.type == DuoUISetter;
+                cell.textField.borderStyle = ui.type == DuoUISetter ? UITextBorderStyleRoundedRect :  UITextBorderStyleNone;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [cell setReloadInterval:ui.reloadInterval];
+                });
+                return cell;
+            }
+            case DuoUISlider: {
+                DetailSliderCell *cell =
+                [tableView dequeueReusableCellWithIdentifier:kDetailSliderCellIdentifer
+                                                forIndexPath:indexPath];
+                cell.title.text = ui.name;
+                cell.duo = _duo;
+                cell.pin = ui.pin;
+                if (ui.key) cell.key = ui.key;
+                if (ui.color) cell.slider.tintColor = ui.color;
+                cell.slider.maximumValue = ui.maximumValue;
+                cell.slider.minimumValue = ui.minimumValue;
+                cell.slider.value = ui.value;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [cell setReloadInterval:ui.reloadInterval];
+                });
+                return cell;
+            }
+            default:
+                break;
+        }
     }
-    
     return [UITableViewCell new];
 }
 
@@ -226,24 +297,37 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSArray<DuoUI *> *source;
+    NSArray *source;
     switch (indexPath.section) {
         case 1:
             source = _layout;
+            break;
+        case 2:
+            source = _misc;
             break;
         default:
             source = _duo.layout;
             break;
     }
     
-    switch ([source objectAtIndex:indexPath.row].type) {
-        case DuoUIWebUI: {
-            DetailWebUICell *cell = [[tableView visibleCells] objectAtIndex:indexPath.row];
-            [cell openWebUI];
-            break;
+    if (indexPath.section == 2) {
+        switch ([[source objectAtIndex:indexPath.row] integerValue]) {
+            case DetailMiscMode: {
+                break;
+            }
+            default:
+                break;
         }
-        default:
-            break;
+    } else {
+        switch (((DuoUI *)[source objectAtIndex:indexPath.row]).type) {
+            case DuoUIWebUI: {
+                DetailWebUICell *cell = [[tableView visibleCells] objectAtIndex:indexPath.row];
+                [cell openWebUI];
+                break;
+            }
+            default:
+                break;
+        }
     }
 }
 
@@ -260,6 +344,25 @@
                      } completion:nil];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == 1;
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (indexPath.row < _layout.count) {
+            [_layout removeObjectAtIndex:indexPath.row];
+            [self saveLayout];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+            
+        }
+    }
+}
+
 - (IBAction)addButtonAction:(id)sender
 {
     [self performSegueWithIdentifier:kDetailAddItemSegueIdentifer sender:sender];
@@ -271,6 +374,39 @@
 {
     [_layout addObject:newUI];
     [self.tableView reloadData];
+    [self saveLayout];
+}
+
+#pragma mark - Sync User Defaults
+
+- (void)loadLayout
+{
+    if (hash) {
+        NSData *data;
+        if ((data = [[NSUserDefaults standardUserDefaults] dataForKey:hash])) {
+            NSMutableArray<DuoUI *> *source;
+            if ((source = [NSKeyedUnarchiver unarchiveObjectWithData:data])) {
+                _layout = [source mutableCopy];
+            }
+        }
+    }
+}
+
+- (void)saveLayout
+{
+    if (hash) {
+        if (_layout.count) {
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_layout];
+            if (data) {
+                [[NSUserDefaults standardUserDefaults] setObject:data
+                                                          forKey:hash];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+        } else {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:hash];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
 }
 
 @end

@@ -30,4 +30,6 @@
 
 @interface HelpTVC : BrowserTVC
 
+- (IBAction)showHelp:(id)sender;
+
 @end
