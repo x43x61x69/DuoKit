@@ -22,6 +22,12 @@
 		1FF343841E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */; };
 		420C50811E11EB0C008B1D3D /* DuoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C50801E11EB0C008B1D3D /* DuoKit.framework */; };
 		420C50821E11EB0C008B1D3D /* DuoKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 420C50801E11EB0C008B1D3D /* DuoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		423FFAAC1E2D9E45007E32DC /* NSNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAAB1E2D9E45007E32DC /* NSNetworkReachability.m */; };
+		423FFAAE1E2D9E61007E32DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423FFAAD1E2D9E61007E32DC /* SystemConfiguration.framework */; };
+		423FFAB11E2DA4D7007E32DC /* ServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAB01E2DA4D7007E32DC /* ServiceCell.m */; };
+		423FFABB1E2DDBE0007E32DC /* BrowserTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFABA1E2DDBE0007E32DC /* BrowserTVC.m */; };
+		423FFABE1E2DDDAF007E32DC /* DomainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFABD1E2DDDAF007E32DC /* DomainCell.m */; };
+		423FFAC11E2DDDC9007E32DC /* HelpTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAC01E2DDDC9007E32DC /* HelpTVC.m */; };
 		4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4266C7811E163A730056FE02 /* DetailSetterCell.m */; };
 		426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */; };
 /* End PBXBuildFile section */
@@ -66,6 +72,18 @@
 		1FF343821E2CEFDA009F2DC7 /* DetailAddItemTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailAddItemTypeCell.h; sourceTree = "<group>"; };
 		1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailAddItemTypeCell.m; sourceTree = "<group>"; };
 		420C50801E11EB0C008B1D3D /* DuoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DuoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		423FFAA71E2D9BFC007E32DC /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		423FFAAA1E2D9E45007E32DC /* NSNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNetworkReachability.h; sourceTree = "<group>"; };
+		423FFAAB1E2D9E45007E32DC /* NSNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNetworkReachability.m; sourceTree = "<group>"; };
+		423FFAAD1E2D9E61007E32DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		423FFAAF1E2DA4D7007E32DC /* ServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCell.h; sourceTree = "<group>"; };
+		423FFAB01E2DA4D7007E32DC /* ServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCell.m; sourceTree = "<group>"; };
+		423FFAB91E2DDBE0007E32DC /* BrowserTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserTVC.h; sourceTree = "<group>"; };
+		423FFABA1E2DDBE0007E32DC /* BrowserTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserTVC.m; sourceTree = "<group>"; };
+		423FFABC1E2DDDAF007E32DC /* DomainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainCell.h; sourceTree = "<group>"; };
+		423FFABD1E2DDDAF007E32DC /* DomainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DomainCell.m; sourceTree = "<group>"; };
+		423FFABF1E2DDDC9007E32DC /* HelpTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTVC.h; sourceTree = "<group>"; };
+		423FFAC01E2DDDC9007E32DC /* HelpTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTVC.m; sourceTree = "<group>"; };
 		4266C7801E163A730056FE02 /* DetailSetterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSetterCell.h; sourceTree = "<group>"; };
 		4266C7811E163A730056FE02 /* DetailSetterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSetterCell.m; sourceTree = "<group>"; };
 		426EC0E81E2337B700D2D762 /* DetailSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSwitchCell.h; sourceTree = "<group>"; };
@@ -77,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423FFAAE1E2D9E61007E32DC /* SystemConfiguration.framework in Frameworks */,
 				420C50811E11EB0C008B1D3D /* DuoKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +116,7 @@
 		1FEB963A1DE95EF600D98443 = {
 			isa = PBXGroup;
 			children = (
+				423FFAA81E2D9E45007E32DC /* External */,
 				1FEB96451DE95EF600D98443 /* DuoBrowser */,
 				1FEB96441DE95EF600D98443 /* Products */,
 				420C50791E11EA1C008B1D3D /* Frameworks */,
@@ -114,12 +134,10 @@
 		1FEB96451DE95EF600D98443 /* DuoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				423FFAB81E2DDB69007E32DC /* Common */,
 				1F4B84F61DEB455300CF1163 /* UI */,
-				1FEB96491DE95EF600D98443 /* AppDelegate.h */,
-				1FEB964A1DE95EF600D98443 /* AppDelegate.m */,
-				426EC0E41E23346B00D2D762 /* Domains */,
-				426EC0E51E23347F00D2D762 /* Services */,
-				426EC0E61E23348D00D2D762 /* Detail */,
+				426EC0E41E23346B00D2D762 /* Browser */,
+				423FFAB71E2DDB56007E32DC /* Help */,
 				1FEB96461DE95EF600D98443 /* Supporting Files */,
 			);
 			path = DuoBrowser;
@@ -137,18 +155,78 @@
 		420C50791E11EA1C008B1D3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				423FFAAD1E2D9E61007E32DC /* SystemConfiguration.framework */,
 				420C50801E11EB0C008B1D3D /* DuoKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		426EC0E41E23346B00D2D762 /* Domains */ = {
+		423FFAA81E2D9E45007E32DC /* External */ = {
+			isa = PBXGroup;
+			children = (
+				423FFAA91E2D9E45007E32DC /* NSNetworkReachability */,
+			);
+			name = External;
+			path = DuoBrowser/External;
+			sourceTree = "<group>";
+		};
+		423FFAA91E2D9E45007E32DC /* NSNetworkReachability */ = {
+			isa = PBXGroup;
+			children = (
+				423FFAAA1E2D9E45007E32DC /* NSNetworkReachability.h */,
+				423FFAAB1E2D9E45007E32DC /* NSNetworkReachability.m */,
+			);
+			path = NSNetworkReachability;
+			sourceTree = "<group>";
+		};
+		423FFAB21E2DA4DA007E32DC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				423FFAAF1E2DA4D7007E32DC /* ServiceCell.h */,
+				423FFAB01E2DA4D7007E32DC /* ServiceCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		423FFAB31E2DAA60007E32DC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				423FFABC1E2DDDAF007E32DC /* DomainCell.h */,
+				423FFABD1E2DDDAF007E32DC /* DomainCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		423FFAB71E2DDB56007E32DC /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				423FFABF1E2DDDC9007E32DC /* HelpTVC.h */,
+				423FFAC01E2DDDC9007E32DC /* HelpTVC.m */,
+			);
+			name = Help;
+			sourceTree = "<group>";
+		};
+		423FFAB81E2DDB69007E32DC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				423FFAA71E2D9BFC007E32DC /* Common.h */,
+				1FEB96491DE95EF600D98443 /* AppDelegate.h */,
+				1FEB964A1DE95EF600D98443 /* AppDelegate.m */,
+				423FFAB91E2DDBE0007E32DC /* BrowserTVC.h */,
+				423FFABA1E2DDBE0007E32DC /* BrowserTVC.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		426EC0E41E23346B00D2D762 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
 				1F4B84F01DEB403B00CF1163 /* DomainsTVC.h */,
 				1F4B84F11DEB403B00CF1163 /* DomainsTVC.m */,
+				423FFAB31E2DAA60007E32DC /* Cell */,
+				426EC0E51E23347F00D2D762 /* Services */,
 			);
-			name = Domains;
+			name = Browser;
 			sourceTree = "<group>";
 		};
 		426EC0E51E23347F00D2D762 /* Services */ = {
@@ -156,6 +234,8 @@
 			children = (
 				1F4B84F31DEB454600CF1163 /* ServicesTVC.h */,
 				1F4B84F41DEB454600CF1163 /* ServicesTVC.m */,
+				423FFAB21E2DA4DA007E32DC /* Cell */,
+				426EC0E61E23348D00D2D762 /* Detail */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -299,16 +379,21 @@
 			files = (
 				1FEB964B1DE95EF600D98443 /* AppDelegate.m in Sources */,
 				1F4B84F51DEB454600CF1163 /* ServicesTVC.m in Sources */,
+				423FFAAC1E2D9E45007E32DC /* NSNetworkReachability.m in Sources */,
 				1FBC90E11E256CE200085360 /* DetailWebUICell.m in Sources */,
 				1FF343841E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m in Sources */,
 				1FEB96481DE95EF600D98443 /* main.m in Sources */,
 				1FEB23B31E2511A600918646 /* DetailSliderCell.m in Sources */,
+				423FFAB11E2DA4D7007E32DC /* ServiceCell.m in Sources */,
+				423FFABB1E2DDBE0007E32DC /* BrowserTVC.m in Sources */,
 				4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */,
 				426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */,
 				1FF343811E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m in Sources */,
+				423FFAC11E2DDDC9007E32DC /* HelpTVC.m in Sources */,
 				1F4B84F21DEB403B00CF1163 /* DomainsTVC.m in Sources */,
 				1FADE3F11E02C2F600E32630 /* DetailTVC.m in Sources */,
 				1F7030FF1E2CBFB1005F4816 /* DetailAddItemTVC.m in Sources */,
+				423FFABE1E2DDDAF007E32DC /* DomainCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

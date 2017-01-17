@@ -1,5 +1,5 @@
 //
-//  DomainsTVC.h
+//  DomainCell.h
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -25,9 +25,13 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import "BrowserTVC.h"
+#define kDomainCellIdentifer  @"DomainCell"
 
-@interface DomainsTVC : BrowserTVC
+#import <UIKit/UIKit.h>
+
+@interface DomainCell : UITableViewCell
+
+@property (nonatomic, weak) IBOutlet UILabel *title;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 @end

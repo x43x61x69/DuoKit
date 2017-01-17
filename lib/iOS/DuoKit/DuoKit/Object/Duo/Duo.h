@@ -1,5 +1,5 @@
 //
-//  MTKDuo.h
+//  Duo.h
 //  DuoKit
 //
 //  The MIT License (MIT)
@@ -28,7 +28,7 @@
 #define kDuoKitMinVersion   3
 
 #import <Foundation/Foundation.h>
-#import "MTKDuoUI.h"
+#import "DuoUI.h"
 
 typedef uint8_t DuoPin;
 
@@ -50,7 +50,7 @@ typedef enum : int8_t {
     DuoPinInputPullup   = 0x2
 } DuoPinMode;
 
-@interface MTKDuo : NSObject
+@interface Duo : NSObject
 
 @property (nonatomic, strong)   NSNetService        *service;
 @property (nonatomic, copy)     NSString            *name;
@@ -63,7 +63,7 @@ typedef enum : int8_t {
 @property (nonatomic, copy)     NSString            *user;
 @property (nonatomic, copy)     NSString            *password;
 @property (nonatomic, copy)     NSString            *profile;
-@property (nonatomic, copy)     NSArray<MTKDuoUI *> *layout;
+@property (nonatomic, copy)     NSArray<DuoUI *> *layout;
 
 @property (nonatomic) NSInteger port;
 

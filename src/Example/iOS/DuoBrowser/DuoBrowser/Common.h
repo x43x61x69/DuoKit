@@ -1,5 +1,5 @@
 //
-//  DomainsTVC.h
+//  Common.h
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -25,9 +25,14 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import "BrowserTVC.h"
+#ifndef Common_h
+#define Common_h
 
-@interface DomainsTVC : BrowserTVC
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@end
+#define kColorBase  UIColorFromRGB(0xFF3B30)
+#define kColorTint  UIColorFromRGB(0x8C0011)
+
+#import "NSNetworkReachability.h"
+
+#endif /* Common_h */

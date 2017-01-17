@@ -51,6 +51,16 @@
     self.navigationItem.rightBarButtonItem = addButton;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backAction:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -60,6 +70,16 @@
             [cell setReloadInterval:0];
         }
     }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)backAction:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Navigation
@@ -107,7 +127,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MTKDuoUI *ui;
+    DuoUI *ui;
     switch (indexPath.section) {
         case 1:
             ui = [_layout objectAtIndex:indexPath.row];
@@ -137,7 +157,7 @@
             cell.duo = _duo;
             cell.pin = ui.pin;
             if (ui.color) cell.pinSwitch.onTintColor = ui.color;
-            [cell.pinSwitch setOn:ui.value animated:YES];
+            [cell.pinSwitch setOn:ui.value animated:NO];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(indexPath.row * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [cell setReloadInterval:ui.reloadInterval];
             });
@@ -206,7 +226,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSArray<MTKDuoUI *> *source;
+    NSArray<DuoUI *> *source;
     switch (indexPath.section) {
         case 1:
             source = _layout;
@@ -247,7 +267,7 @@
 
 #pragma mark - DetailAddItemDelegate
 
-- (void)newItemAdded:(MTKDuoUI *)newUI
+- (void)newItemAdded:(DuoUI *)newUI
 {
     [_layout addObject:newUI];
     [self.tableView reloadData];

@@ -26,15 +26,17 @@
 //
 
 #import "ServicesTVC.h"
+#import "ServiceCell.h"
 #import "DetailTVC.h"
 #import <DuoKit/DuoKit.h>
 
-#define kServiceCellIdentifer    @"ServiceCell"
+@interface ServicesTVC () <DuoBrowserDelegate>
+{
+    UIActivityIndicatorView *indicator;
+}
 
-@interface ServicesTVC () <MTKDuoBrowserDelegate>
-
-@property (nonatomic, strong) NSMutableArray<MTKDuo *>  *dataSource;
-@property (nonatomic, strong) MTKDuoBrowser             *browser;
+@property (nonatomic, strong) NSMutableArray<Duo *>  *dataSource;
+@property (nonatomic, strong) DuoBrowser             *browser;
 
 @end
 
@@ -46,24 +48,75 @@
     
     self.navigationItem.title = @"Select a Service";
     
-    _dataSource = [NSMutableArray new];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForServices)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
     
-    _browser = [MTKDuoBrowser sharedInstance];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForServices)
+                                                 name:kNSNetworkReachabilityDidChangeNotification
+                                               object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self searchForServices];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self hideActivityView];
+    
+    _browser = nil;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)searchForServices
+{
+    _dataSource = [NSMutableArray new];
+    [self.tableView reloadData];
+    
+    [self showActivityView];
+    
+    _browser = nil;
+    _browser = [DuoBrowser new];
     _browser.delegate = self;
     [_browser searchForServicesOfType:_serviceType
                              inDomain:_domain];
 }
 
-#pragma mark - MTKDuoBrowserDelegate
+#pragma mark - DuoBrowserDelegate
 
-- (void)duoListDidChanged:(NSArray<MTKDuo *> *)duoList
+- (void)duoListDidChanged:(NSArray<Duo *> *)duoList
 {
+    self.tableView.userInteractionEnabled = NO;
+    
     _dataSource = [NSMutableArray arrayWithArray:duoList];
+    
+    if (_dataSource.count) {
+        [self hideActivityView];
+    } else {
+        [self showActivityView];
+    }
+    
     [self.tableView reloadData];
+    
+    self.tableView.userInteractionEnabled = YES;
 }
 
-- (void)didResolveDuo:(MTKDuo *)duo
+- (void)didResolveDuo:(Duo *)duo
 {
+    self.tableView.userInteractionEnabled = YES;
+    
     [duo isDeviceReadyWithApi:kDuoKitMinVersion
             completionHandler:^(NSInteger api,
                                 BOOL isReady,
@@ -74,7 +127,7 @@
                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, layouts);
                     NSMutableArray *layoutArray = [NSMutableArray new];
                     for (NSDictionary *dict in layouts) {
-                        MTKDuoUI *ui = [[MTKDuoUI alloc] initWithDictionary:dict];
+                        DuoUI *ui = [[DuoUI alloc] initWithDictionary:dict];
                         if (ui) {
                             [layoutArray addObject:ui];
                         }
@@ -87,6 +140,11 @@
                     }
                     [self performSegueWithIdentifier:kDetailSegueIdentifer sender:duo];
                 } else {
+                    
+                    if (indicator) {
+                        [indicator stopAnimating];
+                    }
+                    
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                                    message:errorMessage
                                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -101,9 +159,12 @@
             }];
 }
 
-- (void)didNotResolveDuo:(MTKDuo *)duo error:(NSDictionary<NSString *,NSNumber *> *)errorDict
+- (void)didNotResolveDuo:(Duo *)duo error:(NSDictionary<NSString *,NSNumber *> *)errorDict
 {
-    
+    if (indicator) {
+        [indicator stopAnimating];
+    }
+    self.tableView.userInteractionEnabled = YES;
 }
 
 #pragma mark - Navigation
@@ -111,10 +172,14 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:kDetailSegueIdentifer]) {
-        MTKDuo *duo = (MTKDuo *)sender;
+        Duo *duo = (Duo *)sender;
         DetailTVC *vc = (DetailTVC *)segue.destinationViewController;
         vc.duo = duo;
         vc.navigationItem.title = duo.profile ? duo.profile : duo.name;
+        
+        if (indicator) {
+            [indicator stopAnimating];
+        }
     }
 }
 
@@ -145,11 +210,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kServiceCellIdentifer
-                                                            forIndexPath:indexPath];
+    ServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kServiceCellIdentifer
+                                                        forIndexPath:indexPath];
     
-    MTKDuo *duo = (MTKDuo *)[_dataSource objectAtIndex:indexPath.row];
-    cell.textLabel.text = duo.name;
+    Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
+    cell.title.text = duo.name;
+    cell.indicator.color = kColorBase;
+    indicator = cell.indicator;
+    [cell.indicator stopAnimating];
     
     return cell;
 }
@@ -157,22 +225,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    MTKDuo *duo = (MTKDuo *)[_dataSource objectAtIndex:indexPath.row];
+    
+    self.tableView.userInteractionEnabled = NO;
+    
+    ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell.indicator startAnimating];
+    
+    Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
     [_browser resolveService:duo.service
-                 withTimeout:30.f];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    cell.alpha = .0f;
-    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
-    [UIView animateWithDuration:.2f
-                          delay:indexPath.row * .1f
-                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
-                     animations:^ {
-                         cell.transform = CGAffineTransformIdentity;
-                         cell.alpha = 1.0f;
-                     } completion:nil];
+                 withTimeout:5.f];
 }
 
 @end

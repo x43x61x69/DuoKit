@@ -1,5 +1,5 @@
 //
-//  DomainsTVC.h
+//  HelpTVC.h
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -28,6 +28,6 @@
 #import <UIKit/UIKit.h>
 #import "BrowserTVC.h"
 
-@interface DomainsTVC : BrowserTVC
+@interface HelpTVC : BrowserTVC
 
 @end

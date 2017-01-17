@@ -30,8 +30,8 @@
 FOUNDATION_EXPORT double DuoKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char DuoKitVersionString[];
 
-#import <DuoKit/MTKDuo.h>
-#import <DuoKit/MTKDuoUI.h>
-#import <DuoKit/MTKDuoBrowser.h>
+#import <DuoKit/Duo.h>
+#import <DuoKit/DuoUI.h>
+#import <DuoKit/DuoBrowser.h>
 
 

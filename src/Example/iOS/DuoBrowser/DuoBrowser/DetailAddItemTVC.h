@@ -32,7 +32,7 @@
 
 @protocol DetailAddItemDelegate <NSObject>
 
-- (void)newItemAdded:(MTKDuoUI *)newUI;
+- (void)newItemAdded:(DuoUI *)newUI;
 
 @end
 

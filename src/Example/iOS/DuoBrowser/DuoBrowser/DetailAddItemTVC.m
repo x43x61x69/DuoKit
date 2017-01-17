@@ -365,7 +365,7 @@ typedef enum {
         return;
     }
     
-    MTKDuoUI *newUI = [MTKDuoUI new];
+    DuoUI *newUI = [DuoUI new];
 
     newUI.type  = [_typePicker selectedRowInComponent:0] == DuoSetPinDigital ? DuoUISwitch : DuoUISlider;
     newUI.name  = _nameTextField.text;

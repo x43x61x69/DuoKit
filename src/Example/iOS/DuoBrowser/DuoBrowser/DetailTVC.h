@@ -32,7 +32,7 @@
 
 @interface DetailTVC : UITableViewController
 
-@property (nonatomic, strong) MTKDuo *duo;
-@property (nonatomic, strong) NSMutableArray<MTKDuoUI *> *layout;
+@property (nonatomic, strong) Duo *duo;
+@property (nonatomic, strong) NSMutableArray<DuoUI *> *layout;
 
 @end

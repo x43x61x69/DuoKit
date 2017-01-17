@@ -32,7 +32,7 @@
 
 @interface DetailSwitchCell : UITableViewCell
 
-@property (nonatomic, strong) MTKDuo *duo;
+@property (nonatomic, strong) Duo *duo;
 @property (nonatomic)         DuoPin pin;
 
 @property (nonatomic, strong) NSTimer *timer;

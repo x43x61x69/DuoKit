@@ -259,6 +259,8 @@ String DuoKit::analogPinStatus(const uint8_t pin)
     } else {
         status = true;
         j.concat(keyPair("value", String(analogRead(pin)), false));
+        j.concat(",");
+        j.concat(keyPair("mode", String(pinModeRead(pin)), false));
     }
     return JSONStatus(status, j);
 }

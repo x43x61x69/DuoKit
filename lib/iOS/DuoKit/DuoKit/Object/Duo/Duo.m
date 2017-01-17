@@ -1,5 +1,5 @@
 //
-//  MTKDuo.m
+//  Duo.m
 //  DuoKit
 //
 //  The MIT License (MIT)
@@ -49,10 +49,10 @@
 #define kProfile        @"profile"
 #define kLayout         @"layout"
 
-#import "MTKDuo.h"
+#import "Duo.h"
 #import "NSNetService+Extension.h"
 
-@implementation MTKDuo
+@implementation Duo
 
 - (id)initWithCoder:(NSCoder *)decoder
 {

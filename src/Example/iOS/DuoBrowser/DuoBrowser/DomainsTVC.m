@@ -25,20 +25,18 @@
 //  SOFTWARE.
 //
 
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-
 #import "DomainsTVC.h"
+#import "DomainCell.h"
 #import "ServicesTVC.h"
-
 #import <DuoKit/DuoKit.h>
 
-#define kDomainCellIdentifer    @"DomainCell"
-#define kServiceSegueIdentifer  @"ServiceSegue"
-
-@interface DomainsTVC () <MTKDuoBrowserDelegate>
+@interface DomainsTVC () <DuoBrowserDelegate>
+{
+    UIActivityIndicatorView *indicator;
+}
 
 @property (nonatomic, strong) NSMutableArray<NSString *>    *dataSource;
-@property (nonatomic, strong) MTKDuoBrowser                 *browser;
+@property (nonatomic, strong) DuoBrowser                    *browser;
 
 @end
 
@@ -48,32 +46,65 @@
 {
     [super viewDidLoad];
     
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForDomains)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
     
-    navigationBar.tintColor       = [UIColor whiteColor];
-    navigationBar.barTintColor    = UIColorFromRGB(0xFF3B30);
-    navigationBar.translucent     = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForDomains)
+                                                 name:kNSNetworkReachabilityDidChangeNotification
+                                               object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
-    navigationBar.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:navigationBar.bounds
-                                                                cornerRadius:navigationBar.layer.cornerRadius].CGPath;
-    [navigationBar.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-    [navigationBar.layer setShadowOffset:CGSizeMake(.0f, 1.f)];
-    [navigationBar.layer setShadowRadius:1.f];
-    [navigationBar.layer setShadowOpacity:.3f];
+    [self searchForDomains];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
     
+    [self hideActivityView];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)searchForDomains
+{
     _dataSource = [NSMutableArray new];
+    [self.tableView reloadData];
     
-    _browser = [MTKDuoBrowser sharedInstance];
+    [self showActivityView];
+    
+    _browser = [DuoBrowser new];
     _browser.delegate = self;
     [_browser searchForBrowsableDomains];
 }
 
-#pragma mark - MTKDuoBrowserDelegate
+#pragma mark - DuoBrowserDelegate
 
 - (void)domainsDidChanged:(NSArray<NSString *> *)domains
 {
+    self.tableView.userInteractionEnabled = NO;
+    
     _dataSource = [NSMutableArray arrayWithArray:domains];
+    
+    if (_dataSource.count) {
+        [self hideActivityView];
+    } else {
+        [self showActivityView];
+    }
+    
     [self.tableView reloadData];
+    
+    self.tableView.userInteractionEnabled = YES;
 }
 
 #pragma mark - Table view data source
@@ -100,14 +131,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDomainCellIdentifer
-                                                            forIndexPath:indexPath];
+    DomainCell *cell = [tableView dequeueReusableCellWithIdentifier:kDomainCellIdentifer
+                                                       forIndexPath:indexPath];
     
     NSString *domain = [_dataSource objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [domain hasSuffix:@"."] ?
+    cell.title.text = [domain hasSuffix:@"."] ?
     [domain substringToIndex:domain.length-1] :
     domain;
+    [cell.indicator stopAnimating];
     
     return cell;
 }
@@ -115,6 +147,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    DomainCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.indicator.color = kColorBase;
+    indicator = cell.indicator;
+    [cell.indicator startAnimating];
+    
     [self performSegueWithIdentifier:kServiceSegueIdentifer sender:indexPath];
 }
 
@@ -129,20 +167,10 @@
         ServicesTVC *vc = (ServicesTVC *)segue.destinationViewController;
         vc.domain = [_dataSource objectAtIndex:indexPath.row];
         vc.serviceType = kBonjourServiceTypeHTTP;
+        if (indicator) {
+            [indicator stopAnimating];
+        }
     }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    cell.alpha = .0f;
-    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
-    [UIView animateWithDuration:.2f
-                          delay:indexPath.row * .1f
-                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
-                     animations:^ {
-                         cell.transform = CGAffineTransformIdentity;
-                         cell.alpha = 1.0f;
-                     } completion:nil];
 }
 
 @end

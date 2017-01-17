@@ -1,10 +1,10 @@
 //
-//  DomainsTVC.h
-//  DuoBrowser
+//  NSNetworkReachability.h
+//  NSNetworkReachability
 //
 //  The MIT License (MIT)
 //
-//  Copyright © 2017 Zhi-Wei Cai. All rights reserved.
+//  Copyright © 2016 Zhi-Wei Cai. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,21 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import "BrowserTVC.h"
+#define kNSNetworkReachabilityDidChangeNotification @"NSNetworkReachabilityDidChangeNotification"
+#define kNSNetworkReachabilityStatus                @"NSNetworkReachabilityStatus"
 
-@interface DomainsTVC : BrowserTVC
+#import <Foundation/Foundation.h>
+
+typedef enum : NSInteger {
+    NotReachable = 0,
+    ReachableViaWiFi,
+    ReachableViaWWAN
+} NSNetworkReachabilityStatus;
+
+@interface NSNetworkReachability : NSObject
+
++ (NSNetworkReachability *)sharedInstance;
++ (NSNetworkReachabilityStatus)networkStatus;
++ (BOOL)canAccessInternet;
 
 @end

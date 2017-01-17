@@ -1,5 +1,5 @@
 //
-//  DomainsTVC.h
+//  BrowserTVC.h
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -26,8 +26,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BrowserTVC.h"
+#import "Common.h"
 
-@interface DomainsTVC : BrowserTVC
+@interface BrowserTVC : UITableViewController
+
+- (void)showActivityView;
+- (void)hideActivityView;
 
 @end

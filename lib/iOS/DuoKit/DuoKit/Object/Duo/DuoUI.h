@@ -1,6 +1,6 @@
 //
-//  DomainsTVC.h
-//  DuoBrowser
+//  DuoUI.h
+//  DuoKit
 //
 //  The MIT License (MIT)
 //
@@ -25,9 +25,39 @@
 //  SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "BrowserTVC.h"
 
-@interface DomainsTVC : BrowserTVC
+typedef enum : uint8_t {
+    DuoUINone  = 0,
+    DuoUIWebUI,
+    DuoUISwitch,
+    DuoUISetter,
+    DuoUIGetter,
+    DuoUISlider
+} DuoUIType;
+
+typedef enum : uint8_t {
+    DuoNoneType  = 0,
+    DuoIntType,
+    DuoDoubleType,
+    DuoStringType
+} DuoObjectType;
+
+@interface DuoUI : NSObject
+
+@property (nonatomic)       DuoUIType       type;
+@property (nonatomic, copy) NSString        *name;
+@property (nonatomic)       NSInteger       pin;
+@property (nonatomic, copy) NSString        *key;
+@property (nonatomic)       double          value;
+@property (nonatomic, copy) NSString        *stringValue;
+@property (nonatomic)       DuoObjectType   valueType;
+@property (nonatomic)       double          minimumValue;
+@property (nonatomic)       double          maximumValue;
+@property (nonatomic, copy) UIColor         *color;
+@property (nonatomic)       NSTimeInterval  reloadInterval;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

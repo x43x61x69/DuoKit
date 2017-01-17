@@ -1,5 +1,5 @@
 //
-//  MTKDuoBrowser.m
+//  DuoBrowser.m
 //  DuoKit
 //
 //  The MIT License (MIT)
@@ -33,12 +33,12 @@
 
 #define kLinkItSmartServicePrefix @"LinkIt"
 
-#import "MTKDuoBrowser.h"
+#import "DuoBrowser.h"
 #import "NSNetService+Extension.h"
 
-#pragma mark - MTKDuoBrowser
+#pragma mark - DuoBrowser
 
-@interface MTKDuoBrowser () <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
+@interface DuoBrowser () <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
 {
     NSString *searchingDomain;
     NSString *searchingService;
@@ -51,17 +51,17 @@
 
 @end
 
-@implementation MTKDuoBrowser
+@implementation DuoBrowser
 
 @synthesize netServiceBrowser = _netServiceBrowser;
 
-static MTKDuoBrowser *sharedInstance = nil;
+static DuoBrowser *sharedInstance = nil;
 
-+ (MTKDuoBrowser *)sharedInstance
++ (DuoBrowser *)sharedInstance
 {
     @synchronized (self) {
         if (!sharedInstance) {
-            sharedInstance = [MTKDuoBrowser new];
+            sharedInstance = [DuoBrowser new];
         }
     }
     return sharedInstance;
@@ -101,12 +101,10 @@ static MTKDuoBrowser *sharedInstance = nil;
     _netServiceBrowser = netServiceBrowser;
     
     if (_netServiceBrowser) {
-        LOGD(@"New!");
         _services   = [NSMutableArray new];
         _domains    = [NSMutableArray new];
         _netServiceBrowser.delegate = self;
     } else {
-        LOGD(@"Clean up!");
         _netService = nil;
         _services   = nil;
         _domains    = nil;
@@ -184,9 +182,9 @@ static MTKDuoBrowser *sharedInstance = nil;
             
             for (NSNetService *service in _services) {
                 
-                MTKDuo *duo;
+                Duo *duo;
                 
-                if ((duo = [[MTKDuo alloc] initWithService:service])) {
+                if ((duo = [[Duo alloc] initWithService:service])) {
                     [list addObject:duo];
                 }
             }
@@ -222,9 +220,9 @@ static MTKDuoBrowser *sharedInstance = nil;
         [_delegate respondsToSelector:@selector(didResolveDuo:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            MTKDuo *duo;
+            Duo *duo;
             
-            if ((duo = [[MTKDuo alloc] initWithService:service])) {
+            if ((duo = [[Duo alloc] initWithService:service])) {
                 [_delegate didResolveDuo:duo];
             }
         });
@@ -246,9 +244,9 @@ static MTKDuoBrowser *sharedInstance = nil;
                               v4Addresses:[service v4AddressStrings]
                               v6Addresses:[service v6AddressStrings]
                                      port:[service port]
-                                     path:[MTKDuo stringFromTXTDict:dict withKey:@"path"]
-                                     user:[MTKDuo stringFromTXTDict:dict withKey:@"u"]
-                                 password:[MTKDuo stringFromTXTDict:dict withKey:@"p"]];
+                                     path:[Duo stringFromTXTDict:dict withKey:@"path"]
+                                     user:[Duo stringFromTXTDict:dict withKey:@"u"]
+                                 password:[Duo stringFromTXTDict:dict withKey:@"p"]];
         });
         
     }
@@ -366,9 +364,9 @@ static MTKDuoBrowser *sharedInstance = nil;
         [_delegate respondsToSelector:@selector(didNotResolveDuo:error:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            MTKDuo *duo;
+            Duo *duo;
             
-            if ((duo = [[MTKDuo alloc] initWithService:sender])) {
+            if ((duo = [[Duo alloc] initWithService:sender])) {
                 [_delegate didNotResolveDuo:duo
                                       error:errorDict];
             }

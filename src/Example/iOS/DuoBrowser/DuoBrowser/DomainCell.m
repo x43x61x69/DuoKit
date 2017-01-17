@@ -1,6 +1,6 @@
 //
-//  MTKDuoUI.h
-//  DuoKit
+//  DomainCell.m
+//  DuoBrowser
 //
 //  The MIT License (MIT)
 //
@@ -25,39 +25,8 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "DomainCell.h"
 
-typedef enum : uint8_t {
-    DuoUINone  = 0,
-    DuoUIWebUI,
-    DuoUISwitch,
-    DuoUISetter,
-    DuoUIGetter,
-    DuoUISlider
-} DuoUIType;
-
-typedef enum : uint8_t {
-    DuoNoneType  = 0,
-    DuoIntType,
-    DuoDoubleType,
-    DuoStringType
-} DuoObjectType;
-
-@interface MTKDuoUI : NSObject
-
-@property (nonatomic)       DuoUIType       type;
-@property (nonatomic, copy) NSString        *name;
-@property (nonatomic)       NSInteger       pin;
-@property (nonatomic, copy) NSString        *key;
-@property (nonatomic)       double          value;
-@property (nonatomic, copy) NSString        *stringValue;
-@property (nonatomic)       DuoObjectType   valueType;
-@property (nonatomic)       double          minimumValue;
-@property (nonatomic)       double          maximumValue;
-@property (nonatomic, copy) UIColor         *color;
-@property (nonatomic)       NSTimeInterval  reloadInterval;
-
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+@implementation DomainCell
 
 @end

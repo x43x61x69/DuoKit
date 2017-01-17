@@ -1,5 +1,5 @@
 //
-//  DomainsTVC.h
+//  ServiceCell.m
 //  DuoBrowser
 //
 //  The MIT License (MIT)
@@ -25,9 +25,8 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import "BrowserTVC.h"
+#import "ServiceCell.h"
 
-@interface DomainsTVC : BrowserTVC
+@implementation ServiceCell
 
 @end

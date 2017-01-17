@@ -26,8 +26,11 @@
 //
 
 #import "AppDelegate.h"
+#import "Common.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, retain) NSNetworkReachability *network;
 
 @end
 
@@ -35,6 +38,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Global Tint
+    // [[UIView appearance] setTintColor:kColorBase];
+    
+    _network = [NSNetworkReachability sharedInstance];
+    
     return YES;
 }
 

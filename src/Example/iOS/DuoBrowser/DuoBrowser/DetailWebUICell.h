@@ -32,7 +32,7 @@
 
 @interface DetailWebUICell : UITableViewCell
 
-@property (nonatomic, strong) MTKDuo *duo;
+@property (nonatomic, strong) Duo *duo;
 
 - (void)openWebUI;
 
