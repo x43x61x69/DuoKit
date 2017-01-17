@@ -418,9 +418,16 @@ typedef enum {
     newUI.type  = [_modePicker selectedRowInComponent:0] == DuoPinOutput ? DuoUIGetter : [_typePicker selectedRowInComponent:0] == DuoSetPinDigital ? DuoUISwitch : DuoUISlider;
     newUI.name  = _nameTextField.text;
     newUI.pin   = [_pinTextField.text integerValue];
-    if (newUI.type == DuoUISlider) {
-        newUI.minimumValue = 0;
-        newUI.maximumValue = 0xFF;
+    switch (newUI.type) {
+        case DuoUISlider:
+            newUI.minimumValue = 0;
+            newUI.maximumValue = 0xFF;
+            break;
+        case DuoUIGetter:
+            newUI.valueType = DuoIntType;
+            break;
+        default:
+            break;
     }
     newUI.reloadInterval = [_intervalTextField.text integerValue];
     newUI.color = [UIColor darkGrayColor];

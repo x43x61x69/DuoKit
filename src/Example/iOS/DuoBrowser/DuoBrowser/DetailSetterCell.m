@@ -93,7 +93,16 @@
                      if (_textField &&
                          !_textField.isEditing &&
                          !actionUUID) {
-                         _textField.text = [NSString stringWithFormat:@"%.*f", 2, _value];
+                         switch (_valueType) {
+                             case DuoIntType:
+                                 _textField.text = [NSString stringWithFormat:@"%ld", lroundf(_value)];
+                                 break;
+                             case DuoDoubleType:
+                                 _textField.text = [NSString stringWithFormat:@"%.*f", 2, _value];
+                                 break;
+                             default:
+                                 break;
+                         }
                      }
                  });
              } else {

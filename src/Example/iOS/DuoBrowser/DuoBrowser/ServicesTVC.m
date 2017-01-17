@@ -250,7 +250,6 @@
     
     Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
     cell.title.text = duo.name;
-    cell.indicator.color = kColorBase;
     indicator = cell.indicator;
     [cell.indicator stopAnimating];
     

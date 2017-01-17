@@ -81,10 +81,12 @@ typedef enum : uint8_t {
     
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     
+#ifdef DEBUG
     _misc = @[@(DetailMiscMode)];
+#endif
     
-    if (_duo.name && _duo.name.length) {
-        hash = [_duo.name md5];
+    if (self.navigationItem.title && self.navigationItem.title.length) {
+        hash = [self.navigationItem.title md5];
     }
     
     [self loadLayout];
@@ -140,8 +142,10 @@ typedef enum : uint8_t {
             return @"Pre-Defined by Arduino";
         case 1:
             return @"User Defined";
+#ifdef DEBUG
         case 2:
             return @"Misc";
+#endif
         default:
             break;
     }
@@ -343,7 +347,7 @@ typedef enum : uint8_t {
                                          sender:[_layout objectAtIndex:indexPath.row]];
            }
        }];
-    editAction.backgroundColor = kColorButtonDefault;
+    editAction.backgroundColor = kColorUIDefault;
     
     UITableViewRowAction *deleteAction
     = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive
@@ -353,7 +357,7 @@ typedef enum : uint8_t {
        {
            [_layout removeObjectAtIndex:indexPath.row];
            [self saveLayout];
-           [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+           [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade|UITableViewRowAnimationLeft];
        }];
     deleteAction.backgroundColor = kColorBase;
     return @[deleteAction, editAction];

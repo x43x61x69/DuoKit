@@ -33,7 +33,7 @@
 #define kProjectURL @"https://github.com/x43x61x69/DuoKit"
 
 #define kColorBase          UIColorFromRGB(0xFF3B30)
-#define kColorTint          UIColorFromRGB(0x8C0011)
+#define kColorTint          UIColorFromRGB(0x6E010F)
 #define kColorUIDefault     [UIColor darkGrayColor]
 #define kColorButtonDefault UIColorFromRGB(0x5856D6)
 
