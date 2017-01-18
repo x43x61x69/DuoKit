@@ -108,7 +108,6 @@ Example
  pre-defined UI settings.
 - Xcode 8.0 or above is required.
 - See `/src/Example/iOS/DuoBrowser/DuoBrowser.xcworkspace`.
-- For pre-compiled binaries, please check out: https://github.com/x43x61x69/DuoKit/releases.
 
 License
 -------
