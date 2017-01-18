@@ -168,16 +168,33 @@
                         [indicator stopAnimating];
                     }
                     
+                    self.tableView.userInteractionEnabled = YES;
+                    isResolving = NO;
+                    
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                                    message:errorMessage
                                                                             preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
                                                                             style:UIAlertActionStyleDefault
-                                                                          handler:^(UIAlertAction * action) {
-                                                                              self.tableView.userInteractionEnabled = YES;
-                                                                              isResolving = NO;
-                                                                          }];
+                                                                          handler:nil];
+                    UIAlertAction *openWebUIAction
+                    = [UIAlertAction actionWithTitle:@"Web UI"
+                                               style:UIAlertActionStyleDefault
+                                             handler:^(UIAlertAction * action)
+                       {
+                           [[UIApplication sharedApplication]
+                            openURL:[NSURL URLWithString:
+                                     [NSString stringWithFormat:@"http://%@%@:%@",
+                                      duo.user ? [NSString stringWithFormat:@"%@%@@",
+                                                  duo.user,
+                                                  duo.password ?
+                                                  [NSString stringWithFormat:@":%@", duo.password] : @""] : @"",
+                                      duo.host,
+                                      duo.port ? [NSString stringWithFormat:@"%ld",
+                                                  (long)duo.port] : @""]]];
+                       }];
                     alert.view.tintColor = kColorButtonDefault;
+                    [alert addAction:openWebUIAction];
                     [alert addAction:defaultAction];
                     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
                                                                                                      animated:YES
