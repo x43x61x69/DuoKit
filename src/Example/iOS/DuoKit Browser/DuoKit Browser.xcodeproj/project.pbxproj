@@ -60,7 +60,7 @@
 		1FBC90E01E256CE200085360 /* DetailWebUICell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailWebUICell.m; sourceTree = "<group>"; };
 		1FEB23B11E2511A600918646 /* DetailSliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSliderCell.h; sourceTree = "<group>"; };
 		1FEB23B21E2511A600918646 /* DetailSliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSliderCell.m; sourceTree = "<group>"; };
-		1FEB96431DE95EF600D98443 /* DuoKit Browser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DuoKit Browser.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FEB96431DE95EF600D98443 /* DuoKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuoKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FEB96471DE95EF600D98443 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1FEB96491DE95EF600D98443 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1FEB964A1DE95EF600D98443 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 		1FEB96441DE95EF600D98443 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1FEB96431DE95EF600D98443 /* DuoKit Browser.app */,
+				1FEB96431DE95EF600D98443 /* DuoKit.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -279,9 +279,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1FEB96421DE95EF600D98443 /* DuoKit Browser */ = {
+		1FEB96421DE95EF600D98443 /* DuoKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1FEB965A1DE95EF600D98443 /* Build configuration list for PBXNativeTarget "DuoKit Browser" */;
+			buildConfigurationList = 1FEB965A1DE95EF600D98443 /* Build configuration list for PBXNativeTarget "DuoKit" */;
 			buildPhases = (
 				1FEB963F1DE95EF600D98443 /* Sources */,
 				1FEB96401DE95EF600D98443 /* Frameworks */,
@@ -294,9 +294,9 @@
 			);
 			dependencies = (
 			);
-			name = "DuoKit Browser";
+			name = DuoKit;
 			productName = DuoBrowser;
-			productReference = 1FEB96431DE95EF600D98443 /* DuoKit Browser.app */;
+			productReference = 1FEB96431DE95EF600D98443 /* DuoKit.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -328,7 +328,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1FEB96421DE95EF600D98443 /* DuoKit Browser */,
+				1FEB96421DE95EF600D98443 /* DuoKit */,
 			);
 		};
 /* End PBXProject section */
@@ -557,7 +557,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1FEB965A1DE95EF600D98443 /* Build configuration list for PBXNativeTarget "DuoKit Browser" */ = {
+		1FEB965A1DE95EF600D98443 /* Build configuration list for PBXNativeTarget "DuoKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FEB965B1DE95EF600D98443 /* Debug */,
