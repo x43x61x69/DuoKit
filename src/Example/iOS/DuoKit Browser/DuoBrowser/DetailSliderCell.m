@@ -76,6 +76,7 @@
         return;
     }
     if (_pin) {
+        _title.textColor = [UIColor darkTextColor];
         _indicator.color = kColorUIDefault;
         [_indicator startAnimating];
         [_duo readAnalogPin:_pin
@@ -92,6 +93,7 @@
                      [self reloadSliderValue:value];
                  });
              } else {
+                 _title.textColor = kColorBase;
                  if (error) {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
@@ -100,6 +102,7 @@
              }
          }];
     } else if (_key) {
+        _title.textColor = [UIColor darkTextColor];
         _indicator.color = kColorUIDefault;
         [_indicator startAnimating];
         [_duo readValueWithKey:_key
@@ -116,6 +119,7 @@
                      [self reloadSliderValue:value];
                  });
              } else {
+                 _title.textColor = kColorBase;
                  if (error) {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
@@ -150,6 +154,7 @@
         actionUUID = thisAction;
         __unsafe_unretained typeof(self) weakSelf = self;
         if (_pin) {
+            _title.textColor = [UIColor darkTextColor];
             _indicator.color = kColorBase;
             [_indicator startAnimating];
             [_duo setPinType:DuoSetPinAnalog
@@ -165,6 +170,7 @@
              {
                  [weakSelf.indicator stopAnimating];
                  if (!status) {
+                     weakSelf.title.textColor = kColorBase;
                      dispatch_async(dispatch_get_main_queue(), ^{
                          [weakSelf updateSliderValue:value action:thisAction];
                      });
@@ -174,6 +180,7 @@
                  }
              }];
         } else if (_key) {
+            _title.textColor = [UIColor darkTextColor];
             _indicator.color = kColorBase;
             [_indicator startAnimating];
             [_duo updateValue:_slider.value
@@ -192,6 +199,7 @@
                          [self updateSliderValue:value action:thisAction];
                      });
                  } else {
+                     _title.textColor = kColorBase;
                      if (error) {
                          NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                      } else {

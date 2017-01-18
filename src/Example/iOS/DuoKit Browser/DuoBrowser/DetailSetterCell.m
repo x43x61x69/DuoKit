@@ -80,6 +80,7 @@
         return;
     }
     if (_pin) {
+        _title.textColor = [UIColor darkTextColor];
         _indicator.color = kColorUIDefault;
         [_indicator startAnimating];
         [_duo readAnalogPin:_pin
@@ -110,6 +111,7 @@
                      }
                  });
              } else {
+                 _title.textColor = kColorBase;
                  if (error) {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
@@ -118,6 +120,7 @@
              }
          }];
     } else if (_key) {
+        _title.textColor = [UIColor darkTextColor];
         _indicator.color = kColorUIDefault;
         [_indicator startAnimating];
         [_duo readValueWithKey:_key
@@ -158,6 +161,7 @@
                      }
                  });
              } else {
+                 _title.textColor = kColorBase;
                  if (error) {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
@@ -182,6 +186,7 @@
         actionUUID = thisAction;
         __unsafe_unretained typeof(self) weakSelf = self;
         if (_pin) {
+            _title.textColor = [UIColor darkTextColor];
             _indicator.color = kColorBase;
             [_indicator startAnimating];
             [_duo setPinType:DuoSetPinAnalog
@@ -197,6 +202,7 @@
              {
                  [weakSelf.indicator stopAnimating];
                  if (!status) {
+                     weakSelf.title.textColor = kColorBase;
                      dispatch_async(dispatch_get_main_queue(), ^{
                          if (!_textField.isEditing &&
                              thisAction == actionUUID) {
@@ -213,6 +219,7 @@
                  }
              }];
         } else if (_key) {
+            _title.textColor = [UIColor darkTextColor];
             _indicator.color = kColorBase;
             [_indicator startAnimating];
             [_duo updateValue:_valueType == DuoStringType ? 0 : [_textField.text floatValue]
@@ -241,7 +248,7 @@
                          }
                      });
                  } else {
-                     
+                     _title.textColor = kColorBase;
                      if (error) {
                          NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                      } else {

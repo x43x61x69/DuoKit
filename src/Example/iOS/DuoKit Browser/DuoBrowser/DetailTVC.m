@@ -100,6 +100,18 @@ typedef enum : uint8_t {
                                                     target:self
                                                     action:@selector(addButtonAction:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = kColorBase;
+    self.refreshControl.attributedTitle
+    = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Reload Layout from %@",
+                                                  _duo.name ? _duo.name : @"Device"]
+                                      attributes:[NSDictionary dictionaryWithObject:kColorBase
+                                                                             forKey:NSForegroundColorAttributeName]];
+    [self.refreshControl addTarget:self
+                            action:@selector(reloadLayouts)
+                  forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewDidLoad
@@ -131,6 +143,66 @@ typedef enum : uint8_t {
 - (void)backAction:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)reloadLayouts
+{
+    self.tableView.userInteractionEnabled = NO;
+    [_duo isDeviceReadyWithApi:kDuoKitMinVersion
+             completionHandler:^(NSInteger api,
+                                 BOOL isReady,
+                                 NSString *profile,
+                                 NSArray *layouts,
+                                 NSString *errorMessage)
+     {
+         [self.refreshControl endRefreshing];
+         if (isReady) {
+             NSLog(@"%s: %@", __PRETTY_FUNCTION__, layouts);
+             NSMutableArray *layoutArray = [NSMutableArray new];
+             for (NSDictionary *dict in layouts) {
+                 DuoUI *ui = [[DuoUI alloc] initWithDictionary:dict];
+                 if (ui) {
+                     [layoutArray addObject:ui];
+                 }
+             }
+             if (profile) {
+                 _duo.profile = profile;
+             }
+             if (layoutArray.count) {
+                 _duo.layout = layoutArray;
+             }
+             self.navigationItem.title = _duo.profile ? _duo.profile : _duo.name;
+             
+             // User Defined
+             if (self.navigationItem.title && self.navigationItem.title.length) {
+                 hash = [self.navigationItem.title md5];
+             }
+             
+             [self loadLayout];
+             
+             if (!_layout) {
+                 _layout = [NSMutableArray new];
+             }
+             
+             [self.tableView reloadData];
+             
+             self.tableView.userInteractionEnabled = YES;
+         } else {
+             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                            message:errorMessage
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                                     style:UIAlertActionStyleDefault
+                                                                   handler:^(UIAlertAction * action) {
+                                                                       self.tableView.userInteractionEnabled = YES;
+                                                                   }];
+             alert.view.tintColor = kColorButtonDefault;
+             [alert addAction:defaultAction];
+             [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
+                                                                                              animated:YES
+                                                                                            completion:nil];
+         }
+     }];
 }
 
 #pragma mark - Table view data source
@@ -221,6 +293,7 @@ typedef enum : uint8_t {
                 [tableView dequeueReusableCellWithIdentifier:kDetailSwitchCellIdentifer
                                                 forIndexPath:indexPath];
                 cell.title.text = ui.name;
+                cell.title.textColor = [UIColor darkTextColor];
                 cell.duo = _duo;
                 cell.pin = ui.pin;
                 cell.pinSwitch.onTintColor = ui.color ? ui.color : kColorUIDefault;
@@ -236,6 +309,7 @@ typedef enum : uint8_t {
                 [tableView dequeueReusableCellWithIdentifier:kDetailSetterCellIdentifer
                                                 forIndexPath:indexPath];
                 cell.title.text = ui.name;
+                cell.title.textColor = [UIColor darkTextColor];
                 cell.duo = _duo;
                 cell.pin = ui.pin;
                 cell.valueType = ui.valueType;
@@ -271,6 +345,7 @@ typedef enum : uint8_t {
                 [tableView dequeueReusableCellWithIdentifier:kDetailSliderCellIdentifer
                                                 forIndexPath:indexPath];
                 cell.title.text = ui.name;
+                cell.title.textColor = [UIColor darkTextColor];
                 cell.duo = _duo;
                 cell.pin = ui.pin;
                 if (ui.key) cell.key = ui.key;
