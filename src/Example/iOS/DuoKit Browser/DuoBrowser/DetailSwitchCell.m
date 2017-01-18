@@ -72,6 +72,7 @@
     }
     _indicator.color = kColorUIDefault;
     [_indicator startAnimating];
+    _title.textColor = [UIColor darkTextColor];
     [_duo readDigitalPin:_pin
        completionHandler:^(NSInteger api,
                            BOOL status,
@@ -91,6 +92,7 @@
                  }
              });
          } else {
+             _title.textColor = kColorBase;
              if (error) {
                  NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
              } else {
@@ -109,6 +111,7 @@
         __unsafe_unretained typeof(self) weakSelf = self;
         _indicator.color = kColorBase;
         [_indicator startAnimating];
+        _title.textColor = [UIColor darkTextColor];
         [_duo setPinType:DuoSetPinDigital
                      pin:_pin
                    value:sender.on ? DuoPinHigh : DuoPinLow
@@ -122,6 +125,7 @@
          {
              [weakSelf.indicator stopAnimating];
              if (!status) {
+                 weakSelf.title.textColor = kColorBase;
                  if (!_pinSwitch.isTouchInside &&
                      thisAction == actionUUID) {
                      [sender setOn:!sender.on animated:YES];

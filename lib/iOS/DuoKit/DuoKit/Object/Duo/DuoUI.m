@@ -80,20 +80,24 @@
             self.key = [dictionary objectForKey:@"key"];
         if ([dictionary objectForKey:@"pin"])
             self.pin = [[dictionary objectForKey:@"pin"] integerValue];
-        if ([dictionary objectForKey:@"valueType"])
+        if ([dictionary objectForKey:@"valueType"]) {
             self.valueType = [[dictionary objectForKey:@"valueType"] integerValue];
-        switch (self.valueType) {
-            case DuoIntType:
-            case DuoDoubleType:
-                if ([dictionary objectForKey:@"value"])
-                    self.value = [[dictionary objectForKey:@"value"] doubleValue];
-                break;
-            case DuoStringType:
-                if ([dictionary objectForKey:@"value"])
-                    self.stringValue = [dictionary objectForKey:@"value"];
-                break;
-            default:
-                break;
+            switch (self.valueType) {
+                case DuoIntType:
+                case DuoDoubleType:
+                    if ([dictionary objectForKey:@"value"]) {
+                        self.value = [[dictionary objectForKey:@"value"] doubleValue];
+                    }
+                    break;
+                case DuoStringType:
+                    if ([dictionary objectForKey:@"value"])
+                        self.stringValue = [dictionary objectForKey:@"value"];
+                    break;
+                default:
+                    break;
+            }
+        } else if ([dictionary objectForKey:@"value"]) {
+            self.value = [[dictionary objectForKey:@"value"] doubleValue];
         }
         if ([dictionary objectForKey:@"min"])
             self.minimumValue = [[dictionary objectForKey:@"min"] doubleValue];
