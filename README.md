@@ -101,13 +101,13 @@ Example
 - Arduino IDE 1.8.0 or above is required.
 - See `File > Examples > DuoKit > Basic`.
 
-**DuoBrowser (iOS):**
+**DuoKit Browser (iOS):**
 
 - An exmple that utilizes Apple's Bonjour service to look for available LinkIt
  7688 Duo boards within LAN, then load the Basic-sketch-enabled ones with
  pre-defined UI settings.
 - Xcode 8.0 or above is required.
-- See `/src/Example/iOS/DuoBrowser/DuoBrowser.xcworkspace`.
+- See `/src/Example/iOS/DuoKit Browser/DuoKit Browser.xcworkspace`.
 
 License
 -------
