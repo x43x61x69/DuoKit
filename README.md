@@ -107,7 +107,7 @@ Example
  7688 Duo boards within LAN, then load the Basic-sketch-enabled ones with
  pre-defined UI settings.
 - Xcode 8.0 or above is required.
-- See `/src/Example/iOS/DuoBrowser/DuoKit Browser.xcworkspace`.
+- See `/src/Example/iOS/DuoKit Browser/DuoKit Browser.xcworkspace`.
 
 License
 -------
