@@ -1,14 +1,22 @@
 DuoKit
 ======
 
-A Bonjour based solution for **Arduino Yún** a-likes.
+DuoKit, a free and open-source IoT control solution for **Arduino Yún** a-likes based on Bonjour.
 
 ![Preview](preview.gif)
+
+**Feature**
+
+- Free and open source.
+- Discover local devices with Bonjour, IP addresses are not required.
+- Pre-defined UI layout within your Arduino sketch.
+- Auto reload values within given time.
+- User defined controls are are also available.
 
 Install
 -------
 
-*As this library requires much of flash memory, it's recommanded to use an Arduino Mega 2560 R3 with a Yún Shield if your pre-existed sketch is large.*
+*As this library requires much of flash memory, it's recommanded to use an Arduino Mega 2560 R3 or Zero with a Yún Shield if your pre-existed sketch is large.*
 
 **Arduino Library:**
 
