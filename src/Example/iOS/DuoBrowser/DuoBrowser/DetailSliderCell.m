@@ -26,6 +26,7 @@
 //
 
 #import "DetailSliderCell.h"
+#import "Common.h"
 
 @interface DetailSliderCell ()
 {
@@ -75,6 +76,8 @@
         return;
     }
     if (_pin) {
+        _indicator.color = kColorUIDefault;
+        [_indicator startAnimating];
         [_duo readAnalogPin:_pin
           completionHandler:^(NSInteger api,
                               BOOL status,
@@ -83,6 +86,7 @@
                               NSString *result,
                               NSError *error)
          {
+             [_indicator stopAnimating];
              if (status) {
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self reloadSliderValue:value];
@@ -96,6 +100,8 @@
              }
          }];
     } else if (_key) {
+        _indicator.color = kColorUIDefault;
+        [_indicator startAnimating];
         [_duo readValueWithKey:_key
              completionHandler:^(NSInteger api,
                                  BOOL status,
@@ -104,6 +110,7 @@
                                  NSString *result,
                                  NSError *error)
          {
+             [_indicator stopAnimating];
              if (status) {
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self reloadSliderValue:value];
@@ -143,6 +150,8 @@
         actionUUID = thisAction;
         __unsafe_unretained typeof(self) weakSelf = self;
         if (_pin) {
+            _indicator.color = kColorBase;
+            [_indicator startAnimating];
             [_duo setPinType:DuoSetPinAnalog
                          pin:_pin
                        value:_slider.value
@@ -154,6 +163,7 @@
                                NSString *result,
                                NSError *error)
              {
+                 [weakSelf.indicator stopAnimating];
                  if (!status) {
                      dispatch_async(dispatch_get_main_queue(), ^{
                          [weakSelf updateSliderValue:value action:thisAction];
@@ -164,6 +174,8 @@
                  }
              }];
         } else if (_key) {
+            _indicator.color = kColorBase;
+            [_indicator startAnimating];
             [_duo updateValue:_slider.value
                   stringValue:nil
                       withKey:_key
@@ -174,6 +186,7 @@
                                 NSString *result,
                                 NSError *error)
              {
+                 [_indicator stopAnimating];
                  if (status) {
                      dispatch_async(dispatch_get_main_queue(), ^{
                          [self updateSliderValue:value action:thisAction];

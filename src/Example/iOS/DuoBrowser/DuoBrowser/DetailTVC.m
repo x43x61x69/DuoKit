@@ -220,7 +220,7 @@ typedef enum : uint8_t {
                 DetailSwitchCell *cell =
                 [tableView dequeueReusableCellWithIdentifier:kDetailSwitchCellIdentifer
                                                 forIndexPath:indexPath];
-                cell.textLabel.text = ui.name;
+                cell.title.text = ui.name;
                 cell.duo = _duo;
                 cell.pin = ui.pin;
                 cell.pinSwitch.onTintColor = ui.color ? ui.color : kColorUIDefault;
@@ -381,7 +381,7 @@ typedef enum : uint8_t {
     editIndex = -1;
     if (_duo.layout.count + _layout.count >= kMaxUIElements) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning"
-                                                                       message:[NSString stringWithFormat:@"You already have %lu controls in the list.\n\nToo many requests will make the device unstable.\n\nPlease remove some of the items before you continue.", _duo.layout.count + _layout.count]
+                                                                       message:[NSString stringWithFormat:@"You already have %u controls in the list.\n\nToo many requests will make the device unstable.\n\nPlease remove some of the items before you continue.", _duo.layout.count + _layout.count]
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Abort"
                                                                 style:UIAlertActionStyleDefault

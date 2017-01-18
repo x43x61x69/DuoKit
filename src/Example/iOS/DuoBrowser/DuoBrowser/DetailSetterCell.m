@@ -26,6 +26,7 @@
 //
 
 #import "DetailSetterCell.h"
+#import "Common.h"
 
 @interface DetailSetterCell ()
 {
@@ -79,6 +80,8 @@
         return;
     }
     if (_pin) {
+        _indicator.color = kColorUIDefault;
+        [_indicator startAnimating];
         [_duo readAnalogPin:_pin
           completionHandler:^(NSInteger api,
                               BOOL status,
@@ -87,6 +90,7 @@
                               NSString *result,
                               NSError *error)
          {
+             [_indicator stopAnimating];
              if (status) {
                  _value = value;
                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -114,6 +118,8 @@
              }
          }];
     } else if (_key) {
+        _indicator.color = kColorUIDefault;
+        [_indicator startAnimating];
         [_duo readValueWithKey:_key
              completionHandler:^(NSInteger api,
                                  BOOL status,
@@ -122,6 +128,7 @@
                                  NSString *result,
                                  NSError *error)
          {
+             [_indicator stopAnimating];
              if (status) {
                  switch (_valueType) {
                      case DuoStringType:
@@ -173,8 +180,10 @@
     if ([textField isEqual:_textField]) {
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
-        
+        __unsafe_unretained typeof(self) weakSelf = self;
         if (_pin) {
+            _indicator.color = kColorBase;
+            [_indicator startAnimating];
             [_duo setPinType:DuoSetPinAnalog
                          pin:_pin
                        value:[_textField.text floatValue]
@@ -186,6 +195,7 @@
                                NSString *result,
                                NSError *error)
              {
+                 [weakSelf.indicator stopAnimating];
                  if (!status) {
                      dispatch_async(dispatch_get_main_queue(), ^{
                          if (!_textField.isEditing &&
@@ -203,6 +213,8 @@
                  }
              }];
         } else if (_key) {
+            _indicator.color = kColorBase;
+            [_indicator startAnimating];
             [_duo updateValue:_valueType == DuoStringType ? 0 : [_textField.text floatValue]
                   stringValue:_valueType == DuoStringType ? _textField.text : nil
                       withKey:_key
@@ -213,6 +225,7 @@
                                 NSString *result,
                                 NSError *error)
              {
+                 [_indicator stopAnimating];
                  if (status) {
                      dispatch_async(dispatch_get_main_queue(), ^{
                          if (!_textField.isEditing &&

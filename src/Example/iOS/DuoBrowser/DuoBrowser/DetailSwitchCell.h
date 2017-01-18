@@ -38,6 +38,9 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) UISwitch *pinSwitch;
 
+@property (nonatomic, weak) IBOutlet UILabel *title;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
+
 - (void)setReloadInterval:(NSTimeInterval)interval;
 - (void)reload;
 

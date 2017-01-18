@@ -26,6 +26,7 @@
 //
 
 #import "DetailSwitchCell.h"
+#import "Common.h"
 
 @interface DetailSwitchCell ()
 {
@@ -69,6 +70,8 @@
     if (_pinSwitch.isTouchInside || actionUUID) {
         return;
     }
+    _indicator.color = kColorUIDefault;
+    [_indicator startAnimating];
     [_duo readDigitalPin:_pin
        completionHandler:^(NSInteger api,
                            BOOL status,
@@ -78,6 +81,7 @@
                            NSString *result,
                            NSError *error)
      {
+         [_indicator stopAnimating];
          if (status) {
              dispatch_async(dispatch_get_main_queue(), ^{
                  if (_pinSwitch &&
@@ -102,6 +106,9 @@
         [sender setOn:[sender isOn] animated:YES];
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
+        __unsafe_unretained typeof(self) weakSelf = self;
+        _indicator.color = kColorBase;
+        [_indicator startAnimating];
         [_duo setPinType:DuoSetPinDigital
                      pin:_pin
                    value:sender.on ? DuoPinHigh : DuoPinLow
@@ -113,6 +120,7 @@
                            NSString *result,
                            NSError *error)
          {
+             [weakSelf.indicator stopAnimating];
              if (!status) {
                  if (!_pinSwitch.isTouchInside &&
                      thisAction == actionUUID) {

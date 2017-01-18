@@ -32,15 +32,16 @@
 
 @interface DetailSliderCell : UITableViewCell
 
-@property (nonatomic, strong)   Duo         *duo;
-@property (nonatomic)           DuoPin      pin;
-@property (nonatomic, strong)   NSString    *key;
+@property (nonatomic, strong) Duo         *duo;
+@property (nonatomic)         DuoPin      pin;
+@property (nonatomic, strong) NSString    *key;
 
-@property (nonatomic, strong)   NSTimer     *timer;
+@property (nonatomic, strong) NSTimer     *timer;
 
-@property (nonatomic, weak)     IBOutlet UILabel    *title;
-@property (nonatomic, weak)     IBOutlet UISlider   *slider;
-@property (nonatomic, weak)     IBOutlet UILabel    *sliderValueLabel;
+@property (nonatomic, weak) IBOutlet UILabel    *title;
+@property (nonatomic, weak) IBOutlet UISlider   *slider;
+@property (nonatomic, weak) IBOutlet UILabel    *sliderValueLabel;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 - (void)setReloadInterval:(NSTimeInterval)interval;
 - (void)reload;

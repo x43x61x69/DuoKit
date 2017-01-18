@@ -105,7 +105,7 @@ typedef enum {
     if (_editIndex >= 0 && _editLayout) {
         self.navigationItem.title = [NSString stringWithFormat:@"Edit \"%@\"", _editLayout.name ? _editLayout.name : @"--"];
         _nameTextField.text = _editLayout.name ? _editLayout.name : @"";
-        _pinTextField.text = _editLayout.pin ? [NSString stringWithFormat:@"%ld", _editLayout.pin] : @"";
+        _pinTextField.text = _editLayout.pin ? [NSString stringWithFormat:@"%ld", (long)_editLayout.pin] : @"";
         [_typePicker selectRow:_editLayout.type == DuoUISwitch ? 0 : 1 inComponent:0 animated:NO];
         _typeTextField.text = _typeDataSource[_editLayout.type == DuoUISwitch ? 0 : 1];
         [_modePicker selectRow:_editLayout.type == DuoUIGetter ? 0 : 1 inComponent:0 animated:NO];
