@@ -16,7 +16,7 @@ DuoKit, a free and open-source IoT control solution for **Arduino Yún** a-likes
 Install
 -------
 
-*As this library requires much of flash memory, it's recommanded to use an Arduino Mega 2560 R3 or Zero with a Yún Shield if your pre-existed sketch is large.*
+*As this library requires much of flash memory, it's recommanded to use an Arduino Mega 2560 R3 or Zero with a Yún Shield if your pre-existed sketches were large.*
 
 **Arduino Library:**
 
