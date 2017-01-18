@@ -1,5 +1,5 @@
 //
-//  MTKDuoBrowser.h
+//  DuoBrowser.h
 //  DuoKit
 //
 //  The MIT License (MIT)
@@ -26,7 +26,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MTKDuo.h"
+#import "Duo.h"
 
 #pragma mark - Bonjour Service Types
 
@@ -57,7 +57,7 @@
 #define kBonjourServiceTypeRAOP                @"_raop._tcp"           // Remote Audio Output Protocol (RAOP)
 
 
-@protocol MTKDuoBrowserDelegate <NSObject>
+@protocol DuoBrowserDelegate <NSObject>
 
 @optional
 
@@ -66,25 +66,25 @@
 - (void)willSearchForServicesOfType:(NSString *)type inDomain:(NSString *)domain;
 - (void)domainsDidChanged:(NSArray<NSString *> *)domains;
 - (void)servicesDidChanged:(NSArray<NSNetService *> *)services;
-- (void)duoListDidChanged:(NSArray<MTKDuo *> *)duoList;
+- (void)duoListDidChanged:(NSArray<Duo *> *)duoList;
 - (void)didNotSearchForServicesOfType:(NSString *)type inDomain:(NSString *)domain error:(NSDictionary<NSString *,NSNumber *> *)errorDict;
 - (void)didStopSearch:(NSString *)type inDomain:(NSString *)domain;
 
 #pragma mark NSNetServiceDelegate
 
 - (void)didResolveInstance:(NSNetService *)service;
-- (void)didResolveDuo:(MTKDuo *)duo;
+- (void)didResolveDuo:(Duo *)duo;
 - (void)didResolveInstance:(NSNetService *)service name:(NSString *)name domain:(NSString *)domain type:(NSString *)type host:(NSString *)host addresses:(NSArray<NSString *> *)addresses v4Addresses:(NSArray<NSString *> *)v4Addresses v6Addresses:(NSArray<NSString *> *)v6Addresses port:(NSInteger)port path:(NSString *)path user:(NSString *)user password:(NSString *)password;
 - (void)didNotResolveInstance:(NSNetService *)service error:(NSDictionary<NSString *,NSNumber *> *)errorDict;
-- (void)didNotResolveDuo:(MTKDuo *)duo error:(NSDictionary<NSString *,NSNumber *> *)errorDict;
+- (void)didNotResolveDuo:(Duo *)duo error:(NSDictionary<NSString *,NSNumber *> *)errorDict;
 
 @end
 
-@interface MTKDuoBrowser : NSObject
+@interface DuoBrowser : NSObject
 
-@property (nonatomic, assign) id <MTKDuoBrowserDelegate> delegate;
+@property (nonatomic, assign) id <DuoBrowserDelegate> delegate;
 
-+ (MTKDuoBrowser *)sharedInstance;
++ (DuoBrowser *)sharedInstance;
 - (BOOL)searchForBrowsableDomains;
 - (BOOL)searchForRegistrationDomains;
 - (BOOL)searchForServicesOfType:(NSString *)type inDomain:(NSString *)domain;

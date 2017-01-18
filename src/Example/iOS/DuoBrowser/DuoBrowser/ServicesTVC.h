@@ -25,9 +25,12 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#define kServiceSegueIdentifer  @"ServiceSegue"
 
-@interface ServicesTVC : UITableViewController
+#import <UIKit/UIKit.h>
+#import "BrowserTVC.h"
+
+@interface ServicesTVC : BrowserTVC
 
 @property (nonatomic, strong) NSString  *domain;
 @property (nonatomic, strong) NSString  *serviceType;

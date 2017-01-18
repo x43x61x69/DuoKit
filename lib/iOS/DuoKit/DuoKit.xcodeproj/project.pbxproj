@@ -7,29 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F4B84FA1DEB46BA00CF1163 /* MTKDuo.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F4B84F81DEB46BA00CF1163 /* MTKDuo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1F4B84FB1DEB46BA00CF1163 /* MTKDuo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B84F91DEB46BA00CF1163 /* MTKDuo.m */; };
+		1F4B84FA1DEB46BA00CF1163 /* Duo.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F4B84F81DEB46BA00CF1163 /* Duo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1F4B84FB1DEB46BA00CF1163 /* Duo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B84F91DEB46BA00CF1163 /* Duo.m */; };
 		1F4B84FF1DEB568900CF1163 /* NSNetService+Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F4B84FD1DEB568900CF1163 /* NSNetService+Extension.h */; };
 		1F4B85001DEB568900CF1163 /* NSNetService+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B84FE1DEB568900CF1163 /* NSNetService+Extension.m */; };
 		1FEB95EA1DE93CBE00D98443 /* DuoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FEB95E81DE93CBE00D98443 /* DuoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1FEB95F61DE9401D00D98443 /* MTKDuoBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FEB95F41DE9401D00D98443 /* MTKDuoBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1FEB95F71DE9401D00D98443 /* MTKDuoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB95F51DE9401D00D98443 /* MTKDuoBrowser.m */; };
-		426EC0ED1E234F0300D2D762 /* MTKDuoUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 426EC0EB1E234F0300D2D762 /* MTKDuoUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		426EC0EE1E234F0300D2D762 /* MTKDuoUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0EC1E234F0300D2D762 /* MTKDuoUI.m */; };
+		1FEB95F61DE9401D00D98443 /* DuoBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FEB95F41DE9401D00D98443 /* DuoBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1FEB95F71DE9401D00D98443 /* DuoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB95F51DE9401D00D98443 /* DuoBrowser.m */; };
+		426EC0ED1E234F0300D2D762 /* DuoUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 426EC0EB1E234F0300D2D762 /* DuoUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		426EC0EE1E234F0300D2D762 /* DuoUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0EC1E234F0300D2D762 /* DuoUI.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F4B84F81DEB46BA00CF1163 /* MTKDuo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTKDuo.h; path = Object/Duo/MTKDuo.h; sourceTree = "<group>"; };
-		1F4B84F91DEB46BA00CF1163 /* MTKDuo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTKDuo.m; path = Object/Duo/MTKDuo.m; sourceTree = "<group>"; };
+		1F4B84F81DEB46BA00CF1163 /* Duo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Duo.h; path = Object/Duo/Duo.h; sourceTree = "<group>"; };
+		1F4B84F91DEB46BA00CF1163 /* Duo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Duo.m; path = Object/Duo/Duo.m; sourceTree = "<group>"; };
 		1F4B84FD1DEB568900CF1163 /* NSNetService+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNetService+Extension.h"; path = "Extension/NSNetService+Extension.h"; sourceTree = "<group>"; };
 		1F4B84FE1DEB568900CF1163 /* NSNetService+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNetService+Extension.m"; path = "Extension/NSNetService+Extension.m"; sourceTree = "<group>"; };
+		1F7030FA1E2CB57F005F4816 /* RGB_LED_Transition.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = RGB_LED_Transition.ino; sourceTree = "<group>"; };
+		1F7030FC1E2CB5E3005F4816 /* RGB_LED.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = RGB_LED.ino; sourceTree = "<group>"; };
 		1FEB95E51DE93CBE00D98443 /* DuoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DuoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FEB95E81DE93CBE00D98443 /* DuoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DuoKit.h; sourceTree = "<group>"; };
 		1FEB95E91DE93CBE00D98443 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1FEB95F41DE9401D00D98443 /* MTKDuoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTKDuoBrowser.h; path = Bonjour/MTKDuoBrowser.h; sourceTree = "<group>"; };
-		1FEB95F51DE9401D00D98443 /* MTKDuoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTKDuoBrowser.m; path = Bonjour/MTKDuoBrowser.m; sourceTree = "<group>"; };
-		426EC0EB1E234F0300D2D762 /* MTKDuoUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTKDuoUI.h; path = Object/Duo/MTKDuoUI.h; sourceTree = "<group>"; };
-		426EC0EC1E234F0300D2D762 /* MTKDuoUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTKDuoUI.m; path = Object/Duo/MTKDuoUI.m; sourceTree = "<group>"; };
+		1FEB95F41DE9401D00D98443 /* DuoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DuoBrowser.h; path = Bonjour/DuoBrowser.h; sourceTree = "<group>"; };
+		1FEB95F51DE9401D00D98443 /* DuoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DuoBrowser.m; path = Bonjour/DuoBrowser.m; sourceTree = "<group>"; };
+		1FFB9F1C1E289F810052B2B8 /* DuoKit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DuoKit.cpp; sourceTree = "<group>"; };
+		1FFB9F1D1E289F810052B2B8 /* DuoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DuoKit.h; sourceTree = "<group>"; };
+		1FFB9F201E289F810052B2B8 /* Basic.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = Basic.ino; sourceTree = "<group>"; };
+		1FFB9F231E289F810052B2B8 /* keywords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
+		1FFB9F241E289F810052B2B8 /* library.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = library.properties; sourceTree = "<group>"; };
+		1FFB9F251E289F810052B2B8 /* README.adoc */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.adoc; sourceTree = "<group>"; };
+		426EC0EB1E234F0300D2D762 /* DuoUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DuoUI.h; path = Object/Duo/DuoUI.h; sourceTree = "<group>"; };
+		426EC0EC1E234F0300D2D762 /* DuoUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DuoUI.m; path = Object/Duo/DuoUI.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +54,10 @@
 		1F4B84F71DEB463E00CF1163 /* Object */ = {
 			isa = PBXGroup;
 			children = (
-				1F4B84F81DEB46BA00CF1163 /* MTKDuo.h */,
-				1F4B84F91DEB46BA00CF1163 /* MTKDuo.m */,
-				426EC0EB1E234F0300D2D762 /* MTKDuoUI.h */,
-				426EC0EC1E234F0300D2D762 /* MTKDuoUI.m */,
+				1F4B84F81DEB46BA00CF1163 /* Duo.h */,
+				1F4B84F91DEB46BA00CF1163 /* Duo.m */,
+				426EC0EB1E234F0300D2D762 /* DuoUI.h */,
+				426EC0EC1E234F0300D2D762 /* DuoUI.m */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -63,9 +71,26 @@
 			name = Extension;
 			sourceTree = "<group>";
 		};
+		1F7030F91E2CB57F005F4816 /* RGB_LED_Transition */ = {
+			isa = PBXGroup;
+			children = (
+				1F7030FA1E2CB57F005F4816 /* RGB_LED_Transition.ino */,
+			);
+			path = RGB_LED_Transition;
+			sourceTree = "<group>";
+		};
+		1F7030FB1E2CB5E3005F4816 /* RGB_LED */ = {
+			isa = PBXGroup;
+			children = (
+				1F7030FC1E2CB5E3005F4816 /* RGB_LED.ino */,
+			);
+			path = RGB_LED;
+			sourceTree = "<group>";
+		};
 		1FEB95DB1DE93CBE00D98443 = {
 			isa = PBXGroup;
 			children = (
+				1FFB9F1B1E289F810052B2B8 /* Arduino Library */,
 				1FEB95E71DE93CBE00D98443 /* DuoKit */,
 				1FEB95E61DE93CBE00D98443 /* Products */,
 			);
@@ -102,10 +127,42 @@
 		1FEB95F31DE93ED300D98443 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				1FEB95F41DE9401D00D98443 /* MTKDuoBrowser.h */,
-				1FEB95F51DE9401D00D98443 /* MTKDuoBrowser.m */,
+				1FEB95F41DE9401D00D98443 /* DuoBrowser.h */,
+				1FEB95F51DE9401D00D98443 /* DuoBrowser.m */,
 			);
 			name = Browser;
+			sourceTree = "<group>";
+		};
+		1FFB9F1B1E289F810052B2B8 /* Arduino Library */ = {
+			isa = PBXGroup;
+			children = (
+				1FFB9F1E1E289F810052B2B8 /* examples */,
+				1FFB9F1D1E289F810052B2B8 /* DuoKit.h */,
+				1FFB9F1C1E289F810052B2B8 /* DuoKit.cpp */,
+				1FFB9F241E289F810052B2B8 /* library.properties */,
+				1FFB9F231E289F810052B2B8 /* keywords.txt */,
+				1FFB9F251E289F810052B2B8 /* README.adoc */,
+			);
+			name = "Arduino Library";
+			path = ../../Arduino/DuoKit;
+			sourceTree = "<group>";
+		};
+		1FFB9F1E1E289F810052B2B8 /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				1FFB9F1F1E289F810052B2B8 /* Basic */,
+				1F7030FB1E2CB5E3005F4816 /* RGB_LED */,
+				1F7030F91E2CB57F005F4816 /* RGB_LED_Transition */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		1FFB9F1F1E289F810052B2B8 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				1FFB9F201E289F810052B2B8 /* Basic.ino */,
+			);
+			path = Basic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -116,9 +173,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FEB95EA1DE93CBE00D98443 /* DuoKit.h in Headers */,
-				1F4B84FA1DEB46BA00CF1163 /* MTKDuo.h in Headers */,
-				426EC0ED1E234F0300D2D762 /* MTKDuoUI.h in Headers */,
-				1FEB95F61DE9401D00D98443 /* MTKDuoBrowser.h in Headers */,
+				1F4B84FA1DEB46BA00CF1163 /* Duo.h in Headers */,
+				426EC0ED1E234F0300D2D762 /* DuoUI.h in Headers */,
+				1FEB95F61DE9401D00D98443 /* DuoBrowser.h in Headers */,
 				1F4B84FF1DEB568900CF1163 /* NSNetService+Extension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,7 +215,7 @@
 				TargetAttributes = {
 					1FEB95E41DE93CBE00D98443 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = ZG5MN8MJ6A;
+						DevelopmentTeam = 928652TY3Y;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -207,7 +264,7 @@
 		};
 		1FEB95F11DE93D0300D98443 /* Increase Subversion Number */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -215,7 +272,7 @@
 			name = "Increase Subversion Number";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "VERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
@@ -227,9 +284,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F4B85001DEB568900CF1163 /* NSNetService+Extension.m in Sources */,
-				1F4B84FB1DEB46BA00CF1163 /* MTKDuo.m in Sources */,
-				426EC0EE1E234F0300D2D762 /* MTKDuoUI.m in Sources */,
-				1FEB95F71DE9401D00D98443 /* MTKDuoBrowser.m in Sources */,
+				1F4B84FB1DEB46BA00CF1163 /* Duo.m in Sources */,
+				426EC0EE1E234F0300D2D762 /* DuoUI.m in Sources */,
+				1FEB95F71DE9401D00D98443 /* DuoBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +396,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZG5MN8MJ6A;
+				DEVELOPMENT_TEAM = 928652TY3Y;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -358,7 +415,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZG5MN8MJ6A;
+				DEVELOPMENT_TEAM = 928652TY3Y;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

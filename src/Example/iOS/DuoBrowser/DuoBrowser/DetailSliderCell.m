@@ -26,6 +26,7 @@
 //
 
 #import "DetailSliderCell.h"
+#import "Common.h"
 
 @interface DetailSliderCell ()
 {
@@ -45,6 +46,14 @@
     [_slider addTarget:self
                 action:@selector(sliderDidEndEditng:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    [_slider addTarget:self
+                action:@selector(sliderDidEndEditng:)
+      forControlEvents:UIControlEventTouchUpOutside];
+    
+    [_slider addTarget:self
+                action:@selector(sliderValueDidChange:)
+      forControlEvents:UIControlEventTouchDragInside];
 }
 
 - (void)setReloadInterval:(NSTimeInterval)interval
@@ -66,75 +75,157 @@
     if (_slider.isTouchInside || actionUUID) {
         return;
     }
-    [_duo readValueWithKey:_key
-         completionHandler:^(NSInteger api,
-                             BOOL status,
-                             double value,
-                             NSString *result,
-                             NSError *error)
-     {
-         if (status) {
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 if (_slider &&
-                     !_slider.isTouchInside &&
-                     !actionUUID) {
-                     [UIView animateWithDuration:.5f
-                                           delay:.0f
-                                         options:UIViewAnimationOptionCurveLinear
-                                      animations:^{
-                                          [_slider setValue:value animated:YES];
-                                      } completion:nil];
-                 }
-             });
-         } else {
-             if (error) {
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+    if (_pin) {
+        _indicator.color = kColorUIDefault;
+        [_indicator startAnimating];
+        [_duo readAnalogPin:_pin
+          completionHandler:^(NSInteger api,
+                              BOOL status,
+                              DuoPin pin,
+                              DuoPinValue value,
+                              NSString *result,
+                              NSError *error)
+         {
+             [_indicator stopAnimating];
+             if (status) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self reloadSliderValue:value];
+                 });
              } else {
-                 NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                 if (error) {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+                 } else {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                 }
              }
-         }
-     }];
+         }];
+    } else if (_key) {
+        _indicator.color = kColorUIDefault;
+        [_indicator startAnimating];
+        [_duo readValueWithKey:_key
+             completionHandler:^(NSInteger api,
+                                 BOOL status,
+                                 double value,
+                                 NSString *stringValue,
+                                 NSString *result,
+                                 NSError *error)
+         {
+             [_indicator stopAnimating];
+             if (status) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self reloadSliderValue:value];
+                 });
+             } else {
+                 if (error) {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+                 } else {
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                 }
+             }
+         }];
+    }
+}
+
+- (void)reloadSliderValue:(CGFloat)value
+{
+    if (_slider &&
+        !_slider.isTouchInside &&
+        !actionUUID) {
+        [UIView animateWithDuration:.5f
+                              delay:.0f
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             [_slider setValue:value animated:YES];
+                         } completion:nil];
+    }
 }
 
 - (void)sliderDidEndEditng:(UISlider *)slider
 {
     if ([slider isEqual:_slider]) {
+        
+        _sliderValueLabel.text = @"";
+        
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
-        [_duo updateValue:_slider.value
-                  withKey:_key
-        completionHandler:^(NSInteger api,
-                            BOOL status,
-                            double value,
-                            NSString *result,
-                            NSError *error)
-         {
-             if (status) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     if (!_slider.isTouchInside &&
-                         thisAction == actionUUID) {
-                         [UIView animateWithDuration:.5f
-                                               delay:.0f
-                                             options:UIViewAnimationOptionCurveLinear
-                                          animations:^{
-                                              [_slider setValue:value animated:YES];
-                                          } completion:nil];
-                     }
-                 });
-             } else {
-                 
-                 if (error) {
-                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error debugDescription]);
+        __unsafe_unretained typeof(self) weakSelf = self;
+        if (_pin) {
+            _indicator.color = kColorBase;
+            [_indicator startAnimating];
+            [_duo setPinType:DuoSetPinAnalog
+                         pin:_pin
+                       value:_slider.value
+           completionHandler:^(NSInteger api,
+                               BOOL status,
+                               DuoPin pin,
+                               DuoPinValue value,
+                               DuoPinMode mode,
+                               NSString *result,
+                               NSError *error)
+             {
+                 [weakSelf.indicator stopAnimating];
+                 if (!status) {
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [weakSelf updateSliderValue:value action:thisAction];
+                     });
+                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
                  } else {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
                  }
-             }
-             
-             if (thisAction == actionUUID) {
-                 actionUUID = nil;
-             }
-         }];
+             }];
+        } else if (_key) {
+            _indicator.color = kColorBase;
+            [_indicator startAnimating];
+            [_duo updateValue:_slider.value
+                  stringValue:nil
+                      withKey:_key
+            completionHandler:^(NSInteger api,
+                                BOOL status,
+                                double value,
+                                NSString *stringValue,
+                                NSString *result,
+                                NSError *error)
+             {
+                 [_indicator stopAnimating];
+                 if (status) {
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [self updateSliderValue:value action:thisAction];
+                     });
+                 } else {
+                     if (error) {
+                         NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+                     } else {
+                         NSLog(@"%s: %@", __PRETTY_FUNCTION__, result);
+                     }
+                 }
+                 
+                 if (thisAction == actionUUID) {
+                     actionUUID = nil;
+                 }
+             }];
+        }
     }
 }
+
+- (void)updateSliderValue:(CGFloat)value action:(NSUUID *)action
+{
+    if (!_slider.isTouchInside &&
+        action == actionUUID) {
+        [UIView animateWithDuration:.5f
+                              delay:.0f
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             [_slider setValue:value animated:YES];
+                         } completion:nil];
+    }
+}
+
+- (void)sliderValueDidChange:(UISlider *)slider
+{
+    if ([slider isEqual:_slider]) {
+        _sliderValueLabel.text = [NSString stringWithFormat:@"%ld", lroundf(_slider.value)];
+    }
+}
+
 
 @end

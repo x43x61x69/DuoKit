@@ -8,6 +8,8 @@ A Bonjour based solution for **Arduino Yún** a-likes.
 Install
 -------
 
+*As this library requires much of flash memory, it's recommanded to use an Arduino Mega 2560 R3 with a Yún Shield if your pre-existed sketch is large.*
+
 **Arduino Library:**
 
 - In Arduino IDE, select `Sketch > Include Library > Add .ZIP Library`.
@@ -33,6 +35,7 @@ avahi-daemon --reload
 
 *If you get `wget: can't execute 'openssl': No such file or directory` error:*
 ```
+opkg update
 opkg install wget ca-certificates
 ```
 
@@ -76,9 +79,9 @@ You can also read/write pre-mapped variables via key name:
 
 - Ping your device to see if it's ready: `/arduino/ping`
 - Read value for key **MyAwesomeKey**: `/arduino/read/MyAwesomeKey`
-- List available keys: `/arduino/list`
 - Update value for key **MyAwesomeKey**: `/arduino/update/MyAwesomeKey/123.45`
-- Remove value for key **MyAwesomeKey** (non-reversale): `/arduino/remove/MyAwesomeKey`
+- List available keys (disabled by default): `/arduino/list`
+- Remove value for key **MyAwesomeKey** (non-reversale, disabled by default): `/arduino/remove/MyAwesomeKey`
 
 The feedback will be in **JSON** format, e.g.:
 

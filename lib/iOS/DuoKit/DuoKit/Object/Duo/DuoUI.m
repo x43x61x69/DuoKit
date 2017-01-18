@@ -1,5 +1,5 @@
 //
-//  MTKDuoUI.m
+//  DuoUI.m
 //  DuoKit
 //
 //  The MIT License (MIT)
@@ -27,9 +27,9 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-#import "MTKDuoUI.h"
+#import "DuoUI.h"
 
-@implementation MTKDuoUI
+@implementation DuoUI
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
@@ -39,6 +39,8 @@
         self.key            = [decoder decodeObjectForKey:@"key"];
         self.pin            = [decoder decodeIntegerForKey:@"pin"];
         self.value          = [decoder decodeDoubleForKey:@"value"];
+        self.stringValue    = [decoder decodeObjectForKey:@"stringValue"];
+        self.valueType      = [decoder decodeIntegerForKey:@"valueType"];
         self.minimumValue   = [decoder decodeDoubleForKey:@"minimumValue"];
         self.maximumValue   = [decoder decodeDoubleForKey:@"maximumValue"];
         self.color          = [decoder decodeObjectForKey:@"color"];
@@ -54,6 +56,8 @@
     [encoder encodeObject:_key              forKey:@"key"];
     [encoder encodeInteger:_pin             forKey:@"pin"];
     [encoder encodeDouble:_value            forKey:@"value"];
+    [encoder encodeObject:_stringValue      forKey:@"stringValue"];
+    [encoder encodeInteger:_valueType       forKey:@"valueType"];
     [encoder encodeDouble:_minimumValue     forKey:@"minimumValue"];
     [encoder encodeDouble:_maximumValue     forKey:@"maximumValue"];
     [encoder encodeObject:_color            forKey:@"color"];
@@ -76,16 +80,33 @@
             self.key = [dictionary objectForKey:@"key"];
         if ([dictionary objectForKey:@"pin"])
             self.pin = [[dictionary objectForKey:@"pin"] integerValue];
-        if ([dictionary objectForKey:@"value"])
-            self.value = [[dictionary objectForKey:@"value"] doubleValue];
+        if ([dictionary objectForKey:@"valueType"])
+            self.valueType = [[dictionary objectForKey:@"valueType"] integerValue];
+        switch (self.valueType) {
+            case DuoIntType:
+            case DuoDoubleType:
+                if ([dictionary objectForKey:@"value"])
+                    self.value = [[dictionary objectForKey:@"value"] doubleValue];
+                break;
+            case DuoStringType:
+                if ([dictionary objectForKey:@"value"])
+                    self.stringValue = [dictionary objectForKey:@"value"];
+                break;
+            default:
+                break;
+        }
         if ([dictionary objectForKey:@"min"])
             self.minimumValue = [[dictionary objectForKey:@"min"] doubleValue];
         if ([dictionary objectForKey:@"max"])
             self.maximumValue = [[dictionary objectForKey:@"max"] doubleValue];
         if ([dictionary objectForKey:@"color"])
             self.color = UIColorFromRGB([[dictionary objectForKey:@"color"] integerValue]);
-        if ([dictionary objectForKey:@"interval"])
-            self.reloadInterval = [[dictionary objectForKey:@"interval"] doubleValue];
+        if ([dictionary objectForKey:@"interval"]) {
+            self.reloadInterval = MAX(0.f, [[dictionary objectForKey:@"interval"] doubleValue]);
+            if (self.reloadInterval) {
+                self.reloadInterval = MAX(3.f, self.reloadInterval);
+            }
+        }
     }
     return self;
 }

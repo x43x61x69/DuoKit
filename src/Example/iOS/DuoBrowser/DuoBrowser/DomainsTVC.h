@@ -26,7 +26,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BrowserTVC.h"
 
-@interface DomainsTVC : UITableViewController
+@interface DomainsTVC : BrowserTVC
 
 @end

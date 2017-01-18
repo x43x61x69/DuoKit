@@ -26,17 +26,17 @@
 //
 
 #import "DomainsTVC.h"
+#import "DomainCell.h"
 #import "ServicesTVC.h"
-
 #import <DuoKit/DuoKit.h>
 
-#define kDomainCellIdentifer    @"DomainCell"
-#define kServiceSegueIdentifer  @"ServiceSegue"
-
-@interface DomainsTVC () <MTKDuoBrowserDelegate>
+@interface DomainsTVC () <DuoBrowserDelegate>
+{
+    UIActivityIndicatorView *indicator;
+}
 
 @property (nonatomic, strong) NSMutableArray<NSString *>    *dataSource;
-@property (nonatomic, strong) MTKDuoBrowser                 *browser;
+@property (nonatomic, strong) DuoBrowser                    *browser;
 
 @end
 
@@ -46,22 +46,84 @@
 {
     [super viewDidLoad];
     
-    _dataSource = [NSMutableArray new];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForDomains)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
     
-    _browser = [MTKDuoBrowser sharedInstance];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForDomains)
+                                                 name:kNSNetworkReachabilityDidChangeNotification
+                                               object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self searchForDomains];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self hideActivityView];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)searchForDomains
+{
+    _dataSource = [NSMutableArray new];
+    [self.tableView reloadData];
+    
+    [self showActivityView];
+    
+    _browser = nil;
+    _browser = [DuoBrowser new];
     _browser.delegate = self;
     [_browser searchForBrowsableDomains];
 }
 
-#pragma mark - MTKDuoBrowserDelegate
+#pragma mark - DuoBrowserDelegate
 
 - (void)domainsDidChanged:(NSArray<NSString *> *)domains
 {
+    self.tableView.userInteractionEnabled = NO;
+    
     _dataSource = [NSMutableArray arrayWithArray:domains];
+    
+    if (_dataSource.count) {
+        [self hideActivityView];
+    } else {
+        [self showActivityView];
+    }
+    
     [self.tableView reloadData];
+    
+    self.tableView.userInteractionEnabled = YES;
 }
 
 #pragma mark - Table view data source
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 48;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"Available Domains";
+        default:
+            return nil;
+    }
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -75,14 +137,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDomainCellIdentifer
-                                                            forIndexPath:indexPath];
+    DomainCell *cell = [tableView dequeueReusableCellWithIdentifier:kDomainCellIdentifer
+                                                       forIndexPath:indexPath];
     
     NSString *domain = [_dataSource objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [domain hasSuffix:@"."] ?
+    cell.title.text = [domain hasSuffix:@"."] ?
     [domain substringToIndex:domain.length-1] :
     domain;
+    indicator = cell.indicator;
+    [cell.indicator stopAnimating];
     
     return cell;
 }
@@ -90,6 +154,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    DomainCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.indicator.color = kColorBase;
+    [cell.indicator startAnimating];
+    
     [self performSegueWithIdentifier:kServiceSegueIdentifer sender:indexPath];
 }
 
@@ -104,6 +173,9 @@
         ServicesTVC *vc = (ServicesTVC *)segue.destinationViewController;
         vc.domain = [_dataSource objectAtIndex:indexPath.row];
         vc.serviceType = kBonjourServiceTypeHTTP;
+        if (indicator) {
+            [indicator stopAnimating];
+        }
     }
 }
 

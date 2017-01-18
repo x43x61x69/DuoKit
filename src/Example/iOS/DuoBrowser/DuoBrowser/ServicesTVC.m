@@ -26,15 +26,18 @@
 //
 
 #import "ServicesTVC.h"
+#import "ServiceCell.h"
 #import "DetailTVC.h"
 #import <DuoKit/DuoKit.h>
 
-#define kServiceCellIdentifer    @"ServiceCell"
+@interface ServicesTVC () <DuoBrowserDelegate>
+{
+    BOOL isResolving;
+    UIActivityIndicatorView *indicator;
+}
 
-@interface ServicesTVC () <MTKDuoBrowserDelegate>
-
-@property (nonatomic, strong) NSMutableArray<MTKDuo *>  *dataSource;
-@property (nonatomic, strong) MTKDuoBrowser             *browser;
+@property (nonatomic, strong) NSMutableArray<Duo *>  *dataSource;
+@property (nonatomic, strong) DuoBrowser             *browser;
 
 @end
 
@@ -44,29 +47,98 @@
 {
     [super viewDidLoad];
     
-    NSString *domain = _domain;
+    self.navigationItem.title = @"Select a Service";
     
-    self.navigationItem.title = [domain hasSuffix:@"."] ?
-    [domain substringToIndex:domain.length-1] :
-    domain;
+    UIBarButtonItem *hintButton
+    = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tab-info"]
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(hintButtonAction:)];
+    self.navigationItem.rightBarButtonItem = hintButton;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForServices)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchForServices)
+                                                 name:kNSNetworkReachabilityDidChangeNotification
+                                               object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self searchForServices];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self hideActivityView];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)searchForServices
+{
     _dataSource = [NSMutableArray new];
+    [self.tableView reloadData];
     
-    _browser = [MTKDuoBrowser sharedInstance];
+    [self showActivityView];
+    
+    _browser = nil;
+    _browser = [DuoBrowser new];
     _browser.delegate = self;
     [_browser searchForServicesOfType:_serviceType
                              inDomain:_domain];
 }
 
-#pragma mark - MTKDuoBrowserDelegate
-
-- (void)duoListDidChanged:(NSArray<MTKDuo *> *)duoList
+- (void)hintButtonAction:(id)sender
 {
-    _dataSource = [NSMutableArray arrayWithArray:duoList];
-    [self.tableView reloadData];
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Didn't See Your Devices?"
+                                                                   message:@"Make sure you included the required library properly in your sketches and has connected to the same network as your devices.\n\nCheck out \"Help\" for more info."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:nil];
+    alert.view.tintColor = kColorButtonDefault;
+    [alert addAction:defaultAction];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
+                                                                                         animated:YES
+                                                                                       completion:nil];
+    });
 }
 
-- (void)didResolveDuo:(MTKDuo *)duo
+#pragma mark - DuoBrowserDelegate
+
+- (void)duoListDidChanged:(NSArray<Duo *> *)duoList
+{
+    self.tableView.userInteractionEnabled = NO;
+    
+    _dataSource = [NSMutableArray arrayWithArray:duoList];
+    
+    if (_dataSource.count) {
+        [self hideActivityView];
+    } else {
+        [self showActivityView];
+    }
+    
+    [self.tableView reloadData];
+    
+    self.tableView.userInteractionEnabled = YES;
+}
+
+- (void)didResolveDuo:(Duo *)duo
 {
     [duo isDeviceReadyWithApi:kDuoKitMinVersion
             completionHandler:^(NSInteger api,
@@ -78,7 +150,7 @@
                     NSLog(@"%s: %@", __PRETTY_FUNCTION__, layouts);
                     NSMutableArray *layoutArray = [NSMutableArray new];
                     for (NSDictionary *dict in layouts) {
-                        MTKDuoUI *ui = [[MTKDuoUI alloc] initWithDictionary:dict];
+                        DuoUI *ui = [[DuoUI alloc] initWithDictionary:dict];
                         if (ui) {
                             [layoutArray addObject:ui];
                         }
@@ -91,12 +163,21 @@
                     }
                     [self performSegueWithIdentifier:kDetailSegueIdentifer sender:duo];
                 } else {
+                    
+                    if (indicator) {
+                        [indicator stopAnimating];
+                    }
+                    
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                                    message:errorMessage
                                                                             preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
                                                                             style:UIAlertActionStyleDefault
-                                                                          handler:^(UIAlertAction * action) {}];
+                                                                          handler:^(UIAlertAction * action) {
+                                                                              self.tableView.userInteractionEnabled = YES;
+                                                                              isResolving = NO;
+                                                                          }];
+                    alert.view.tintColor = kColorButtonDefault;
                     [alert addAction:defaultAction];
                     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert
                                                                                                      animated:YES
@@ -105,9 +186,13 @@
             }];
 }
 
-- (void)didNotResolveDuo:(MTKDuo *)duo error:(NSDictionary<NSString *,NSNumber *> *)errorDict
+- (void)didNotResolveDuo:(Duo *)duo error:(NSDictionary<NSString *,NSNumber *> *)errorDict
 {
-    
+    if (indicator) {
+        [indicator stopAnimating];
+    }
+    self.tableView.userInteractionEnabled = YES;
+    isResolving = NO;
 }
 
 #pragma mark - Navigation
@@ -115,14 +200,38 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:kDetailSegueIdentifer]) {
-        MTKDuo *duo = (MTKDuo *)sender;
+        Duo *duo = (Duo *)sender;
         DetailTVC *vc = (DetailTVC *)segue.destinationViewController;
         vc.duo = duo;
         vc.navigationItem.title = duo.profile ? duo.profile : duo.name;
+        
+        if (indicator) {
+            [indicator stopAnimating];
+        }
+        self.tableView.userInteractionEnabled = YES;
+        isResolving = NO;
     }
 }
 
 #pragma mark - Table view data source
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 48;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return [NSString stringWithFormat:@"Available Services in \"%@\"",
+                    [_domain hasSuffix:@"."] ?
+                    [_domain substringToIndex:_domain.length-1] :
+                    _domain];
+        default:
+            return nil;
+    }
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -136,11 +245,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kServiceCellIdentifer
-                                                            forIndexPath:indexPath];
+    ServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kServiceCellIdentifer
+                                                        forIndexPath:indexPath];
     
-    MTKDuo *duo = (MTKDuo *)[_dataSource objectAtIndex:indexPath.row];
-    cell.textLabel.text = duo.name;
+    Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
+    cell.title.text = duo.name;
+    indicator = cell.indicator;
+    [cell.indicator stopAnimating];
     
     return cell;
 }
@@ -148,9 +259,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    MTKDuo *duo = (MTKDuo *)[_dataSource objectAtIndex:indexPath.row];
-    [_browser resolveService:duo.service
-                 withTimeout:30.f];
+    
+    if (!isResolving) {
+        isResolving = YES;
+        self.tableView.userInteractionEnabled = NO;
+        ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell.indicator startAnimating];
+        
+        Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
+        [_browser resolveService:duo.service
+                     withTimeout:5.f];
+    }
 }
 
 @end

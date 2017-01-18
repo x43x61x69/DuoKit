@@ -1,5 +1,5 @@
 //
-//  MTKDuo.h
+//  Duo.h
 //  DuoKit
 //
 //  The MIT License (MIT)
@@ -25,10 +25,10 @@
 //  SOFTWARE.
 //
 
-#define kDuoKitMinVersion   2
+#define kDuoKitMinVersion   3
 
 #import <Foundation/Foundation.h>
-#import "MTKDuoUI.h"
+#import "DuoUI.h"
 
 typedef uint8_t DuoPin;
 
@@ -50,7 +50,7 @@ typedef enum : int8_t {
     DuoPinInputPullup   = 0x2
 } DuoPinMode;
 
-@interface MTKDuo : NSObject
+@interface Duo : NSObject
 
 @property (nonatomic, strong)   NSNetService        *service;
 @property (nonatomic, copy)     NSString            *name;
@@ -63,7 +63,7 @@ typedef enum : int8_t {
 @property (nonatomic, copy)     NSString            *user;
 @property (nonatomic, copy)     NSString            *password;
 @property (nonatomic, copy)     NSString            *profile;
-@property (nonatomic, copy)     NSArray<MTKDuoUI *> *layout;
+@property (nonatomic, copy)     NSArray<DuoUI *> *layout;
 
 @property (nonatomic) NSInteger port;
 
@@ -73,9 +73,9 @@ typedef enum : int8_t {
 - (void)setPinType:(DuoSetPinType)type pin:(DuoPin)pin value:(DuoPinValue)value completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, DuoPinMode mode, NSString *result, NSError *error))completionHandler;
 - (void)readDigitalPin:(DuoPin)pin completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, DuoPinMode mode, NSString *result, NSError *error))completionHandler;
 - (void)readAnalogPin:(DuoPin)pin completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, NSString *result, NSError *error))completionHandler;
-- (void)readValueWithKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *result, NSError *error))completionHandler;
+- (void)readValueWithKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *stringValue, NSString *result, NSError *error))completionHandler;
 - (void)listKeysWithCompletionHandler:(void (^)(NSInteger api, BOOL status, NSInteger count, NSArray *keys, NSError *error))completionHandler;
-- (void)updateValue:(double)value withKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *result, NSError *error))completionHandler;
+- (void)updateValue:(double)value stringValue:(NSString *)stringValue withKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, double value, NSString *stringValue, NSString *result, NSError *error))completionHandler;
 - (void)removeKey:(NSString *)key completionHandler:(void (^)(NSInteger api, BOOL status, NSString *result, NSError *error))completionHandler;
 
 @end

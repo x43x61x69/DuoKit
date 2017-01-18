@@ -32,14 +32,19 @@
 
 @interface DetailSetterCell : UITableViewCell <UITextFieldDelegate>
 
-@property (nonatomic)           CGFloat value;
+@property (nonatomic)         DuoObjectType   valueType;
+@property (nonatomic)         CGFloat         value;
+@property (nonatomic, strong) NSString        *stringValue;
 
-@property (nonatomic, strong)   MTKDuo *duo;
-@property (nonatomic, strong)   NSString *key;
+@property (nonatomic, strong) Duo             *duo;
+@property (nonatomic)         DuoPin          pin;
+@property (nonatomic, strong) NSString        *key;
 
-@property (nonatomic, strong)   NSTimer *timer;
-@property (nonatomic, weak)     IBOutlet UILabel     *title;
-@property (nonatomic, weak)     IBOutlet UITextField *textField;
+@property (nonatomic, strong) NSTimer         *timer;
+
+@property (nonatomic, weak) IBOutlet UILabel     *title;
+@property (nonatomic, weak) IBOutlet UITextField *textField;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 - (void)setReloadInterval:(NSTimeInterval)interval;
 - (void)reload;

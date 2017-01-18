@@ -32,11 +32,14 @@
 
 @interface DetailSwitchCell : UITableViewCell
 
-@property (nonatomic, strong) MTKDuo *duo;
+@property (nonatomic, strong) Duo *duo;
 @property (nonatomic)         DuoPin pin;
 
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) UISwitch *pinSwitch;
+
+@property (nonatomic, weak) IBOutlet UILabel *title;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 - (void)setReloadInterval:(NSTimeInterval)interval;
 - (void)reload;
