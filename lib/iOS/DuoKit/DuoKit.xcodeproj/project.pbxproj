@@ -18,16 +18,6 @@
 		426EC0EE1E234F0300D2D762 /* DuoUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0EC1E234F0300D2D762 /* DuoUI.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		423FFAC91E2F1E4A007E32DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 423FFAC51E2F1E4A007E32DC /* DuoKit Browser.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1FEB96431DE95EF600D98443;
-			remoteInfo = "DuoKit Browser";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		1F4B84F81DEB46BA00CF1163 /* Duo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Duo.h; path = Object/Duo/Duo.h; sourceTree = "<group>"; };
 		1F4B84F91DEB46BA00CF1163 /* Duo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Duo.m; path = Object/Duo/Duo.m; sourceTree = "<group>"; };
@@ -46,7 +36,6 @@
 		1FFB9F231E289F810052B2B8 /* keywords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
 		1FFB9F241E289F810052B2B8 /* library.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = library.properties; sourceTree = "<group>"; };
 		1FFB9F251E289F810052B2B8 /* README.adoc */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.adoc; sourceTree = "<group>"; };
-		423FFAC51E2F1E4A007E32DC /* DuoKit Browser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "DuoKit Browser.xcodeproj"; path = "../../../src/Example/iOS/DuoKit Browser/DuoKit Browser.xcodeproj"; sourceTree = "<group>"; };
 		423FFACF1E308F0A007E32DC /* Blink.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = Blink.ino; sourceTree = "<group>"; };
 		426EC0EB1E234F0300D2D762 /* DuoUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DuoUI.h; path = Object/Duo/DuoUI.h; sourceTree = "<group>"; };
 		426EC0EC1E234F0300D2D762 /* DuoUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DuoUI.m; path = Object/Duo/DuoUI.m; sourceTree = "<group>"; };
@@ -105,7 +94,6 @@
 				1FFB9F1B1E289F810052B2B8 /* Arduino Library */,
 				1FEB95E71DE93CBE00D98443 /* DuoKit */,
 				1FEB95E61DE93CBE00D98443 /* Products */,
-				423FFAC51E2F1E4A007E32DC /* DuoKit Browser.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,14 +165,6 @@
 				1FFB9F201E289F810052B2B8 /* Basic.ino */,
 			);
 			path = Basic;
-			sourceTree = "<group>";
-		};
-		423FFAC61E2F1E4A007E32DC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				423FFACA1E2F1E4A007E32DC /* DuoKit.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		423FFACE1E308F0A007E32DC /* Blink */ = {
@@ -260,28 +240,12 @@
 			mainGroup = 1FEB95DB1DE93CBE00D98443;
 			productRefGroup = 1FEB95E61DE93CBE00D98443 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 423FFAC61E2F1E4A007E32DC /* Products */;
-					ProjectRef = 423FFAC51E2F1E4A007E32DC /* DuoKit Browser.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				1FEB95E41DE93CBE00D98443 /* DuoKit */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		423FFACA1E2F1E4A007E32DC /* DuoKit.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DuoKit.app;
-			remoteRef = 423FFAC91E2F1E4A007E32DC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FEB95E31DE93CBE00D98443 /* Resources */ = {

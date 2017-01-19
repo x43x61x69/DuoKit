@@ -258,6 +258,10 @@ typedef enum : uint8_t {
                 break;
         }
     } else {
+        NSUInteger sectionDelay = 0;
+        for (NSUInteger i = 0; i < indexPath.section; i++) {
+            sectionDelay += [tableView numberOfRowsInSection:i];
+        }
         DuoUI *ui;
         switch (indexPath.section) {
             case 1:
@@ -273,6 +277,7 @@ typedef enum : uint8_t {
                 DetailWebUICell *cell =
                 [tableView dequeueReusableCellWithIdentifier:kDetailWebUICellIdentifer
                                                 forIndexPath:indexPath];
+                cell.imageView.image = [UIImage imageNamed:@"tab-settings"];
                 cell.duo = _duo;
                 cell.textLabel.text = ui.name ? ui.name : _duo.name;
                 cell.detailTextLabel.text = _duo.v4Addresses.count ?
@@ -290,7 +295,7 @@ typedef enum : uint8_t {
                 cell.pin = ui.pin;
                 cell.pinSwitch.onTintColor = ui.color ? ui.color : kColorUIDefault;
                 [cell.pinSwitch setOn:ui.value animated:NO];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((indexPath.section + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((sectionDelay + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [cell setReloadInterval:ui.reloadInterval];
                 });
                 return cell;
@@ -327,7 +332,7 @@ typedef enum : uint8_t {
                 }
                 cell.textField.userInteractionEnabled = ui.type == DuoUISetter;
                 cell.textField.borderStyle = ui.type == DuoUISetter ? UITextBorderStyleRoundedRect :  UITextBorderStyleNone;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((indexPath.section + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((sectionDelay + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [cell setReloadInterval:ui.reloadInterval];
                 });
                 return cell;
@@ -351,7 +356,7 @@ typedef enum : uint8_t {
                     cell.slider.minimumValue = ui.minimumValue;
                 }
                 cell.slider.value = ui.value;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((indexPath.section + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((sectionDelay + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [cell setReloadInterval:ui.reloadInterval];
                 });
                 return cell;
