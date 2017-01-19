@@ -85,16 +85,6 @@ typedef enum : uint8_t {
     _misc = @[@(DetailMiscMode)];
 #endif
     
-    if (self.navigationItem.title && self.navigationItem.title.length) {
-        hash = [self.navigationItem.title md5];
-    }
-    
-    [self loadLayout];
-    
-    if (!_layout) {
-        _layout = [NSMutableArray new];
-    }
-    
     UIBarButtonItem *addButton
     = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                     target:self
@@ -117,6 +107,12 @@ typedef enum : uint8_t {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.navigationItem.title && self.navigationItem.title.length) {
+        hash = [self.navigationItem.title md5];
+    }
+    
+    [self loadLayout];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backAction:)
@@ -179,10 +175,6 @@ typedef enum : uint8_t {
              }
              
              [self loadLayout];
-             
-             if (!_layout) {
-                 _layout = [NSMutableArray new];
-             }
              
              [self.tableView reloadData];
              
@@ -444,19 +436,6 @@ typedef enum : uint8_t {
     return @[deleteAction, editAction];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        if (indexPath.row < _layout.count) {
-//            [_layout removeObjectAtIndex:indexPath.row];
-//            [self saveLayout];
-//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//        } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//            
-//        }
-//    }
-}
-
 - (IBAction)addButtonAction:(id)sender
 {
     editIndex = -1;
@@ -524,6 +503,8 @@ typedef enum : uint8_t {
 
 - (void)loadLayout
 {
+    _layout = nil;
+    
     if (hash) {
         NSData *data;
         if ((data = [[NSUserDefaults standardUserDefaults] dataForKey:hash])) {
@@ -532,6 +513,10 @@ typedef enum : uint8_t {
                 _layout = [source mutableCopy];
             }
         }
+    }
+    
+    if (!_layout) {
+        _layout = [NSMutableArray new];
     }
 }
 
