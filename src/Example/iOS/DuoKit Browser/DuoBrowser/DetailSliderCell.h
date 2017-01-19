@@ -33,6 +33,7 @@
 @interface DetailSliderCell : UITableViewCell
 
 @property (nonatomic, strong) Duo         *duo;
+@property (nonatomic)         BOOL        isReversedValue;
 @property (nonatomic)         DuoPin      pin;
 @property (nonatomic, strong) NSString    *key;
 

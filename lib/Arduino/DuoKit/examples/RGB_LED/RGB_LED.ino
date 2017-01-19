@@ -37,7 +37,6 @@
 #define RGBCommonAnode
 
 #define LAYOUT_LENGTH   5
-#define OBJECTS_LENGTH  3
 
 #define LED_MAX     0xFF
 #define CommonAnodeRGB(value)   LED_MAX - int(value)
@@ -59,26 +58,9 @@
 DuoKit duokit;
 
 DuoUI layout[LAYOUT_LENGTH];
-DuoObject objects[OBJECTS_LENGTH];
-
-double r = 0;
-double g = 0;
-double b = 0;
-
-uint8_t _r = 0;
-uint8_t _g = 0;
-uint8_t _b = 0;
 
 void setup()
 {
-    //
-    // Initialize with a random color.
-    //
-    randomSeed(analogRead(0));
-    r = _r = random(LED_MAX);
-    g = _g = random(LED_MAX);
-    b = _b = random(LED_MAX);
-
     //
     // Turn off RGB LED color.
     //
@@ -101,9 +83,10 @@ void setup()
     //
     // Change RGB LED color.
     //
-    analogWrite(RED_PIN,    _r);
-    analogWrite(GREEN_PIN,  _g);
-    analogWrite(BLUE_PIN,   _b);
+    randomSeed(analogRead(0));
+    analogWrite(RED_PIN,    random(LED_MAX));
+    analogWrite(GREEN_PIN,  random(LED_MAX));
+    analogWrite(BLUE_PIN,   random(LED_MAX));
 
     //
     // Setup layout profile name.
@@ -111,39 +94,15 @@ void setup()
     duokit.layoutProfile = "RGB LED Contorller";
 
     //
-    // Setup object pointers.
-    //
-    uint8_t i = 0;
-    objects[i].type         = DuoDoubleType;
-    objects[i].name         = "r";
-    objects[i].doublePtr    = &r;
-
-    objects[++i].type       = DuoDoubleType;
-    objects[i].name         = "g";
-    objects[i].doublePtr    = &g;
-
-    objects[++i].type       = DuoDoubleType;
-    objects[i].name         = "b";
-    objects[i].doublePtr    = &b;
-
-
-    duokit.setObjetcs(objects, OBJECTS_LENGTH);
-
-    //
     // Setup layouts.
     //
-    i = 0;
+    uint8_t i = 0;
     layout[i].type      = DuoUIWebUI;
     layout[i].name      = "Access WebUI";
 
-    layout[++i].type    = DuoUISwitch;
-    layout[i].name      = "Built-in LED";
-    layout[i].pin       = 13;
-    layout[i].interval  = 10;
-
     layout[++i].type    = DuoUISlider;
     layout[i].name      = "Red";
-    layout[i].key       = "r";
+    layout[i].pin       = RED_PIN;
     layout[i].min       = 0;
     layout[i].max       = LED_MAX;
     layout[i].useColor  = true;
@@ -152,7 +111,7 @@ void setup()
 
     layout[++i].type    = DuoUISlider;
     layout[i].name      = "Green";
-    layout[i].key       = "g";
+    layout[i].pin       = GREEN_PIN;
     layout[i].min       = 0;
     layout[i].max       = LED_MAX;
     layout[i].useColor  = true;
@@ -161,7 +120,7 @@ void setup()
 
     layout[++i].type    = DuoUISlider;
     layout[i].name      = "Blue";
-    layout[i].key       = "b";
+    layout[i].pin       = BLUE_PIN;
     layout[i].min       = 0;
     layout[i].max       = LED_MAX;
     layout[i].useColor  = true;
@@ -174,24 +133,4 @@ void setup()
 void loop()
 {
     duokit.loop();
-
-    //
-    // Transition r, g, b values to user selection.
-    // Use "CommonCathodeRGB()" if you have a common cathode LED.
-    //
-    ledTransition(RED_PIN,   &_r,  RBGLED(r));
-    ledTransition(GREEN_PIN, &_g,  RBGLED(g));
-    ledTransition(BLUE_PIN,  &_b,  RBGLED(b));
-}
-
-void ledTransition(const uint8_t pin, uint8_t *current, const uint8_t value)
-{
-    if (*current > value) {
-        *current -= 1;
-    } else if (*current < value) {
-        *current += 1;
-    } else {
-      return;
-    }
-    analogWrite(pin, *current);
 }
