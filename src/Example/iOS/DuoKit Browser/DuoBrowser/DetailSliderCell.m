@@ -4,7 +4,7 @@
 //
 //  The MIT License (MIT)
 //
-//  Copyright © 2017 Zhi-Wei Cai. All rights reserved.
+//  Copyright © 2017 Zhi-Wei Cai (MediaTek Inc.). All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -139,7 +139,11 @@
                               delay:.0f
                             options:UIViewAnimationOptionCurveLinear
                          animations:^{
-                             [_slider setValue:value animated:YES];
+                             if (_isReversedValue) {
+                                 [_slider setValue:_slider.maximumValue - value animated:YES];
+                             } else {
+                                 [_slider setValue:value animated:YES];
+                             }
                          } completion:nil];
     }
 }
@@ -150,6 +154,8 @@
         
         _sliderValueLabel.text = @"";
         
+        CGFloat valueToSend = _slider.value;
+        
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
         __unsafe_unretained typeof(self) weakSelf = self;
@@ -159,7 +165,7 @@
             [_indicator startAnimating];
             [_duo setPinType:DuoSetPinAnalog
                          pin:_pin
-                       value:_slider.value
+                       value:valueToSend
            completionHandler:^(NSInteger api,
                                BOOL status,
                                DuoPin pin,
@@ -183,7 +189,7 @@
             _title.textColor = [UIColor darkTextColor];
             _indicator.color = kColorBase;
             [_indicator startAnimating];
-            [_duo updateValue:_slider.value
+            [_duo updateValue:valueToSend
                   stringValue:nil
                       withKey:_key
             completionHandler:^(NSInteger api,
@@ -223,7 +229,11 @@
                               delay:.0f
                             options:UIViewAnimationOptionCurveLinear
                          animations:^{
-                             [_slider setValue:value animated:YES];
+                             if (_isReversedValue) {
+                                 [_slider setValue:_slider.maximumValue - value animated:YES];
+                             } else {
+                                 [_slider setValue:value animated:YES];
+                             }
                          } completion:nil];
     }
 }

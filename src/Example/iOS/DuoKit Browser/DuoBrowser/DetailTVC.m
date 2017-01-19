@@ -4,7 +4,7 @@
 //
 //  The MIT License (MIT)
 //
-//  Copyright © 2017 Zhi-Wei Cai. All rights reserved.
+//  Copyright © 2017 Zhi-Wei Cai (MediaTek Inc.). All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -350,8 +350,14 @@ typedef enum : uint8_t {
                 cell.pin = ui.pin;
                 if (ui.key) cell.key = ui.key;
                 cell.slider.tintColor = ui.color ? ui.color : kColorUIDefault;
-                cell.slider.maximumValue = ui.maximumValue;
-                cell.slider.minimumValue = ui.minimumValue;
+                if (ui.minimumValue > ui.maximumValue) {
+                    cell.isReversedValue = YES;
+                    cell.slider.maximumValue = ui.minimumValue;
+                    cell.slider.minimumValue = ui.maximumValue;
+                } else {
+                    cell.slider.maximumValue = ui.maximumValue;
+                    cell.slider.minimumValue = ui.minimumValue;
+                }
                 cell.slider.value = ui.value;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((indexPath.section + indexPath.row) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [cell setReloadInterval:ui.reloadInterval];
