@@ -14,6 +14,8 @@
 
 > Please check out the [wiki](https://github.com/x43x61x69/DuoKit/wiki) page for installation and usage.
 
+[![App Store](app_store_badge.png)](https://itunes.apple.com/us/app/id1196094443)
+
 ### License
 
 The MIT License (MIT)
