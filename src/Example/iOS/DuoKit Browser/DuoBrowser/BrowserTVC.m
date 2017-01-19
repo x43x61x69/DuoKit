@@ -65,10 +65,14 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSUInteger sectionDelay = 0;
+    for (NSUInteger i = 0; i < indexPath.section; i++) {
+        sectionDelay += [tableView numberOfRowsInSection:i];
+    }
     cell.alpha = .0f;
     cell.transform = CGAffineTransformMakeScale(.8f, .5f);
     [UIView animateWithDuration:.2f
-                          delay:(indexPath.section + indexPath.row) * .05f
+                          delay:(sectionDelay + indexPath.row) * .05f
                         options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
                      animations:^ {
                          cell.transform = CGAffineTransformIdentity;

@@ -7,4 +7,7 @@
    <FileRef
       location = "group:../../../../lib/iOS/DuoKit/DuoKit.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:DuoKit Browser.xcodeproj">
+   </FileRef>
 </Workspace>
