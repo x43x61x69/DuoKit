@@ -323,7 +323,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="--" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tt5-oj-PZz">
-                                            <rect key="frame" x="184.5" y="7" width="178.5" height="30"/>
+                                            <rect key="frame" x="238" y="7" width="125" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="yLd-D6-B3F"/>
                                             </constraints>
@@ -332,7 +332,7 @@
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" keyboardAppearance="alert" returnKeyType="done"/>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uA6-51-a61">
-                                            <rect key="frame" x="43" y="12" width="133.5" height="21"/>
+                                            <rect key="frame" x="43" y="12" width="187" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="T7b-f9-1WS"/>
                                             </constraints>
@@ -357,7 +357,7 @@
                                         <constraint firstAttribute="trailing" secondItem="tt5-oj-PZz" secondAttribute="trailing" constant="12" id="bBv-Kb-Ee5"/>
                                         <constraint firstItem="amS-eH-uZX" firstAttribute="centerY" secondItem="aYS-tG-NM6" secondAttribute="centerY" id="bH3-yP-jWh"/>
                                         <constraint firstItem="tt5-oj-PZz" firstAttribute="leading" secondItem="uA6-51-a61" secondAttribute="trailing" constant="8" id="hyb-bx-boN"/>
-                                        <constraint firstItem="tt5-oj-PZz" firstAttribute="width" secondItem="uA6-51-a61" secondAttribute="width" multiplier="4:3" id="r7B-TO-BJD"/>
+                                        <constraint firstItem="tt5-oj-PZz" firstAttribute="width" secondItem="uA6-51-a61" secondAttribute="width" multiplier="2:3" id="r7B-TO-BJD"/>
                                         <constraint firstItem="tt5-oj-PZz" firstAttribute="centerY" secondItem="aYS-tG-NM6" secondAttribute="centerY" id="vw5-8Y-awI"/>
                                     </constraints>
                                 </tableViewCellContentView>

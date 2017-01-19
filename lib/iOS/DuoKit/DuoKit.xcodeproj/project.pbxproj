@@ -47,6 +47,7 @@
 		1FFB9F241E289F810052B2B8 /* library.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = library.properties; sourceTree = "<group>"; };
 		1FFB9F251E289F810052B2B8 /* README.adoc */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.adoc; sourceTree = "<group>"; };
 		423FFAC51E2F1E4A007E32DC /* DuoKit Browser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "DuoKit Browser.xcodeproj"; path = "../../../src/Example/iOS/DuoKit Browser/DuoKit Browser.xcodeproj"; sourceTree = "<group>"; };
+		423FFACF1E308F0A007E32DC /* Blink.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = Blink.ino; sourceTree = "<group>"; };
 		426EC0EB1E234F0300D2D762 /* DuoUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DuoUI.h; path = Object/Duo/DuoUI.h; sourceTree = "<group>"; };
 		426EC0EC1E234F0300D2D762 /* DuoUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DuoUI.m; path = Object/Duo/DuoUI.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				1FFB9F1F1E289F810052B2B8 /* Basic */,
+				423FFACE1E308F0A007E32DC /* Blink */,
 				1F7030FB1E2CB5E3005F4816 /* RGB_LED */,
 				1F7030F91E2CB57F005F4816 /* RGB_LED_Transition */,
 			);
@@ -180,9 +182,17 @@
 		423FFAC61E2F1E4A007E32DC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				423FFACA1E2F1E4A007E32DC /* DuoKit Browser.app */,
+				423FFACA1E2F1E4A007E32DC /* DuoKit.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		423FFACE1E308F0A007E32DC /* Blink */ = {
+			isa = PBXGroup;
+			children = (
+				423FFACF1E308F0A007E32DC /* Blink.ino */,
+			);
+			path = Blink;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,10 +274,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		423FFACA1E2F1E4A007E32DC /* DuoKit Browser.app */ = {
+		423FFACA1E2F1E4A007E32DC /* DuoKit.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = "DuoKit Browser.app";
+			path = DuoKit.app;
 			remoteRef = 423FFAC91E2F1E4A007E32DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
