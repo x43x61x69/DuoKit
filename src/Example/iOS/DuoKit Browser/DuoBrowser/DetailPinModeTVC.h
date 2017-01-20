@@ -1,5 +1,5 @@
 //
-//  DetailAddItemTVC.h
+//  DetailPinModeTVC.h
 //  DuoKit Browser
 //
 //  The MIT License (MIT)
@@ -29,21 +29,10 @@
 #import <DuoKit/DuoKit.h>
 #import "BrowserTVC.h"
 
-#define kDetailAddItemSegueIdentifer  @"DetailAddItemSegue"
+#define kDetailPinModeSegueIdentifer  @"DetailPinModeSegue"
 
-@protocol DetailAddItemDelegate <NSObject>
+@interface DetailPinModeTVC : BrowserTVC
 
-- (void)newItemAdded:(DuoUI *)newUI;
-- (void)itemEdited:(DuoUI *)newUI atIndex:(NSUInteger)index;
-
-@end
-
-@interface DetailAddItemTVC : BrowserTVC
-
-@property (nonatomic, assign) id<DetailAddItemDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *layout;
-
-@property (nonatomic, strong) DuoUI           *editLayout;
-@property (nonatomic)         NSInteger       editIndex;
+@property (nonatomic, strong) Duo *duo;
 
 @end

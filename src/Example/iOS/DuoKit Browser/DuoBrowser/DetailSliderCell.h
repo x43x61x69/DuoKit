@@ -1,6 +1,6 @@
 //
 //  DetailSliderCell.h
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -40,6 +40,7 @@
 @property (nonatomic, strong) NSTimer     *timer;
 
 @property (nonatomic, weak) IBOutlet UILabel    *title;
+@property (nonatomic, weak) IBOutlet UIImageView *image;
 @property (nonatomic, weak) IBOutlet UISlider   *slider;
 @property (nonatomic, weak) IBOutlet UILabel    *sliderValueLabel;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;

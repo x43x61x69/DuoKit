@@ -1,6 +1,6 @@
 //
 //  DetailSwitchCell.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -70,6 +70,7 @@
     if (_pinSwitch.isTouchInside || actionUUID) {
         return;
     }
+    _image.image = nil;
     _indicator.color = kColorUIDefault;
     [_indicator startAnimating];
     _title.textColor = [UIColor darkTextColor];
@@ -92,6 +93,7 @@
                  }
              });
          } else {
+             _image.image = [UIImage imageNamed:@"icon-error"];
              _title.textColor = kColorBase;
              if (error) {
                  NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
@@ -109,6 +111,7 @@
         NSUUID *thisAction = [NSUUID UUID];
         actionUUID = thisAction;
         __unsafe_unretained typeof(self) weakSelf = self;
+        _image.image = nil;
         _indicator.color = kColorBase;
         [_indicator startAnimating];
         _title.textColor = [UIColor darkTextColor];
@@ -125,6 +128,7 @@
          {
              [weakSelf.indicator stopAnimating];
              if (!status) {
+                 weakSelf.image.image = [UIImage imageNamed:@"icon-error"];
                  weakSelf.title.textColor = kColorBase;
                  if (!_pinSwitch.isTouchInside &&
                      thisAction == actionUUID) {

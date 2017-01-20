@@ -29,6 +29,10 @@
 		423FFABE1E2DDDAF007E32DC /* DomainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFABD1E2DDDAF007E32DC /* DomainCell.m */; };
 		423FFAC11E2DDDC9007E32DC /* HelpTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAC01E2DDDC9007E32DC /* HelpTVC.m */; };
 		423FFAC41E2DF681007E32DC /* DetailMiscDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAC31E2DF681007E32DC /* DetailMiscDefaultCell.m */; };
+		423FFAD21E31AD11007E32DC /* DetailPinModeTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAD11E31AD11007E32DC /* DetailPinModeTVC.m */; };
+		423FFAD71E31BB74007E32DC /* DetailPinModeDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAD51E31BB74007E32DC /* DetailPinModeDefaultCell.m */; };
+		423FFAD81E31BB74007E32DC /* DetailPinModeTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAD61E31BB74007E32DC /* DetailPinModeTypeCell.m */; };
+		423FFADC1E31C1F1007E32DC /* UICaretTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFADB1E31C1F1007E32DC /* UICaretTextField.m */; };
 		4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4266C7811E163A730056FE02 /* DetailSetterCell.m */; };
 		426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */; };
 /* End PBXBuildFile section */
@@ -87,6 +91,14 @@
 		423FFAC01E2DDDC9007E32DC /* HelpTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTVC.m; sourceTree = "<group>"; };
 		423FFAC21E2DF681007E32DC /* DetailMiscDefaultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMiscDefaultCell.h; sourceTree = "<group>"; };
 		423FFAC31E2DF681007E32DC /* DetailMiscDefaultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMiscDefaultCell.m; sourceTree = "<group>"; };
+		423FFAD01E31AD11007E32DC /* DetailPinModeTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPinModeTVC.h; sourceTree = "<group>"; };
+		423FFAD11E31AD11007E32DC /* DetailPinModeTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPinModeTVC.m; sourceTree = "<group>"; };
+		423FFAD31E31BB74007E32DC /* DetailPinModeDefaultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPinModeDefaultCell.h; sourceTree = "<group>"; };
+		423FFAD41E31BB74007E32DC /* DetailPinModeTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPinModeTypeCell.h; sourceTree = "<group>"; };
+		423FFAD51E31BB74007E32DC /* DetailPinModeDefaultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPinModeDefaultCell.m; sourceTree = "<group>"; };
+		423FFAD61E31BB74007E32DC /* DetailPinModeTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPinModeTypeCell.m; sourceTree = "<group>"; };
+		423FFADA1E31C1F1007E32DC /* UICaretTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICaretTextField.h; sourceTree = "<group>"; };
+		423FFADB1E31C1F1007E32DC /* UICaretTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICaretTextField.m; sourceTree = "<group>"; };
 		4266C7801E163A730056FE02 /* DetailSetterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSetterCell.h; sourceTree = "<group>"; };
 		4266C7811E163A730056FE02 /* DetailSetterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSetterCell.m; sourceTree = "<group>"; };
 		426EC0E81E2337B700D2D762 /* DetailSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSwitchCell.h; sourceTree = "<group>"; };
@@ -109,9 +121,9 @@
 		1F4B84F61DEB455300CF1163 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1FEB96521DE95EF600D98443 /* Assets.xcassets */,
 				1FEB964F1DE95EF600D98443 /* Main.storyboard */,
 				1FEB96541DE95EF600D98443 /* LaunchScreen.storyboard */,
-				1FEB96521DE95EF600D98443 /* Assets.xcassets */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -167,6 +179,7 @@
 		423FFAA81E2D9E45007E32DC /* External */ = {
 			isa = PBXGroup;
 			children = (
+				423FFAD91E31C1F1007E32DC /* UICaretTextField */,
 				423FFAA91E2D9E45007E32DC /* NSNetworkReachability */,
 			);
 			name = External;
@@ -221,12 +234,21 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		423FFAD91E31C1F1007E32DC /* UICaretTextField */ = {
+			isa = PBXGroup;
+			children = (
+				423FFADA1E31C1F1007E32DC /* UICaretTextField.h */,
+				423FFADB1E31C1F1007E32DC /* UICaretTextField.m */,
+			);
+			path = UICaretTextField;
+			sourceTree = "<group>";
+		};
 		426EC0E41E23346B00D2D762 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				423FFAB31E2DAA60007E32DC /* Cell */,
 				1F4B84F01DEB403B00CF1163 /* DomainsTVC.h */,
 				1F4B84F11DEB403B00CF1163 /* DomainsTVC.m */,
-				423FFAB31E2DAA60007E32DC /* Cell */,
 				426EC0E51E23347F00D2D762 /* Services */,
 			);
 			name = Browser;
@@ -235,9 +257,9 @@
 		426EC0E51E23347F00D2D762 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				423FFAB21E2DA4DA007E32DC /* Cell */,
 				1F4B84F31DEB454600CF1163 /* ServicesTVC.h */,
 				1F4B84F41DEB454600CF1163 /* ServicesTVC.m */,
-				423FFAB21E2DA4DA007E32DC /* Cell */,
 				426EC0E61E23348D00D2D762 /* Detail */,
 			);
 			name = Services;
@@ -246,11 +268,13 @@
 		426EC0E61E23348D00D2D762 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				426EC0E71E2334A000D2D762 /* Cell */,
 				1FADE3EF1E02C2F600E32630 /* DetailTVC.h */,
 				1FADE3F01E02C2F600E32630 /* DetailTVC.m */,
 				1F7030FD1E2CBFB1005F4816 /* DetailAddItemTVC.h */,
 				1F7030FE1E2CBFB1005F4816 /* DetailAddItemTVC.m */,
-				426EC0E71E2334A000D2D762 /* Cell */,
+				423FFAD01E31AD11007E32DC /* DetailPinModeTVC.h */,
+				423FFAD11E31AD11007E32DC /* DetailPinModeTVC.m */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -272,6 +296,10 @@
 				1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */,
 				423FFAC21E2DF681007E32DC /* DetailMiscDefaultCell.h */,
 				423FFAC31E2DF681007E32DC /* DetailMiscDefaultCell.m */,
+				423FFAD31E31BB74007E32DC /* DetailPinModeDefaultCell.h */,
+				423FFAD51E31BB74007E32DC /* DetailPinModeDefaultCell.m */,
+				423FFAD41E31BB74007E32DC /* DetailPinModeTypeCell.h */,
+				423FFAD61E31BB74007E32DC /* DetailPinModeTypeCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -388,18 +416,22 @@
 				1FBC90E11E256CE200085360 /* DetailWebUICell.m in Sources */,
 				1FF343841E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m in Sources */,
 				1FEB96481DE95EF600D98443 /* main.m in Sources */,
+				423FFAD21E31AD11007E32DC /* DetailPinModeTVC.m in Sources */,
+				423FFADC1E31C1F1007E32DC /* UICaretTextField.m in Sources */,
 				1FEB23B31E2511A600918646 /* DetailSliderCell.m in Sources */,
 				423FFAB11E2DA4D7007E32DC /* ServiceCell.m in Sources */,
 				423FFABB1E2DDBE0007E32DC /* BrowserTVC.m in Sources */,
 				4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */,
 				423FFAC41E2DF681007E32DC /* DetailMiscDefaultCell.m in Sources */,
 				426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */,
+				423FFAD71E31BB74007E32DC /* DetailPinModeDefaultCell.m in Sources */,
 				1FF343811E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m in Sources */,
 				423FFAC11E2DDDC9007E32DC /* HelpTVC.m in Sources */,
 				1F4B84F21DEB403B00CF1163 /* DomainsTVC.m in Sources */,
 				1FADE3F11E02C2F600E32630 /* DetailTVC.m in Sources */,
 				1F7030FF1E2CBFB1005F4816 /* DetailAddItemTVC.m in Sources */,
 				423FFABE1E2DDDAF007E32DC /* DomainCell.m in Sources */,
+				423FFAD81E31BB74007E32DC /* DetailPinModeTypeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

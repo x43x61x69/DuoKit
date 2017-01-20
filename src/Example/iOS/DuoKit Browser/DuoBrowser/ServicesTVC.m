@@ -1,6 +1,6 @@
 //
 //  ServicesTVC.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -276,10 +276,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.tableView.userInteractionEnabled = NO;
     
     if (!isResolving) {
         isResolving = YES;
-        self.tableView.userInteractionEnabled = NO;
         ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         [cell.indicator startAnimating];
         

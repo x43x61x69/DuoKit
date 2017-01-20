@@ -1,6 +1,6 @@
 //
 //  DetailSetterCell.h
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -43,6 +43,7 @@
 @property (nonatomic, strong) NSTimer         *timer;
 
 @property (nonatomic, weak) IBOutlet UILabel     *title;
+@property (nonatomic, weak) IBOutlet UIImageView *image;
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 

@@ -1,10 +1,10 @@
 //
-//  DetailAddItemTVC.h
-//  DuoKit Browser
+//  UICaretTextField.h
+//  UICaretTextField
 //
 //  The MIT License (MIT)
 //
-//  Copyright © 2017 Zhi-Wei Cai (MediaTek Inc.). All rights reserved.
+//  Copyright © 2017 Zhi-Wei Cai. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,24 +26,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <DuoKit/DuoKit.h>
-#import "BrowserTVC.h"
 
-#define kDetailAddItemSegueIdentifer  @"DetailAddItemSegue"
+@interface UICaretTextField : UITextField
 
-@protocol DetailAddItemDelegate <NSObject>
-
-- (void)newItemAdded:(DuoUI *)newUI;
-- (void)itemEdited:(DuoUI *)newUI atIndex:(NSUInteger)index;
-
-@end
-
-@interface DetailAddItemTVC : BrowserTVC
-
-@property (nonatomic, assign) id<DetailAddItemDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *layout;
-
-@property (nonatomic, strong) DuoUI           *editLayout;
-@property (nonatomic)         NSInteger       editIndex;
+@property (nonatomic) BOOL hideCaret;
 
 @end

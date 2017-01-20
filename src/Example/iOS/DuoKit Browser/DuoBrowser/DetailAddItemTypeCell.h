@@ -1,6 +1,6 @@
 //
 //  DetailAddItemTypeCell.h
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -28,12 +28,7 @@
 #define kDetailAddItemTypeCellIdentifer  @"DetailAddItemTypeCell"
 
 #import <UIKit/UIKit.h>
-
-@interface UICaretTextField : UITextField
-
-@property (nonatomic) BOOL hideCaret;
-
-@end
+#import "UICaretTextField.h"
 
 @interface DetailAddItemTypeCell : UITableViewCell
 

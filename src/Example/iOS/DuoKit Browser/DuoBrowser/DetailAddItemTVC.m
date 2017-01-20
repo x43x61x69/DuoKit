@@ -1,6 +1,6 @@
 //
 //  DetailAddItemTVC.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -177,7 +177,7 @@ typedef enum {
         case DetailAddItemPin: {
             DetailAddItemDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailAddItemDefaultCellIdentifer
                                                                              forIndexPath:indexPath];
-            cell.title.text = @"PIN Number";
+            cell.title.text = @"Pin Number";
             cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             _pinTextField = cell.textField;
             _pinTextField.delegate = self;
@@ -203,7 +203,7 @@ typedef enum {
                                                                           forIndexPath:indexPath];
             cell.textField.hideCaret = YES;
             
-            cell.title.text = @"PIN Mode";
+            cell.title.text = @"Pin Mode";
             cell.textField.text = _modeDataSource[1];
             [cell.textField setInputView:_modePicker];
             _modeTextField = cell.textField;
@@ -258,19 +258,6 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    cell.alpha = .0f;
-    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
-    [UIView animateWithDuration:.2f
-                          delay:indexPath.row * .1f
-                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
-                     animations:^ {
-                         cell.transform = CGAffineTransformIdentity;
-                         cell.alpha = 1.0f;
-                     } completion:nil];
 }
 
 #pragma mark - UIPickerViewDelegate
@@ -360,7 +347,7 @@ typedef enum {
         [_nameTextField becomeFirstResponder];
     } else if (!_typeTextField.text.length) {
         [_typeTextField becomeFirstResponder];
-    } else if (![_pinTextField.text integerValue]) {
+    } else if (!_pinTextField.text.length || [_pinTextField.text integerValue] < 0) {
         _pinTextField.text = @"";
         [_pinTextField becomeFirstResponder];
     } else if ([_modePicker selectedRowInComponent:0] < DuoPinOutput || [_modePicker selectedRowInComponent:0] > DuoPinInputPullup) {
@@ -382,13 +369,13 @@ typedef enum {
         error = @"You must give this control a name!";
         errorTextField = _nameTextField;
     } else if (!_typeTextField.text.length) {
-        error = @"You must select a PIN type!";
+        error = @"You must select a Pin type!";
         errorTextField = _typeTextField;
-    } else if (![_pinTextField.text integerValue]) {
-        error = @"Invalid PIN number!";
+    } else if (!_pinTextField.text.length || [_pinTextField.text integerValue] < 0) {
+        error = @"Invalid Pin number!";
         errorTextField = _pinTextField;
     } else if ([_modePicker selectedRowInComponent:0] < DuoPinOutput || [_modePicker selectedRowInComponent:0] > DuoPinInputPullup) {
-        error = @"Invalid PIN mode!";
+        error = @"Invalid Pin mode!";
         errorTextField = _modeTextField;
     } else if ([_intervalTextField.text integerValue] != 0 && [_intervalTextField.text integerValue] < 3) {
         error = @"Reload interval must either be 0 or longer than 3 secs!";

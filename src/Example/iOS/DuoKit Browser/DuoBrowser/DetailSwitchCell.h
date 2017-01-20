@@ -1,6 +1,6 @@
 //
 //  DetailSwitchCell.h
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -39,6 +39,7 @@
 @property (nonatomic, strong) UISwitch *pinSwitch;
 
 @property (nonatomic, weak) IBOutlet UILabel *title;
+@property (nonatomic, weak) IBOutlet UIImageView *image;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 - (void)setReloadInterval:(NSTimeInterval)interval;

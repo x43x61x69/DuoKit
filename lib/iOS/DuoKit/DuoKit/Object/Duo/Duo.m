@@ -188,6 +188,7 @@
          }
      }];
 }
+
 #pragma mark Set Pin
 - (void)setPinType:(DuoSetPinType)type pin:(DuoPin)pin value:(DuoPinValue)value completionHandler:(void (^)(NSInteger api, BOOL status, DuoPin pin, DuoPinValue value, DuoPinMode mode, NSString *result, NSError *error))completionHandler
 {

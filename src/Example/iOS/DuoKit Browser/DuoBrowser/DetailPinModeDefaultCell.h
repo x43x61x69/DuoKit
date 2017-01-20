@@ -1,5 +1,5 @@
 //
-//  DetailAddItemTVC.h
+//  DetailPinModeDefaultCell.h
 //  DuoKit Browser
 //
 //  The MIT License (MIT)
@@ -25,25 +25,13 @@
 //  SOFTWARE.
 //
 
+#define kDetailPinModeDefaultCellIdentifer  @"DetailPinModeDefaultCell"
+
 #import <UIKit/UIKit.h>
-#import <DuoKit/DuoKit.h>
-#import "BrowserTVC.h"
 
-#define kDetailAddItemSegueIdentifer  @"DetailAddItemSegue"
+@interface DetailPinModeDefaultCell : UITableViewCell
 
-@protocol DetailAddItemDelegate <NSObject>
-
-- (void)newItemAdded:(DuoUI *)newUI;
-- (void)itemEdited:(DuoUI *)newUI atIndex:(NSUInteger)index;
-
-@end
-
-@interface DetailAddItemTVC : BrowserTVC
-
-@property (nonatomic, assign) id<DetailAddItemDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *layout;
-
-@property (nonatomic, strong) DuoUI           *editLayout;
-@property (nonatomic)         NSInteger       editIndex;
+@property (nonatomic, weak) IBOutlet UILabel     *title;
+@property (nonatomic, weak) IBOutlet UITextField *textField;
 
 @end
