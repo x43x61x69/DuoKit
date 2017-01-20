@@ -33,6 +33,16 @@
 		423FFAD71E31BB74007E32DC /* DetailPinModeDefaultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAD51E31BB74007E32DC /* DetailPinModeDefaultCell.m */; };
 		423FFAD81E31BB74007E32DC /* DetailPinModeTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAD61E31BB74007E32DC /* DetailPinModeTypeCell.m */; };
 		423FFADC1E31C1F1007E32DC /* UICaretTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFADB1E31C1F1007E32DC /* UICaretTextField.m */; };
+		423FFADF1E31D6EF007E32DC /* DetailAddItemColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFADE1E31D6EF007E32DC /* DetailAddItemColorCell.m */; };
+		423FFAF11E31DD6A007E32DC /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAE21E31DD6A007E32DC /* HRBrightnessCursor.m */; };
+		423FFAF21E31DD6A007E32DC /* HRBrightnessSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAE41E31DD6A007E32DC /* HRBrightnessSlider.m */; };
+		423FFAF31E31DD6A007E32DC /* HRColorCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAE61E31DD6A007E32DC /* HRColorCursor.m */; };
+		423FFAF41E31DD6A007E32DC /* HRColorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAE81E31DD6A007E32DC /* HRColorInfoView.m */; };
+		423FFAF51E31DD6A007E32DC /* HRColorMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAEA1E31DD6A007E32DC /* HRColorMapView.m */; };
+		423FFAF61E31DD6A007E32DC /* HRColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAEC1E31DD6A007E32DC /* HRColorPickerView.m */; };
+		423FFAF71E31DD6A007E32DC /* HRHSVColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAEE1E31DD6A007E32DC /* HRHSVColorUtil.m */; };
+		423FFAF81E31DD6A007E32DC /* UIImage+CoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAF01E31DD6A007E32DC /* UIImage+CoreGraphics.m */; };
+		423FFAFB1E31E244007E32DC /* DetailColorPickerTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 423FFAFA1E31E244007E32DC /* DetailColorPickerTVC.m */; };
 		4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4266C7811E163A730056FE02 /* DetailSetterCell.m */; };
 		426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EC0E91E2337B700D2D762 /* DetailSwitchCell.m */; };
 /* End PBXBuildFile section */
@@ -99,6 +109,26 @@
 		423FFAD61E31BB74007E32DC /* DetailPinModeTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPinModeTypeCell.m; sourceTree = "<group>"; };
 		423FFADA1E31C1F1007E32DC /* UICaretTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICaretTextField.h; sourceTree = "<group>"; };
 		423FFADB1E31C1F1007E32DC /* UICaretTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICaretTextField.m; sourceTree = "<group>"; };
+		423FFADD1E31D6EF007E32DC /* DetailAddItemColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailAddItemColorCell.h; sourceTree = "<group>"; };
+		423FFADE1E31D6EF007E32DC /* DetailAddItemColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailAddItemColorCell.m; sourceTree = "<group>"; };
+		423FFAE11E31DD6A007E32DC /* HRBrightnessCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessCursor.h; sourceTree = "<group>"; };
+		423FFAE21E31DD6A007E32DC /* HRBrightnessCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessCursor.m; sourceTree = "<group>"; };
+		423FFAE31E31DD6A007E32DC /* HRBrightnessSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessSlider.h; sourceTree = "<group>"; };
+		423FFAE41E31DD6A007E32DC /* HRBrightnessSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessSlider.m; sourceTree = "<group>"; };
+		423FFAE51E31DD6A007E32DC /* HRColorCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorCursor.h; sourceTree = "<group>"; };
+		423FFAE61E31DD6A007E32DC /* HRColorCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorCursor.m; sourceTree = "<group>"; };
+		423FFAE71E31DD6A007E32DC /* HRColorInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorInfoView.h; sourceTree = "<group>"; };
+		423FFAE81E31DD6A007E32DC /* HRColorInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorInfoView.m; sourceTree = "<group>"; };
+		423FFAE91E31DD6A007E32DC /* HRColorMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorMapView.h; sourceTree = "<group>"; };
+		423FFAEA1E31DD6A007E32DC /* HRColorMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorMapView.m; sourceTree = "<group>"; };
+		423FFAEB1E31DD6A007E32DC /* HRColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerView.h; sourceTree = "<group>"; };
+		423FFAEC1E31DD6A007E32DC /* HRColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerView.m; sourceTree = "<group>"; };
+		423FFAED1E31DD6A007E32DC /* HRHSVColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRHSVColorUtil.h; sourceTree = "<group>"; };
+		423FFAEE1E31DD6A007E32DC /* HRHSVColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRHSVColorUtil.m; sourceTree = "<group>"; };
+		423FFAEF1E31DD6A007E32DC /* UIImage+CoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CoreGraphics.h"; sourceTree = "<group>"; };
+		423FFAF01E31DD6A007E32DC /* UIImage+CoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CoreGraphics.m"; sourceTree = "<group>"; };
+		423FFAF91E31E244007E32DC /* DetailColorPickerTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailColorPickerTVC.h; sourceTree = "<group>"; };
+		423FFAFA1E31E244007E32DC /* DetailColorPickerTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailColorPickerTVC.m; sourceTree = "<group>"; };
 		4266C7801E163A730056FE02 /* DetailSetterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSetterCell.h; sourceTree = "<group>"; };
 		4266C7811E163A730056FE02 /* DetailSetterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailSetterCell.m; sourceTree = "<group>"; };
 		426EC0E81E2337B700D2D762 /* DetailSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailSwitchCell.h; sourceTree = "<group>"; };
@@ -179,6 +209,7 @@
 		423FFAA81E2D9E45007E32DC /* External */ = {
 			isa = PBXGroup;
 			children = (
+				423FFAE01E31DD6A007E32DC /* ColorPicker */,
 				423FFAD91E31C1F1007E32DC /* UICaretTextField */,
 				423FFAA91E2D9E45007E32DC /* NSNetworkReachability */,
 			);
@@ -243,6 +274,29 @@
 			path = UICaretTextField;
 			sourceTree = "<group>";
 		};
+		423FFAE01E31DD6A007E32DC /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				423FFAE11E31DD6A007E32DC /* HRBrightnessCursor.h */,
+				423FFAE21E31DD6A007E32DC /* HRBrightnessCursor.m */,
+				423FFAE31E31DD6A007E32DC /* HRBrightnessSlider.h */,
+				423FFAE41E31DD6A007E32DC /* HRBrightnessSlider.m */,
+				423FFAE51E31DD6A007E32DC /* HRColorCursor.h */,
+				423FFAE61E31DD6A007E32DC /* HRColorCursor.m */,
+				423FFAE71E31DD6A007E32DC /* HRColorInfoView.h */,
+				423FFAE81E31DD6A007E32DC /* HRColorInfoView.m */,
+				423FFAE91E31DD6A007E32DC /* HRColorMapView.h */,
+				423FFAEA1E31DD6A007E32DC /* HRColorMapView.m */,
+				423FFAEB1E31DD6A007E32DC /* HRColorPickerView.h */,
+				423FFAEC1E31DD6A007E32DC /* HRColorPickerView.m */,
+				423FFAED1E31DD6A007E32DC /* HRHSVColorUtil.h */,
+				423FFAEE1E31DD6A007E32DC /* HRHSVColorUtil.m */,
+				423FFAEF1E31DD6A007E32DC /* UIImage+CoreGraphics.h */,
+				423FFAF01E31DD6A007E32DC /* UIImage+CoreGraphics.m */,
+			);
+			path = ColorPicker;
+			sourceTree = "<group>";
+		};
 		426EC0E41E23346B00D2D762 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +327,8 @@
 				1FADE3F01E02C2F600E32630 /* DetailTVC.m */,
 				1F7030FD1E2CBFB1005F4816 /* DetailAddItemTVC.h */,
 				1F7030FE1E2CBFB1005F4816 /* DetailAddItemTVC.m */,
+				423FFAF91E31E244007E32DC /* DetailColorPickerTVC.h */,
+				423FFAFA1E31E244007E32DC /* DetailColorPickerTVC.m */,
 				423FFAD01E31AD11007E32DC /* DetailPinModeTVC.h */,
 				423FFAD11E31AD11007E32DC /* DetailPinModeTVC.m */,
 			);
@@ -294,6 +350,8 @@
 				1FF343801E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m */,
 				1FF343821E2CEFDA009F2DC7 /* DetailAddItemTypeCell.h */,
 				1FF343831E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m */,
+				423FFADD1E31D6EF007E32DC /* DetailAddItemColorCell.h */,
+				423FFADE1E31D6EF007E32DC /* DetailAddItemColorCell.m */,
 				423FFAC21E2DF681007E32DC /* DetailMiscDefaultCell.h */,
 				423FFAC31E2DF681007E32DC /* DetailMiscDefaultCell.m */,
 				423FFAD31E31BB74007E32DC /* DetailPinModeDefaultCell.h */,
@@ -411,19 +469,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FEB964B1DE95EF600D98443 /* AppDelegate.m in Sources */,
+				423FFAF71E31DD6A007E32DC /* HRHSVColorUtil.m in Sources */,
 				1F4B84F51DEB454600CF1163 /* ServicesTVC.m in Sources */,
 				423FFAAC1E2D9E45007E32DC /* NSNetworkReachability.m in Sources */,
 				1FBC90E11E256CE200085360 /* DetailWebUICell.m in Sources */,
+				423FFAF81E31DD6A007E32DC /* UIImage+CoreGraphics.m in Sources */,
 				1FF343841E2CEFDA009F2DC7 /* DetailAddItemTypeCell.m in Sources */,
 				1FEB96481DE95EF600D98443 /* main.m in Sources */,
 				423FFAD21E31AD11007E32DC /* DetailPinModeTVC.m in Sources */,
 				423FFADC1E31C1F1007E32DC /* UICaretTextField.m in Sources */,
+				423FFAF11E31DD6A007E32DC /* HRBrightnessCursor.m in Sources */,
 				1FEB23B31E2511A600918646 /* DetailSliderCell.m in Sources */,
+				423FFAF21E31DD6A007E32DC /* HRBrightnessSlider.m in Sources */,
 				423FFAB11E2DA4D7007E32DC /* ServiceCell.m in Sources */,
+				423FFAFB1E31E244007E32DC /* DetailColorPickerTVC.m in Sources */,
+				423FFAF61E31DD6A007E32DC /* HRColorPickerView.m in Sources */,
 				423FFABB1E2DDBE0007E32DC /* BrowserTVC.m in Sources */,
+				423FFAF41E31DD6A007E32DC /* HRColorInfoView.m in Sources */,
 				4266C7821E163A730056FE02 /* DetailSetterCell.m in Sources */,
 				423FFAC41E2DF681007E32DC /* DetailMiscDefaultCell.m in Sources */,
 				426EC0EA1E2337B700D2D762 /* DetailSwitchCell.m in Sources */,
+				423FFADF1E31D6EF007E32DC /* DetailAddItemColorCell.m in Sources */,
 				423FFAD71E31BB74007E32DC /* DetailPinModeDefaultCell.m in Sources */,
 				1FF343811E2CEF71009F2DC7 /* DetailAddItemDefaultCell.m in Sources */,
 				423FFAC11E2DDDC9007E32DC /* HelpTVC.m in Sources */,
@@ -431,7 +497,9 @@
 				1FADE3F11E02C2F600E32630 /* DetailTVC.m in Sources */,
 				1F7030FF1E2CBFB1005F4816 /* DetailAddItemTVC.m in Sources */,
 				423FFABE1E2DDDAF007E32DC /* DomainCell.m in Sources */,
+				423FFAF51E31DD6A007E32DC /* HRColorMapView.m in Sources */,
 				423FFAD81E31BB74007E32DC /* DetailPinModeTypeCell.m in Sources */,
+				423FFAF31E31DD6A007E32DC /* HRColorCursor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

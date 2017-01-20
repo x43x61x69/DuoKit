@@ -249,7 +249,7 @@ typedef enum : uint8_t {
                 DetailMiscDefaultCell *cell =
                 [tableView dequeueReusableCellWithIdentifier:kDetailMiscDefaultCellIdentifer
                                                 forIndexPath:indexPath];
-                cell.textLabel.text = @"Read and Change Pin Mode";
+                cell.textLabel.text = @"Read / Change Pin Mode";
                 return cell;
             }
             default:
