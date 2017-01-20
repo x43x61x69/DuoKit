@@ -243,7 +243,7 @@ typedef enum {
     _modeTextField.text = @"";
     
     NSInteger pin = [_pinTextField.text integerValue];
-    if (pin < 0) {
+    if (!_pinTextField.text.length || pin < 0) {
         _pinTextField.text = @"";
         [_pinTextField becomeFirstResponder];
     } else {
