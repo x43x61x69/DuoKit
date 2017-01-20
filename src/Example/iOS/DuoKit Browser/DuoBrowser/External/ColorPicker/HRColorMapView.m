@@ -125,7 +125,7 @@
 #pragma mark - init
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame {
-    return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:0.95];
+    return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:1.f];
 }
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit {
@@ -133,7 +133,7 @@
 }
 
 - (id)init {
-    return [self initWithFrame:CGRectZero saturationUpperLimit:0.95];
+    return [self initWithFrame:CGRectZero saturationUpperLimit:1.f];
 }
 
 - (id)initWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit {
@@ -217,6 +217,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    [self createColorMapLayer];
     [self updateColorCursor];
     _didLayoutSubview = YES;
     [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
@@ -265,6 +266,13 @@
 }
 
 - (void)createColorMapLayer {
+    
+    if (self.colorMapLayer) {
+        self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
+        self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
+        return;
+    }
+    
     if (self.colorMapImage) {
         return;
     }
