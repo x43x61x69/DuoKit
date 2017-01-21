@@ -1,6 +1,6 @@
 //
-//  DetailTVC.m
-//  DuoBrowser
+//  DetailsTVC.m
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -28,9 +28,11 @@
 #define kMaxUIElements  10
 
 #import <CommonCrypto/CommonDigest.h>
-#import "DetailTVC.h"
+#import "DetailsTVC.h"
 #import "Common.h"
 #import "DetailAddItemTVC.h"
+#import "DetailPinModeTVC.h"
+
 #import "DetailWebUICell.h"
 #import "DetailSwitchCell.h"
 #import "DetailSetterCell.h"
@@ -65,7 +67,7 @@ typedef enum : uint8_t {
     DetailMiscMode
 } DetailMiscType;
 
-@interface DetailTVC () <UITableViewDataSource, UITextFieldDelegate, DetailAddItemDelegate>
+@interface DetailsTVC () <UITableViewDataSource, UITextFieldDelegate, DetailAddItemDelegate>
 {
     NSString *hash;
     NSInteger editIndex;
@@ -73,7 +75,7 @@ typedef enum : uint8_t {
 
 @end
 
-@implementation DetailTVC
+@implementation DetailsTVC
 
 - (void)loadView
 {
@@ -81,9 +83,7 @@ typedef enum : uint8_t {
     
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     
-#ifdef DEBUG
     _misc = @[@(DetailMiscMode)];
-#endif
     
     UIBarButtonItem *addButton
     = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -206,10 +206,8 @@ typedef enum : uint8_t {
             return @"Pre-Defined by Arduino";
         case 1:
             return @"User Defined";
-#ifdef DEBUG
         case 2:
             return @"Misc";
-#endif
         default:
             break;
     }
@@ -251,7 +249,7 @@ typedef enum : uint8_t {
                 DetailMiscDefaultCell *cell =
                 [tableView dequeueReusableCellWithIdentifier:kDetailMiscDefaultCellIdentifer
                                                 forIndexPath:indexPath];
-                cell.textLabel.text = @"PIN Mode";
+                cell.textLabel.text = @"Read / Change Pin Mode";
                 return cell;
             }
             default:
@@ -388,6 +386,8 @@ typedef enum : uint8_t {
     if (indexPath.section == 2) {
         switch ([[source objectAtIndex:indexPath.row] integerValue]) {
             case DetailMiscMode: {
+                [self performSegueWithIdentifier:kDetailPinModeSegueIdentifer
+                                          sender:self];
                 break;
             }
             default:
@@ -482,6 +482,9 @@ typedef enum : uint8_t {
         } else {
             vc.editIndex = -1;
         }
+    } else if ([segue.identifier isEqualToString:kDetailPinModeSegueIdentifer]) {
+        DetailPinModeTVC *vc = segue.destinationViewController;
+        vc.duo = _duo;
     }
 }
 

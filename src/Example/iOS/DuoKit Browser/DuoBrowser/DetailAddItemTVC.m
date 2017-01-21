@@ -1,6 +1,6 @@
 //
 //  DetailAddItemTVC.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -26,8 +26,10 @@
 //
 
 #import "DetailAddItemTVC.h"
+#import "DetailColorPickerTVC.h"
 #import "DetailAddItemDefaultCell.h"
 #import "DetailAddItemTypeCell.h"
+#import "DetailAddItemColorCell.h"
 
 typedef enum {
     DetailAddItemNone = 0,
@@ -39,7 +41,7 @@ typedef enum {
     DetailAddItemColor
 } DetailAddItemKey;
 
-@interface DetailAddItemTVC () <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
+@interface DetailAddItemTVC () <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, DetailColorPickerDelegate>
 
 @property (nonatomic, strong) NSMutableArray  *typeDataSource;
 @property (nonatomic, strong) UIPickerView    *typePicker;
@@ -52,7 +54,7 @@ typedef enum {
 @property (nonatomic, strong) UITextField     *pinTextField;
 @property (nonatomic, strong) UITextField     *modeTextField;
 @property (nonatomic, strong) UITextField     *intervalTextField;
-@property (nonatomic, strong) UITextField     *colorTextField;
+@property (nonatomic, strong) UIView          *colorView;
 
 @end
 
@@ -79,7 +81,7 @@ typedef enum {
                                                @(DetailAddItemPin),
                                                @(DetailAddItemMode),
                                                @(DetailAddItemInterval),
-                                               // @(DetailAddItemColor)
+                                               @(DetailAddItemColor)
                                                ]];
     
     
@@ -104,13 +106,6 @@ typedef enum {
     
     if (_editIndex >= 0 && _editLayout) {
         self.navigationItem.title = [NSString stringWithFormat:@"Edit \"%@\"", _editLayout.name ? _editLayout.name : @"--"];
-        _nameTextField.text = _editLayout.name ? _editLayout.name : @"";
-        _pinTextField.text = _editLayout.pin ? [NSString stringWithFormat:@"%ld", (long)_editLayout.pin] : @"";
-        [_typePicker selectRow:_editLayout.type == DuoUISwitch ? 0 : 1 inComponent:0 animated:NO];
-        _typeTextField.text = _typeDataSource[_editLayout.type == DuoUISwitch ? 0 : 1];
-        [_modePicker selectRow:_editLayout.type == DuoUIGetter ? 0 : 1 inComponent:0 animated:NO];
-        _modeTextField.text = _modeDataSource[_editLayout.type == DuoUIGetter ? 0 : 1];
-        _intervalTextField.text = _editLayout.reloadInterval ? [NSString stringWithFormat:@"%.f", MAX(3.f, _editLayout.reloadInterval)] : @"";
     }
 }
 
@@ -146,6 +141,9 @@ typedef enum {
             cell.textField.keyboardType = UIKeyboardTypeDefault;
             _nameTextField = cell.textField;
             _nameTextField.delegate = self;
+            if (_editIndex >= 0 && _editLayout) {
+                _nameTextField.text = _editLayout.name ? _editLayout.name : @"";
+            }
             return cell;
         }
         case DetailAddItemType: {
@@ -158,6 +156,10 @@ typedef enum {
             [cell.textField setInputView:_typePicker];
             _typeTextField = cell.textField;
             _typeTextField.delegate = self;
+            if (_editIndex >= 0 && _editLayout) {
+                [_typePicker selectRow:_editLayout.type == DuoUISwitch ? 0 : 1 inComponent:0 animated:NO];
+                _typeTextField.text = _typeDataSource[_editLayout.type == DuoUISwitch ? 0 : 1];
+            }
             
             UIBarButtonItem *flexibleItem
             = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -177,11 +179,13 @@ typedef enum {
         case DetailAddItemPin: {
             DetailAddItemDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailAddItemDefaultCellIdentifer
                                                                              forIndexPath:indexPath];
-            cell.title.text = @"PIN Number";
+            cell.title.text = @"Pin Number";
             cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             _pinTextField = cell.textField;
             _pinTextField.delegate = self;
-            
+            if (_editIndex >= 0 && _editLayout) {
+                _pinTextField.text = _editLayout.pin ? [NSString stringWithFormat:@"%ld", (long)_editLayout.pin] : @"";
+            }
             UIBarButtonItem *flexibleItem
             = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                             target:nil
@@ -203,11 +207,15 @@ typedef enum {
                                                                           forIndexPath:indexPath];
             cell.textField.hideCaret = YES;
             
-            cell.title.text = @"PIN Mode";
+            cell.title.text = @"Current Pin Mode";
             cell.textField.text = _modeDataSource[1];
             [cell.textField setInputView:_modePicker];
             _modeTextField = cell.textField;
             _modeTextField.delegate = self;
+            if (_editIndex >= 0 && _editLayout) {
+                [_modePicker selectRow:_editLayout.type == DuoUIGetter ? 0 : 1 inComponent:0 animated:NO];
+                _modeTextField.text = _modeDataSource[_editLayout.type == DuoUIGetter ? 0 : 1];
+            }
             
             UIBarButtonItem *flexibleItem
             = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -232,6 +240,9 @@ typedef enum {
             cell.textField.keyboardType = UIKeyboardTypeDecimalPad;
             _intervalTextField = cell.textField;
             _intervalTextField.delegate = self;
+            if (_editIndex >= 0 && _editLayout) {
+                _intervalTextField.text = _editLayout.reloadInterval ? [NSString stringWithFormat:@"%.f", MAX(3.f, _editLayout.reloadInterval)] : @"";
+            }
             
             UIBarButtonItem *flexibleItem
             = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -249,6 +260,17 @@ typedef enum {
             cell.textField.inputAccessoryView = inputToolbar;
             return cell;
         }
+        case DetailAddItemColor: {
+            DetailAddItemColorCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailAddItemColorCellIdentifer
+                                                                           forIndexPath:indexPath];
+            cell.title.text = @"Color";
+            cell.colorView.backgroundColor = kColorUIDefault;
+            _colorView = cell.colorView;
+            if (_editIndex >= 0 && _editLayout) {
+                _colorView.backgroundColor = _editLayout.color ? _editLayout.color : kColorUIDefault;
+            }
+            return cell;
+        }
         default:
             break;
     }
@@ -258,19 +280,27 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    switch ([[_layout objectAtIndex:indexPath.row] integerValue]) {
+        case DetailAddItemColor:
+            [self performSegueWithIdentifier:kDetailColorPickerSegueIdentifer sender:self];
+            break;
+        default:
+            break;
+    }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    cell.alpha = .0f;
-    cell.transform = CGAffineTransformMakeScale(.8f, .5f);
-    [UIView animateWithDuration:.2f
-                          delay:indexPath.row * .1f
-                        options:UIViewAnimationOptionTransitionFlipFromTop|UIViewAnimationOptionTransitionCrossDissolve
-                     animations:^ {
-                         cell.transform = CGAffineTransformIdentity;
-                         cell.alpha = 1.0f;
-                     } completion:nil];
+    [super prepareForSegue:segue sender:sender];
+    
+    if ([segue.identifier isEqualToString:kDetailColorPickerSegueIdentifer]) {
+        DetailColorPickerTVC *vc = segue.destinationViewController;
+        vc.delegate = self;
+        vc.color = _colorView.backgroundColor;
+    }
 }
 
 #pragma mark - UIPickerViewDelegate
@@ -320,11 +350,6 @@ typedef enum {
     return YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.view endEditing:YES];
@@ -360,7 +385,7 @@ typedef enum {
         [_nameTextField becomeFirstResponder];
     } else if (!_typeTextField.text.length) {
         [_typeTextField becomeFirstResponder];
-    } else if (![_pinTextField.text integerValue]) {
+    } else if (!_pinTextField.text.length || [_pinTextField.text integerValue] < 0) {
         _pinTextField.text = @"";
         [_pinTextField becomeFirstResponder];
     } else if ([_modePicker selectedRowInComponent:0] < DuoPinOutput || [_modePicker selectedRowInComponent:0] > DuoPinInputPullup) {
@@ -368,6 +393,18 @@ typedef enum {
     } else if ([_intervalTextField.text integerValue] != 0 && [_intervalTextField.text integerValue] < 3) {
         _intervalTextField.text = @"";
         [_intervalTextField becomeFirstResponder];
+    }
+}
+
+#pragma mark - DetailColorPickerDelegate
+
+- (void)colorChanged:(UIColor *)color
+{
+    if (color) {
+        if (_editIndex >= 0 && _editLayout) {
+            _editLayout.color = color;
+        }
+        _colorView.backgroundColor = color;
     }
 }
 
@@ -382,13 +419,13 @@ typedef enum {
         error = @"You must give this control a name!";
         errorTextField = _nameTextField;
     } else if (!_typeTextField.text.length) {
-        error = @"You must select a PIN type!";
+        error = @"You must select a Pin type!";
         errorTextField = _typeTextField;
-    } else if (![_pinTextField.text integerValue]) {
-        error = @"Invalid PIN number!";
+    } else if (!_pinTextField.text.length || [_pinTextField.text integerValue] < 0) {
+        error = @"Invalid Pin number!";
         errorTextField = _pinTextField;
     } else if ([_modePicker selectedRowInComponent:0] < DuoPinOutput || [_modePicker selectedRowInComponent:0] > DuoPinInputPullup) {
-        error = @"Invalid PIN mode!";
+        error = @"Invalid Pin mode!";
         errorTextField = _modeTextField;
     } else if ([_intervalTextField.text integerValue] != 0 && [_intervalTextField.text integerValue] < 3) {
         error = @"Reload interval must either be 0 or longer than 3 secs!";
@@ -430,7 +467,7 @@ typedef enum {
             break;
     }
     newUI.reloadInterval = [_intervalTextField.text integerValue];
-    newUI.color = [UIColor darkGrayColor];
+    newUI.color = _colorView.backgroundColor ? _colorView.backgroundColor : kColorUIDefault;
     
     if (_editIndex >= 0) {
         [_delegate itemEdited:newUI atIndex:_editIndex];

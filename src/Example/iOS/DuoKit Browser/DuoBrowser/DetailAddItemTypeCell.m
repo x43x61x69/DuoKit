@@ -1,6 +1,6 @@
 //
 //  DetailAddItemTypeCell.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -26,18 +26,6 @@
 //
 
 #import "DetailAddItemTypeCell.h"
-
-@implementation UICaretTextField
-
-- (CGRect)caretRectForPosition:(UITextPosition *)position
-{
-    if (_hideCaret) {
-        return CGRectZero;
-    }
-    return [super caretRectForPosition:position];
-}
-
-@end
 
 @implementation DetailAddItemTypeCell
 

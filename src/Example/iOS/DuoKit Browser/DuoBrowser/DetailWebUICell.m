@@ -1,6 +1,6 @@
 //
 //  DetailWebUICell.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //

@@ -1,6 +1,6 @@
 //
 //  ServicesTVC.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -27,12 +27,11 @@
 
 #import "ServicesTVC.h"
 #import "ServiceCell.h"
-#import "DetailTVC.h"
+#import "DetailsTVC.h"
 #import <DuoKit/DuoKit.h>
 
 @interface ServicesTVC () <DuoBrowserDelegate>
 {
-    BOOL isResolving;
     UIActivityIndicatorView *indicator;
 }
 
@@ -169,7 +168,6 @@
                     }
                     
                     self.tableView.userInteractionEnabled = YES;
-                    isResolving = NO;
                     
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                                    message:errorMessage
@@ -209,7 +207,6 @@
         [indicator stopAnimating];
     }
     self.tableView.userInteractionEnabled = YES;
-    isResolving = NO;
 }
 
 #pragma mark - Navigation
@@ -218,7 +215,7 @@
 {
     if ([segue.identifier isEqualToString:kDetailSegueIdentifer]) {
         Duo *duo = (Duo *)sender;
-        DetailTVC *vc = (DetailTVC *)segue.destinationViewController;
+        DetailsTVC *vc = (DetailsTVC *)segue.destinationViewController;
         vc.duo = duo;
         vc.navigationItem.title = duo.profile ? duo.profile : duo.name;
         
@@ -226,7 +223,6 @@
             [indicator stopAnimating];
         }
         self.tableView.userInteractionEnabled = YES;
-        isResolving = NO;
     }
 }
 
@@ -276,17 +272,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.tableView.userInteractionEnabled = NO;
     
-    if (!isResolving) {
-        isResolving = YES;
-        self.tableView.userInteractionEnabled = NO;
-        ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        [cell.indicator startAnimating];
-        
-        Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
-        [_browser resolveService:duo.service
-                     withTimeout:5.f];
-    }
+    ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell.indicator startAnimating];
+    
+    Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
+    [_browser resolveService:duo.service
+                 withTimeout:5.f];
 }
 
 @end

@@ -1,6 +1,6 @@
 //
-//  DetailTVC.h
-//  DuoBrowser
+//  DetailAddItemColorCell.m
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -25,16 +25,17 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import <DuoKit/DuoKit.h>
-#import "BrowserTVC.h"
+#import "DetailAddItemColorCell.h"
 
-#define kDetailSegueIdentifer    @"DetailSegue"
+@implementation DetailAddItemColorCell
 
-@interface DetailTVC : BrowserTVC
-
-@property (nonatomic, strong) Duo *duo;
-@property (nonatomic, strong) NSMutableArray<DuoUI *> *layout;
-@property (nonatomic, strong) NSArray<NSNumber *> *misc;
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    _colorView.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    _colorView.layer.borderWidth = 1.f;
+    _colorView.layer.cornerRadius = 4.f;
+}
 
 @end

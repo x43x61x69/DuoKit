@@ -1,6 +1,6 @@
 //
 //  DetailSliderCell.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -76,6 +76,7 @@
         return;
     }
     if (_pin) {
+        _image.image = nil;
         _title.textColor = [UIColor darkTextColor];
         _indicator.color = kColorUIDefault;
         [_indicator startAnimating];
@@ -93,6 +94,7 @@
                      [self reloadSliderValue:value];
                  });
              } else {
+                 _image.image = [UIImage imageNamed:@"icon-error"];
                  _title.textColor = kColorBase;
                  if (error) {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
@@ -102,6 +104,7 @@
              }
          }];
     } else if (_key) {
+        _image.image = nil;
         _title.textColor = [UIColor darkTextColor];
         _indicator.color = kColorUIDefault;
         [_indicator startAnimating];
@@ -119,6 +122,7 @@
                      [self reloadSliderValue:value];
                  });
              } else {
+                 _image.image = [UIImage imageNamed:@"icon-error"];
                  _title.textColor = kColorBase;
                  if (error) {
                      NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);
@@ -160,6 +164,7 @@
         actionUUID = thisAction;
         __unsafe_unretained typeof(self) weakSelf = self;
         if (_pin) {
+            _image.image = nil;
             _title.textColor = [UIColor darkTextColor];
             _indicator.color = kColorBase;
             [_indicator startAnimating];
@@ -186,6 +191,7 @@
                  }
              }];
         } else if (_key) {
+            _image.image = nil;
             _title.textColor = [UIColor darkTextColor];
             _indicator.color = kColorBase;
             [_indicator startAnimating];
@@ -205,6 +211,7 @@
                          [self updateSliderValue:value action:thisAction];
                      });
                  } else {
+                     _image.image = [UIImage imageNamed:@"icon-error"];
                      _title.textColor = kColorBase;
                      if (error) {
                          NSLog(@"%s: %@", __PRETTY_FUNCTION__, [error localizedDescription]);

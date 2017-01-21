@@ -1,6 +1,6 @@
 //
 //  BrowserTVC.m
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  Created by Cai on 17/01/2017.
 //  Copyright © 2017 MediaTek Inc. All rights reserved.

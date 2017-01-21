@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //

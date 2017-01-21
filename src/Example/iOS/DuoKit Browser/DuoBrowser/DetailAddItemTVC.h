@@ -1,6 +1,6 @@
 //
 //  DetailAddItemTVC.h
-//  DuoBrowser
+//  DuoKit Browser
 //
 //  The MIT License (MIT)
 //
@@ -27,6 +27,7 @@
 
 #import <UIKit/UIKit.h>
 #import <DuoKit/DuoKit.h>
+#import "BrowserTVC.h"
 
 #define kDetailAddItemSegueIdentifer  @"DetailAddItemSegue"
 
@@ -37,7 +38,7 @@
 
 @end
 
-@interface DetailAddItemTVC : UITableViewController
+@interface DetailAddItemTVC : BrowserTVC
 
 @property (nonatomic, assign) id<DetailAddItemDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *layout;
