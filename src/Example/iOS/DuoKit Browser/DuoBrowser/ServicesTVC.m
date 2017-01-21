@@ -32,7 +32,6 @@
 
 @interface ServicesTVC () <DuoBrowserDelegate>
 {
-    BOOL isResolving;
     UIActivityIndicatorView *indicator;
 }
 
@@ -169,7 +168,6 @@
                     }
                     
                     self.tableView.userInteractionEnabled = YES;
-                    isResolving = NO;
                     
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                                    message:errorMessage
@@ -209,7 +207,6 @@
         [indicator stopAnimating];
     }
     self.tableView.userInteractionEnabled = YES;
-    isResolving = NO;
 }
 
 #pragma mark - Navigation
@@ -226,7 +223,6 @@
             [indicator stopAnimating];
         }
         self.tableView.userInteractionEnabled = YES;
-        isResolving = NO;
     }
 }
 
@@ -278,15 +274,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.tableView.userInteractionEnabled = NO;
     
-    if (!isResolving) {
-        isResolving = YES;
-        ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        [cell.indicator startAnimating];
-        
-        Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
-        [_browser resolveService:duo.service
-                     withTimeout:5.f];
-    }
+    ServiceCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell.indicator startAnimating];
+    
+    Duo *duo = (Duo *)[_dataSource objectAtIndex:indexPath.row];
+    [_browser resolveService:duo.service
+                 withTimeout:5.f];
 }
 
 @end
