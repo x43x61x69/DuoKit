@@ -1,5 +1,5 @@
 //
-//  DetailTVC.m
+//  DetailsTVC.m
 //  DuoKit Browser
 //
 //  The MIT License (MIT)
@@ -28,7 +28,7 @@
 #define kMaxUIElements  10
 
 #import <CommonCrypto/CommonDigest.h>
-#import "DetailTVC.h"
+#import "DetailsTVC.h"
 #import "Common.h"
 #import "DetailAddItemTVC.h"
 #import "DetailPinModeTVC.h"
@@ -67,7 +67,7 @@ typedef enum : uint8_t {
     DetailMiscMode
 } DetailMiscType;
 
-@interface DetailTVC () <UITableViewDataSource, UITextFieldDelegate, DetailAddItemDelegate>
+@interface DetailsTVC () <UITableViewDataSource, UITextFieldDelegate, DetailAddItemDelegate>
 {
     NSString *hash;
     NSInteger editIndex;
@@ -75,7 +75,7 @@ typedef enum : uint8_t {
 
 @end
 
-@implementation DetailTVC
+@implementation DetailsTVC
 
 - (void)loadView
 {

@@ -27,7 +27,7 @@
 
 #import "ServicesTVC.h"
 #import "ServiceCell.h"
-#import "DetailTVC.h"
+#import "DetailsTVC.h"
 #import <DuoKit/DuoKit.h>
 
 @interface ServicesTVC () <DuoBrowserDelegate>
@@ -215,7 +215,7 @@
 {
     if ([segue.identifier isEqualToString:kDetailSegueIdentifer]) {
         Duo *duo = (Duo *)sender;
-        DetailTVC *vc = (DetailTVC *)segue.destinationViewController;
+        DetailsTVC *vc = (DetailsTVC *)segue.destinationViewController;
         vc.duo = duo;
         vc.navigationItem.title = duo.profile ? duo.profile : duo.name;
         

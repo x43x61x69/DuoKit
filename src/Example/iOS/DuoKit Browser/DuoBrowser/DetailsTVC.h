@@ -1,5 +1,5 @@
 //
-//  DetailTVC.h
+//  DetailsTVC.h
 //  DuoKit Browser
 //
 //  The MIT License (MIT)
@@ -31,7 +31,7 @@
 
 #define kDetailSegueIdentifer    @"DetailSegue"
 
-@interface DetailTVC : BrowserTVC
+@interface DetailsTVC : BrowserTVC
 
 @property (nonatomic, strong) Duo *duo;
 @property (nonatomic, strong) NSMutableArray<DuoUI *> *layout;
