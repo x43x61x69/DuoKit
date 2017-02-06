@@ -37,6 +37,7 @@
 		1FFB9F241E289F810052B2B8 /* library.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = library.properties; sourceTree = "<group>"; };
 		1FFB9F251E289F810052B2B8 /* README.adoc */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.adoc; sourceTree = "<group>"; };
 		423FFACF1E308F0A007E32DC /* Blink.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = Blink.ino; sourceTree = "<group>"; };
+		426435E51E4803BA00D489E7 /* DHT.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = DHT.ino; sourceTree = "<group>"; };
 		426EC0EB1E234F0300D2D762 /* DuoUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DuoUI.h; path = Object/Duo/DuoUI.h; sourceTree = "<group>"; };
 		426EC0EC1E234F0300D2D762 /* DuoUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DuoUI.m; path = Object/Duo/DuoUI.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +156,7 @@
 				423FFACE1E308F0A007E32DC /* Blink */,
 				1F7030FB1E2CB5E3005F4816 /* RGB_LED */,
 				1F7030F91E2CB57F005F4816 /* RGB_LED_Transition */,
+				426435E41E4803BA00D489E7 /* DHT */,
 			);
 			path = examples;
 			sourceTree = "<group>";
@@ -173,6 +175,14 @@
 				423FFACF1E308F0A007E32DC /* Blink.ino */,
 			);
 			path = Blink;
+			sourceTree = "<group>";
+		};
+		426435E41E4803BA00D489E7 /* DHT */ = {
+			isa = PBXGroup;
+			children = (
+				426435E51E4803BA00D489E7 /* DHT.ino */,
+			);
+			path = DHT;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
