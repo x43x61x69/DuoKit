@@ -61,9 +61,10 @@ void setup()
 
     //
     // Setup variable pointers:
-    // Format: {VAR_KEY_NAME, VAR_POINTER}
-    // - VAR_KEY_NAME: A String object that will be referencing to the variable.
-    // - VAR_POINTER: A memory pointer that points to the variable. (.intPtr, .doublePtr, .stringPtr)
+    // Format: {VAR_TYPE, VAR_KEY_NAME, VAR_POINTER}
+    // - VAR_TYPE:      A DuoObjectType that consists with the variable. (DuoIntType, DuoDoubleType, DuoStringType)
+    // - VAR_KEY_NAME:  A String object that will be referencing to the variable.
+    // - VAR_POINTER:   A memory pointer that points to the variable. (.intPtr, .doublePtr, .stringPtr)
     //
 
     uint8_t i = 0;
@@ -102,7 +103,7 @@ void setup()
 
     layout[++i].type    = DuoUISwitch;
     layout[i].name      = "Built-in LED";
-    layout[i].pin       = 13;
+    layout[i].pin       = LED_BUILTIN;
     layout[i].interval  = 10;
 
     //
